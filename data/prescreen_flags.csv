@@ -1,0 +1,39 @@
+﻿qa_id,corpus_index,arxiv_id,template_type,suggested_condition,title
+2309.01431__method,0,2309.01431,method,partially_supported,Benchmarking Large Language Models in Retrieval-Augmented 
+2309.01431__finding,0,2309.01431,finding,partially_supported,Benchmarking Large Language Models in Retrieval-Augmented 
+2601.16397__dataset,1,2601.16397,dataset,partially_supported,From Attribution to Abstention: Training-Free Attention-Ba
+2411.19203__method,2,2411.19203,method,partially_supported,An Extensive Evaluation of Factual Consistency in Large La
+2606.03728__method,3,2606.03728,method,partially_supported,Re-Ranking Through an Attribution Lens for Citation Qualit
+2505.11731__dataset,4,2505.11731,dataset,partially_supported,Dist2ill: Distributional Distillation for One-Pass Uncerta
+2502.01142__dataset,5,2502.01142,dataset,partially_supported,DeepRAG: Thinking to Retrieve Step by Step for Large Langu
+2406.14709__dataset,8,2406.14709,dataset,partially_supported,Factual Dialogue Summarization via Learning from Large Lan
+2407.02062__method,10,2407.02062,method,partially_supported,Are Data Augmentation Methods in Named Entity Recognition 
+2407.02062__dataset,10,2407.02062,dataset,partially_supported,Are Data Augmentation Methods in Named Entity Recognition 
+2507.02949__dataset,11,2507.02949,dataset,partially_supported,RADIANT: Retrieval AugmenteD entIty-context AligNmenT -- I
+2212.09968__method,13,2212.09968,method,partially_supported,On Improving Summarization Factual Consistency from Natura
+2602.13540__dataset,15,2602.13540,dataset,partially_supported,On Calibration of Large Language Models: From Response To 
+2509.10467__dataset,16,2509.10467,dataset,partially_supported,DSRAG: A Domain-Specific Retrieval Framework Based on Docu
+2409.01864__method,18,2409.01864,method,partially_supported,The Role of Large Language Models in Musicology: Are We Re
+2412.18004__dataset,20,2412.18004,dataset,partially_supported,Correctness is not Faithfulness in RAG Attributions
+2601.02179__finding,21,2601.02179,finding,partially_supported,Confidence Estimation for LLMs in Multi-turn Interactions
+2410.22874__dataset,22,2410.22874,dataset,partially_supported,Eliciting Critical Reasoning in Retrieval-Augmented Langua
+2509.07925__dataset,27,2509.07925,dataset,partially_supported,GENUINE: Graph Enhanced Multi-level Uncertainty Estimation
+2502.06864__finding,28,2502.06864,finding,partially_supported,Knowledge Graph-Guided Retrieval Augmented Generation
+2607.17883__dataset,29,2607.17883,dataset,partially_supported,"Zero Hallucination, by Construction: Hallucination-Aware L"
+2310.08372__method,30,2310.08372,method,partially_supported,Improving Factual Consistency for Knowledge-Grounded Dialo
+2509.20859__finding,31,2509.20859,finding,partially_supported,Concise and Sufficient Sub-Sentence Citations for Retrieva
+2510.10913__dataset,32,2510.10913,dataset,partially_supported,ADVICE: Answer-Dependent Verbalized Confidence Estimation
+2506.21288__method,33,2506.21288,method,partially_supported,Small Encoders Can Rival Large Decoders in Detecting Groun
+2309.12455__dataset,34,2309.12455,dataset,partially_supported,LongDocFACTScore: Evaluating the Factuality of Long Docume
+2211.07066__dataset,35,2211.07066,dataset,partially_supported,Controllable Citation Sentence Generation with Language Mo
+2211.07066__finding,35,2211.07066,finding,partially_supported,Controllable Citation Sentence Generation with Language Mo
+2603.05698__method,38,2603.05698,method,partially_supported,Towards Robust Retrieval-Augmented Generation Based on Kno
+2410.03726__dataset,40,2410.03726,dataset,partially_supported,Neurosymbolic AI approach to Attribution in Large Language
+2503.02623__dataset,41,2503.02623,dataset,partially_supported,Rewarding Doubt: A Reinforcement Learning Approach to Cali
+2311.12233__dataset,44,2311.12233,dataset,partially_supported,Unifying Corroborative and Contributive Attributions in La
+2311.12233__finding,44,2311.12233,finding,partially_supported,Unifying Corroborative and Contributive Attributions in La
+2608.07827__method,45,2608.07827,method,partially_supported,From token probabilities to calibrated confidence: An empi
+2307.04642__dataset,46,2307.04642,dataset,partially_supported,TRAQ: Trustworthy Retrieval Augmented Question Answering v
+2603.06290__finding,47,2603.06290,finding,partially_supported,The EpisTwin: A Knowledge Graph-Grounded Neuro-Symbolic Ar
+2602.16843__dataset,48,2602.16843,dataset,partially_supported,BanglaSummEval: Reference-Free Factual Consistency Evaluat
+2605.00199__dataset,49,2605.00199,dataset,partially_supported,RSAT: Structured Attribution Makes Small Language Models F

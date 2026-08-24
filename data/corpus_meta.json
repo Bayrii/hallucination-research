@@ -1,0 +1,31 @@
+{
+  "fetched_utc": "2026-08-23T20:53:56.832894+00:00",
+  "queries": [
+    "cat:cs.CL AND abs:\"hallucination\" AND (abs:\"retrieval-augmented\" OR abs:\"RAG\" OR abs:\"retrieval augmented\")",
+    "cat:cs.CL AND (abs:\"faithfulness\" OR abs:\"groundedness\") AND abs:\"generation\"",
+    "cat:cs.CL AND abs:\"retrieval-augmented generation\" AND (abs:\"evaluation\" OR abs:\"benchmark\")",
+    "cat:cs.CL AND (abs:\"factual consistency\" OR abs:\"factuality\") AND abs:\"language model\"",
+    "cat:cs.CL AND (abs:\"attribution\" OR abs:\"citation\") AND abs:\"language model\"",
+    "cat:cs.CL AND (abs:\"uncertainty estimation\" OR abs:\"confidence estimation\" OR abs:\"calibration\") AND abs:\"language model\""
+  ],
+  "per_query_requested": 45,
+  "per_query_returned": [
+    45,
+    45,
+    45,
+    45,
+    45,
+    45
+  ],
+  "target_size": 50,
+  "final_size": 50,
+  "min_abstract_chars": 700,
+  "surveys_excluded": true,
+  "filtered_counts": {
+    "duplicate": 2,
+    "too_short": 3,
+    "survey": 4
+  },
+  "seed": 42,
+  "note": "arXiv relevance ranking drifts over time. Rebuilding with these queries at a later date will NOT reproduce this exact corpus. Treat corpus.json itself as the artifact of record."
+}

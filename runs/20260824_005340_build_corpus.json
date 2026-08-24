@@ -1,0 +1,24 @@
+{
+  "stage": "build_corpus",
+  "timestamp_utc": "2026-08-23T20:53:40.377765+00:00",
+  "args": {
+    "out": "C:\\Dev\\Hallucination research\\data\\corpus.json",
+    "meta_out": "C:\\Dev\\Hallucination research\\data\\corpus_meta.json",
+    "target": 50,
+    "per_query": 45,
+    "min_abstract_chars": 700,
+    "keep_surveys": false,
+    "delay": 3.0,
+    "seed": 42
+  },
+  "python": "3.12.10",
+  "platform": "win32",
+  "queries": [
+    "cat:cs.CL AND abs:\"hallucination\" AND (abs:\"retrieval-augmented\" OR abs:\"RAG\" OR abs:\"retrieval augmented\")",
+    "cat:cs.CL AND (abs:\"faithfulness\" OR abs:\"groundedness\") AND abs:\"generation\"",
+    "cat:cs.CL AND abs:\"retrieval-augmented generation\" AND (abs:\"evaluation\" OR abs:\"benchmark\")",
+    "cat:cs.CL AND (abs:\"factual consistency\" OR abs:\"factuality\") AND abs:\"language model\"",
+    "cat:cs.CL AND (abs:\"attribution\" OR abs:\"citation\") AND abs:\"language model\"",
+    "cat:cs.CL AND (abs:\"uncertainty estimation\" OR abs:\"confidence estimation\" OR abs:\"calibration\") AND abs:\"language model\""
+  ]
+}
