@@ -1,9 +1,9 @@
 """
 Stage 2 — Draft candidate QA pairs for manual review.
 
-Produces an EDITABLE csv (plus a json mirror), not a locked dataset. You are
-expected to open data/qa_pairs.csv, fix or delete bad questions, and set
-`intended_condition` by hand.
+Produces an EDITABLE csv, not a locked dataset. You are expected to open
+data/qa_pairs.csv, fix or delete bad questions, and set `intended_condition`
+by hand.
 
 Two modes:
 
@@ -15,6 +15,11 @@ Two modes:
 
 Mode 2 reads the csv back, so it never clobbers your manual edits. It writes a
 .bak first anyway.
+
+data/qa_pairs.csv is the SINGLE SOURCE OF TRUTH -- run_pipeline.py reads it
+directly. An earlier version also wrote a qa_pairs.json mirror and the pipeline
+read *that*, so any hand-edit was invisible until the mirror was rebuilt. It
+silently discarded review work twice before being removed. Do not reintroduce it.
 
 On distractor strategy
 ----------------------
@@ -54,7 +59,6 @@ from common import (
     set_seed,
     truncate,
     warn,
-    write_json,
 )
 
 # --- Question templates -----------------------------------------------------
@@ -183,18 +187,6 @@ def read_rows(path: Path) -> list[dict]:
             for c in added:
                 r.setdefault(c, "")
     return rows
-
-
-def mirror_json(csv_path: Path, rows: list[dict]) -> Path:
-    """
-    Keep a .json mirror alongside the .csv.
-
-    Downstream stages read the json; the csv exists purely so the team can edit
-    in a spreadsheet. Regenerating the mirror on every write keeps them in sync.
-    """
-    json_path = csv_path.with_suffix(".json")
-    write_json(json_path, rows)
-    return json_path
 
 
 # --- distractor assignment --------------------------------------------------
@@ -355,7 +347,6 @@ def main() -> None:
             only,
         )
         write_rows(out, rows)
-        mirror_json(out, rows)
 
         info(f"{n} rows now have forced_context_id (condition -> poorly_supported)")
         _summarize(rows)
@@ -378,11 +369,9 @@ def main() -> None:
 
     rows = draft_pairs(corpus, keys)
     write_rows(out, rows)
-    json_path = mirror_json(out, rows)
 
     rule("Done")
     info(f"{len(rows)} candidate QA pairs -> {out}")
-    info(f"json mirror -> {json_path}")
     _summarize(rows)
 
     print(
@@ -397,9 +386,9 @@ def main() -> None:
         f"       python generate_qa_pairs.py --assign-distractors 50 "
         f"--strategy similar\n\n"
         f"  5. Re-save as CSV, then run:  python run_pipeline.py\n\n"
-        f"NOTE: downstream stages read the .json mirror. It is rewritten from the\n"
-        f"csv every time this script runs — but if you hand-edit the csv, run\n"
-        f"`--assign-distractors 0` to refresh the mirror before the pipeline.\n"
+        f"This csv is the SINGLE SOURCE OF TRUTH. run_pipeline.py reads it\n"
+        f"directly, so your edits take effect the moment you save. There is no\n"
+        f"sync step to remember.\n"
     )
 
 

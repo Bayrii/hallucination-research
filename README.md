@@ -13,6 +13,56 @@ number. Latency is measured per signal and treated as a primary axis.
 
 ---
 
+## START HERE — current state (updated 2026-08-25)
+
+Stages 0–2 are **done** and committed. Nothing has been run on a GPU yet; no
+model has produced a single token in this project so far.
+
+| Artifact | State |
+|---|---|
+| `data/corpus.json` | ✅ 50 abstracts, 6 related arXiv queries, surveys + stub abstracts filtered out |
+| `data/qa_pairs.csv` | ✅ 150 QA pairs drafted. **Manual review in progress** — 124 `well_supported`, 26 `partially_supported`, 0 distractors assigned |
+| Everything from Stage 3 on | ❌ not started |
+
+**Next actions, in order** (steps 2–5 need the RTX 3060):
+
+1. **Finish reviewing `data/qa_pairs.csv`** — set `intended_condition` to
+   `partially_supported` wherever the abstract can't answer its question.
+   `data/prescreen_flags.csv` lists candidates; the `dataset` flags are reliable,
+   the `method`/`finding` flags are mostly false alarms. Target 30–60 total.
+2. **Install** (see Setup below), then `python index_corpus.py`.
+3. **Assign distractors** — converts 50 `well_supported` rows into
+   `poorly_supported` by pointing them at the wrong abstract:
+   ```
+   python generate_qa_pairs.py --assign-distractors 25 --strategy similar
+   python generate_qa_pairs.py --assign-distractors 25 --strategy dissimilar
+   ```
+   If step 1 ended near 25 rather than 40+, drop these to 20/20 so
+   `well_supported` doesn't get squeezed below ~60.
+4. **Preflight, then generate** (~50 min):
+   ```
+   python run_pipeline.py --check --model qwen2.5:0.5b
+   python run_pipeline.py --model qwen2.5:7b-instruct-q4_K_M --unload-when-done
+   ```
+5. **Label, score, evaluate** — Stages 4–6. These need no GPU.
+
+### Things that already went wrong once — don't repeat them
+
+- **`data/qa_pairs.csv` is the single source of truth.** There was a
+  `qa_pairs.json` mirror that the pipeline read instead; it went stale twice and
+  silently discarded hand-labelled rows with no error. It has been deleted and
+  `run_pipeline.py` now reads the CSV directly. **Do not reintroduce a mirror.**
+- **`--assign-distractors` overwrites `intended_condition`.** It defaults to
+  `--only-condition well_supported` so hand-marked `partially_supported` rows are
+  protected. Don't pass `--only-condition any` unless you mean it.
+- **Always run `run_pipeline.py --check` first.** It verifies Ollama actually
+  returns token log-probabilities (needs **v0.12.11+**). Signal 1 *is* logprobs,
+  so without that verification a multi-hour run produces unusable data.
+- **Unload the generator before Stage 5** (`--unload-when-done`, or
+  `ollama stop <model>`). 6 GB will not hold the generator and the NLI model.
+
+---
+
 ## Setup
 
 Run everything on the **RTX 3060 machine**. Only Stage 3 needs the GPU, but it is
@@ -84,9 +134,8 @@ python generate_qa_pairs.py --assign-distractors 50 --strategy similar
 negative (realistic), `dissimilar` = easy negative (upper bound), `random` = mixed.
 Running a mix gives a difficulty gradient to report against.
 
-> Downstream stages read `data/qa_pairs.json`. It is rewritten from the CSV every
-> time this script runs — after hand-editing the CSV, run
-> `python generate_qa_pairs.py --assign-distractors 0` to refresh the mirror.
+> `data/qa_pairs.csv` is read directly by `run_pipeline.py`. Your edits take
+> effect as soon as you save — there is no sync step.
 
 ### Stage 3 — generation
 

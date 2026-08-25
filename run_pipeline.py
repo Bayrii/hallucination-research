@@ -343,7 +343,7 @@ def main() -> None:
         description="Run the RAG pipeline and record generations + logprobs.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
-    ap.add_argument("--qa-pairs", default=str(DATA_DIR / "qa_pairs.json"))
+    ap.add_argument("--qa-pairs", default=str(DATA_DIR / "qa_pairs.csv"))
     ap.add_argument("--index-dir", default=str(DATA_DIR))
     ap.add_argument("--out", default=str(DATA_DIR / "generations.jsonl"))
     ap.add_argument("--backend", choices=["ollama"], default="ollama")
@@ -386,18 +386,19 @@ def main() -> None:
     log_run_config("run_pipeline", args, extra={"prompt_template": PROMPT_TEMPLATE})
 
     # --- inputs -------------------------------------------------------------
+    # The csv the team edits IS the input. Reading a derived copy meant a stale
+    # mirror could silently discard hours of labelling with no error, so the
+    # mirror was removed rather than patched.
     qa_path = Path(args.qa_pairs)
     if not qa_path.exists():
-        csv_alt = qa_path.with_suffix(".csv")
-        hint = "python generate_qa_pairs.py"
-        if csv_alt.exists():
-            hint = (
-                "The .csv exists but the .json mirror does not. Refresh it:\n"
-                "        python generate_qa_pairs.py --assign-distractors 0"
-            )
-        die(f"QA pairs not found: {qa_path}", hint)
+        die(f"QA pairs not found: {qa_path}", "python generate_qa_pairs.py")
 
-    rows = read_json(qa_path)
+    if qa_path.suffix.lower() == ".csv":
+        from generate_qa_pairs import read_rows
+
+        rows = read_rows(qa_path)
+    else:
+        rows = read_json(qa_path)
     if not rows:
         die(f"{qa_path} is empty.", "python generate_qa_pairs.py")
 
