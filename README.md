@@ -37,8 +37,10 @@ model has produced a single token in this project so far.
    python generate_qa_pairs.py --assign-distractors 25 --strategy similar
    python generate_qa_pairs.py --assign-distractors 25 --strategy dissimilar
    ```
-   If step 1 ended near 25 rather than 40+, drop these to 20/20 so
-   `well_supported` doesn't get squeezed below ~60.
+   The arithmetic is `well_supported = 150 − partially − distractors`. At 26
+   `partially_supported` this leaves 74 `well_supported`, which is healthy —
+   keep 25/25. Only reduce the distractor count if `partially_supported` ends
+   up *large* (say 80+), which is what would squeeze `well_supported`.
 4. **Preflight, then generate** (~50 min):
    ```
    python run_pipeline.py --check --model qwen2.5:0.5b
