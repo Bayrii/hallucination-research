@@ -159,10 +159,35 @@ def main() -> None:
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     ap.add_argument("--generations", default=str(DATA_DIR / "generations.jsonl"))
+    ap.add_argument(
+        "--qa-pairs",
+        default=str(DATA_DIR / "qa_pairs.csv"),
+        help="manifest used to draw a stable --subset sample",
+    )
     ap.add_argument("--annotator", required=True, help="e.g. annotator1")
     ap.add_argument("--out", default=None, help="default: data/labels_<annotator>.jsonl")
     ap.add_argument("--width", type=int, default=78)
     ap.add_argument("--limit", type=int, default=None, help="label at most N items")
+    ap.add_argument(
+        "--subset",
+        type=int,
+        default=None,
+        metavar="N",
+        help=(
+            "label only a random N-item subset. Used for the reliability check: "
+            "the primary annotator labels everything, the second labels this "
+            "subset, and kappa is computed on the overlap."
+        ),
+    )
+    ap.add_argument(
+        "--subset-seed",
+        type=int,
+        default=42,
+        help=(
+            "seed for --subset. MUST match between annotators or the subsets "
+            "will not overlap and kappa cannot be computed."
+        ),
+    )
     ap.add_argument(
         "--no-shuffle", action="store_true", help="present in file order instead"
     )
@@ -187,6 +212,42 @@ def main() -> None:
             "\n  *** --show-condition is ON. Labels from this pass are NOT blind\n"
             "      and must not be used as ground truth. ***\n"
         )
+
+    # Subset is chosen BEFORE filtering out already-labelled items, and from a
+    # deterministic base order, so the sample is identical for both annotators
+    # and stable across resumes. The seed is deliberately NOT annotator-derived:
+    # if the two subsets did not overlap there would be nothing to compute kappa
+    # on, which is the entire point of the second pass.
+    if args.subset:
+        # Sample from the QA MANIFEST, not from generations.jsonl. The manifest
+        # holds all 150 ids from the start, whereas generations.jsonl grows as
+        # the run proceeds -- sampling that would silently change the subset
+        # between sessions and destroy the overlap kappa depends on. Subset
+        # items not yet generated simply appear in a later session.
+        manifest = Path(args.qa_pairs)
+        if manifest.exists():
+            from generate_qa_pairs import read_rows
+
+            all_ids = sorted(r["qa_id"] for r in read_rows(manifest))
+            src = manifest.name
+        else:
+            warn(f"{manifest} not found — sampling from generations instead; "
+                 f"the subset may shift if more generations are added later.")
+            all_ids = sorted(g["qa_id"] for g in gens)
+            src = "generations.jsonl"
+
+        n = min(args.subset, len(all_ids))
+        if args.subset > len(all_ids):
+            warn(f"--subset {args.subset} exceeds {len(all_ids)} available; using all.")
+        keep = set(random.Random(args.subset_seed).sample(all_ids, n))
+
+        gens = [g for g in gens if g["qa_id"] in keep]
+        info(
+            f"subset: {n} of {len(all_ids)} items from {src} "
+            f"(seed {args.subset_seed}); {len(gens)} generated so far"
+        )
+        if len(gens) < n:
+            info(f"{n - len(gens)} subset item(s) not generated yet — re-run later.")
 
     done = completed_ids(out_path, "qa_id")
     todo = [g for g in gens if g["qa_id"] not in done]
