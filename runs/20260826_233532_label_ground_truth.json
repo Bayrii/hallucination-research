@@ -1,0 +1,16 @@
+{
+  "stage": "label_ground_truth",
+  "timestamp_utc": "2026-08-26T19:35:32.300823+00:00",
+  "args": {
+    "generations": "E:\\Coding\\Hallucination research\\data\\generations.jsonl",
+    "annotator": "demo",
+    "out": "C:/Users/user/AppData/Local/Temp/demo.jsonl",
+    "width": 78,
+    "limit": 1,
+    "no_shuffle": false,
+    "show_condition": false,
+    "no_clear": true
+  },
+  "python": "3.12.0",
+  "platform": "win32"
+}
