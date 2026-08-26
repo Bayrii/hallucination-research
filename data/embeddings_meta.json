@@ -1,0 +1,864 @@
+{
+  "model_name": "sentence-transformers/all-MiniLM-L6-v2",
+  "dim": 384,
+  "count": 50,
+  "normalized": true,
+  "records": [
+    {
+      "arxiv_id": "2309.01431",
+      "arxiv_id_versioned": "2309.01431v2",
+      "title": "Benchmarking Large Language Models in Retrieval-Augmented Generation",
+      "abstract": "Retrieval-Augmented Generation (RAG) is a promising approach for mitigating the hallucination of large language models (LLMs). However, existing research lacks rigorous evaluation of the impact of retrieval-augmented generation on different large language models, which make it challenging to identify the potential bottlenecks in the capabilities of RAG for different LLMs. In this paper, we systematically investigate the impact of Retrieval-Augmented Generation on large language models. We analyze the performance of different large language models in 4 fundamental abilities required for RAG, including noise robustness, negative rejection, information integration, and counterfactual robustness. To this end, we establish Retrieval-Augmented Generation Benchmark (RGB), a new corpus for RAG evaluation in both English and Chinese. RGB divides the instances within the benchmark into 4 separate testbeds based on the aforementioned fundamental abilities required to resolve the case. Then we evaluate 6 representative LLMs on RGB to diagnose the challenges of current LLMs when applying RAG. Evaluation reveals that while LLMs exhibit a certain degree of noise robustness, they still struggle significantly in terms of negative rejection, information integration, and dealing with false information. The aforementioned assessment outcomes indicate that there is still a considerable journey ahead to effectively apply RAG to LLMs.",
+      "authors": [
+        "Jiawei Chen",
+        "Hongyu Lin",
+        "Xianpei Han",
+        "Le Sun"
+      ],
+      "published": "2023-09-04",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2309.01431v2",
+      "source_query": "cat:cs.CL AND abs:\"hallucination\" AND (abs:\"retrieval-augmented\" OR abs:\"RAG\" OR abs:\"retrieval augmented\")"
+    },
+    {
+      "arxiv_id": "2601.16397",
+      "arxiv_id_versioned": "2601.16397v2",
+      "title": "From Attribution to Abstention: Training-Free Attention-Based Auditing for Clinical Summarization",
+      "abstract": "Deploying multimodal large language models (MLLMs) for clinical summarization demands not only fluent generation but also transparency about where each statement originates-and a mechanism to flag when statements lack evidential support. We present ClinTrace, a training-free framework that extracts two clinically useful signals from the decoder attention weights that every transformer-based MLLM already produces during generation: (i) fine-grained source attributions linking each output sentence to supporting text spans or images, and (ii) per-sentence groundedness scores that identify poorly supported claims as candidate hallucinations. Both signals are derived from the same attention tensors in a single pass, requiring no retraining, no auxiliary models, and no additional inference cost. We evaluate on two clinical summarization tasks: doctor-patient dialogue summarization (CliConSummation) and radiology report summarization (MIMIC-CXR) using a general-purpose MLLM (Qwen3-8B) and a medical-finetuned model (HuatuoGPT-Vision-7B). For source attribution, ClinTrace achieves over 92% text F1 on radiology and 88% on dialogue summarization, substantially outperforming embedding-based and self-attribution baselines. For hallucination detection, groundedness scores achieve 0.77 AUROC with the medical-finetuned model: competitive with embedding-based confidence at zero additional cost, and enable an abstention mechanism that improves faithfulness from 61.7% to 72.6% by withholding the least: grounded 20% of output for clinician review. Notably, medical finetuning substantially improves the reliability of attention-based hallucination detection, suggesting that domain adaptation produces more semantically structured attention patterns amenable to self-auditing.",
+      "authors": [
+        "Qianqi Yan",
+        "Huy Nguyen",
+        "Sumana Srivatsa",
+        "Hari Bandi",
+        "Xin Eric Wang",
+        "Krishnaram Kenthapadi"
+      ],
+      "published": "2026-01-23",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2601.16397v2",
+      "source_query": "cat:cs.CL AND (abs:\"faithfulness\" OR abs:\"groundedness\") AND abs:\"generation\""
+    },
+    {
+      "arxiv_id": "2411.19203",
+      "arxiv_id_versioned": "2411.19203v1",
+      "title": "An Extensive Evaluation of Factual Consistency in Large Language Models for Data-to-Text Generation",
+      "abstract": "Large Language Models (LLMs) have shown exceptional performance across various Data-to-Text Generation (DTG) tasks. However, generating factually consistent text in DTG remains challenging for LLMs. Despite this, in-depth evaluations of LLM factual consistency for DTG remain missing in the current literature. This paper addresses this gap by providing an extensive evaluation of factual consistency in LLMs for DTG. Our evaluation covers five widely used DTG datasets (E2E, ViGGo, WikiTableText, DART, and WebNLG) and five prominent LLM families (T5, BART, OPT, BLOOM, and Llama 2). To ensure a thorough evaluation of factual consistency, we use four state-of-the-art automatic metrics and include essential human assessments. Our extensive evaluations reveals three key findings regarding factual consistency in LLMs for DTG. First, Llama 2 often excels in generating factually consistent text, although smaller models like T5 and BART can achieve strong factual consistency on larger, lexically less-diverse datasets. Second, the average rate of change (AROC) indicates that increasing model size (number of model trainable parameters) generally enhances factual consistency of LLMs in DTG. Third, we observe that source-reference divergence (i.e., when the reference text diverges semantically from the source) typically reduces the factual consistency of LLMs in DTG.",
+      "authors": [
+        "Joy Mahapatra",
+        "Utpal Garain"
+      ],
+      "published": "2024-11-28",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2411.19203v1",
+      "source_query": "cat:cs.CL AND (abs:\"factual consistency\" OR abs:\"factuality\") AND abs:\"language model\""
+    },
+    {
+      "arxiv_id": "2606.03728",
+      "arxiv_id_versioned": "2606.03728v1",
+      "title": "Re-Ranking Through an Attribution Lens for Citation Quality in Legal QA",
+      "abstract": "Retrieval-augmented generation systems for legal question answering typically retrieve passages based on semantic similarity and provide them to a language model, which then generates cited answers. Prior work assumes that highly ranked passages are most likely to be usefully cited by the model. Perturbation-based attribution methods, such as C-LIME, have been used exclusively for post-hoc explanation. However, on the AQuAECHR benchmark, semantic similarity does not correlate with passage attribution. Within a retriever's candidate pool, similarity-based ranking performs worse than random selection at surfacing gold citation paragraphs. To address this limitation, a lightweight cross-encoder is trained on continuous perturbation-based attribution scores to re-rank passages prior to generation. This approach is evaluated on the AQuAECHR benchmark, using two language models and five-fold cross-validation. The re-ranker substantially improves citation faithfulness and alignment with gold expert answers. Notably, two re-rankers trained independently on different models converge beyond their raw attribution agreement. This finding indicates that the cross-encoder reduces model-specific noise and produces a shared relevance signal that partially transfers across models, although same-model re-ranking remains more effective. These results demonstrate that perturbation-based attribution provides a practical, model-agnostic training signal for citation-aware retrieval.",
+      "authors": [
+        "Mohamed Hesham Elganayni",
+        "Selim Saleh"
+      ],
+      "published": "2026-06-02",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2606.03728v1",
+      "source_query": "cat:cs.CL AND (abs:\"attribution\" OR abs:\"citation\") AND abs:\"language model\""
+    },
+    {
+      "arxiv_id": "2505.11731",
+      "arxiv_id_versioned": "2505.11731v3",
+      "title": "Dist2ill: Distributional Distillation for One-Pass Uncertainty Estimation in Large Language Models",
+      "abstract": "Large Language Models (LLMs) often exhibit misalignment between the quality of their generated responses and the confidence estimates they assign to them. Bayesian treatments, such as marginalizing over a reliable weight posterior or over the space of reasoning traces, provide an effective remedy, but incur substantial computational overhead due to repeated sampling at test time. To enable accurate uncertainty estimation in a single forward pass, we propose a novel distributional distillation framework (Dist2ill) that trains an LLM to produce multiple diverse reasoning paths within one inference pass, while using a lightweight parametric module to approximate empirical confidence scores derived from the sampling distribution. Extensive experiments demonstrate that Dist2ill preserves reasoning diversity and achieves state-of-the-art uncertainty estimation, substantially improving Expected Calibration Error (ECE) and Negative Log-Likelihood (NLL), while remaining computationally efficient.",
+      "authors": [
+        "Yicong Zhao",
+        "King Yeung Tsang",
+        "Harshil Vejendla",
+        "Haizhou Shi",
+        "Zhuohang Li",
+        "Zhigang Hua",
+        "Qi Xu",
+        "Tunyu Zhang",
+        "Yi Wang",
+        "Ligong Han",
+        "Bradley A. Malin",
+        "Hao Wang"
+      ],
+      "published": "2025-05-16",
+      "primary_category": "cs.LG",
+      "url": "http://arxiv.org/abs/2505.11731v3",
+      "source_query": "cat:cs.CL AND (abs:\"uncertainty estimation\" OR abs:\"confidence estimation\" OR abs:\"calibration\") AND abs:\"language model\""
+    },
+    {
+      "arxiv_id": "2502.01142",
+      "arxiv_id_versioned": "2502.01142v2",
+      "title": "DeepRAG: Thinking to Retrieve Step by Step for Large Language Models",
+      "abstract": "Large Language Models (LLMs) have shown remarkable reasoning capabilities, while their practical applications are limited by severe factual hallucinations due to limitations in the timeliness, accuracy, and comprehensiveness of their parametric knowledge. Meanwhile, enhancing retrieval-augmented generation (RAG) with reasoning remains challenging due to ineffective task decomposition and redundant retrieval, which can introduce noise and degrade response quality. In this paper, we propose DeepRAG, a framework that models retrieval-augmented reasoning as a Markov Decision Process (MDP), enabling reasonable and adaptive retrieval. By iteratively decomposing queries, DeepRAG dynamically determines whether to retrieve external knowledge or rely on parametric reasoning at each step. Experiments show that DeepRAG improves retrieval efficiency and boosts answer accuracy by 26.4%, demonstrating its effectiveness in enhancing retrieval-augmented reasoning.",
+      "authors": [
+        "Xinyan Guan",
+        "Jiali Zeng",
+        "Fandong Meng",
+        "Chunlei Xin",
+        "Yaojie Lu",
+        "Hongyu Lin",
+        "Xianpei Han",
+        "Le Sun",
+        "Jie Zhou"
+      ],
+      "published": "2025-02-03",
+      "primary_category": "cs.AI",
+      "url": "http://arxiv.org/abs/2502.01142v2",
+      "source_query": "cat:cs.CL AND abs:\"hallucination\" AND (abs:\"retrieval-augmented\" OR abs:\"RAG\" OR abs:\"retrieval augmented\")"
+    },
+    {
+      "arxiv_id": "2509.26011",
+      "arxiv_id_versioned": "2509.26011v1",
+      "title": "RAGferee: Building Contextual Reward Models for Retrieval-Augmented Generation",
+      "abstract": "Existing Reward Models (RMs), typically trained on general preference data, struggle in Retrieval Augmented Generation (RAG) settings, which require judging responses for faithfulness to retrieved context, relevance to the user query, appropriate refusals when context is insufficient, completeness and conciseness of information. To address the lack of publicly available RAG-centric preference datasets and specialised RMs, we introduce RAGferee, a methodology that repurposes question-answering (QA) datasets into preference pairs that prioritise groundedness over stylistic features, enabling the training of contextual RMs better suited to judging RAG responses. Using RAGferee, we curate a small preference dataset of 4K samples and fine-tune RMs ranging from 7B to 24B parameters. Our RAG-centric RMs achieve state-of-the-art performance on ContextualJudgeBench, surpassing existing 70B+ RMs trained on much larger (up to 2.4M samples) general corpora, with an absolute improvement of +15.5%.",
+      "authors": [
+        "Andrei C. Coman",
+        "Ionut-Teodor Sorodoc",
+        "Leonardo F. R. Ribeiro",
+        "Bill Byrne",
+        "James Henderson",
+        "Adrià de Gispert"
+      ],
+      "published": "2025-09-30",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2509.26011v1",
+      "source_query": "cat:cs.CL AND (abs:\"faithfulness\" OR abs:\"groundedness\") AND abs:\"generation\""
+    },
+    {
+      "arxiv_id": "2601.16503",
+      "arxiv_id_versioned": "2601.16503v2",
+      "title": "MRAG: Benchmarking Retrieval-Augmented Generation for Bio-medicine",
+      "abstract": "While Retrieval-Augmented Generation (RAG) has been swiftly adopted in scientific and clinical QA systems, a comprehensive evaluation benchmark in the medical domain is lacking. To address this gap, we introduce the Medical Retrieval-Augmented Generation (MRAG) benchmark, covering various tasks in English and Chinese languages, and building a corpus with Wikipedia and Pubmed. Additionally, we develop the MRAG-Toolkit, facilitating systematic exploration of different RAG components. Our experiments reveal that: (a) RAG enhances LLM reliability across MRAG tasks. (b) the performance of RAG systems is influenced by retrieval approaches, model sizes, and prompting strategies. (c) While RAG improves usefulness and reasoning quality, LLM responses may become slightly less readable for long-form questions. We will release the MRAG-Bench's dataset and toolkit with CCBY-4.0 license upon acceptance, to facilitate applications from both academia and industry.",
+      "authors": [
+        "Liz Li",
+        "Wei Zhu"
+      ],
+      "published": "2026-01-23",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2601.16503v2",
+      "source_query": "cat:cs.CL AND abs:\"retrieval-augmented generation\" AND (abs:\"evaluation\" OR abs:\"benchmark\")"
+    },
+    {
+      "arxiv_id": "2406.14709",
+      "arxiv_id_versioned": "2406.14709v1",
+      "title": "Factual Dialogue Summarization via Learning from Large Language Models",
+      "abstract": "Factual consistency is an important quality in dialogue summarization. Large language model (LLM)-based automatic text summarization models generate more factually consistent summaries compared to those by smaller pretrained language models, but they face deployment challenges in real-world applications due to privacy or resource constraints. In this paper, we investigate the use of symbolic knowledge distillation to improve the factual consistency of smaller pretrained models for dialogue summarization. We employ zero-shot learning to extract symbolic knowledge from LLMs, generating both factually consistent (positive) and inconsistent (negative) summaries. We then apply two contrastive learning objectives on these summaries to enhance smaller summarization models. Experiments with BART, PEGASUS, and Flan-T5 indicate that our approach surpasses strong baselines that rely on complex data augmentation strategies. Our approach achieves better factual consistency while maintaining coherence, fluency, and relevance, as confirmed by various automatic evaluation metrics. We also provide access to the data and code to facilitate future research.",
+      "authors": [
+        "Rongxin Zhu",
+        "Jey Han Lau",
+        "Jianzhong Qi"
+      ],
+      "published": "2024-06-20",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2406.14709v1",
+      "source_query": "cat:cs.CL AND (abs:\"factual consistency\" OR abs:\"factuality\") AND abs:\"language model\""
+    },
+    {
+      "arxiv_id": "2310.05634",
+      "arxiv_id_versioned": "2310.05634v2",
+      "title": "Towards Verifiable Generation: A Benchmark for Knowledge-aware Language Model Attribution",
+      "abstract": "Although achieving great success, Large Language Models (LLMs) usually suffer from unreliable hallucinations. Although language attribution can be a potential solution, there are no suitable benchmarks and evaluation metrics to attribute LLMs to structured knowledge. In this paper, we define a new task of Knowledge-aware Language Model Attribution (KaLMA) that improves upon three core concerns with conventional attributed LMs. First, we extend attribution source from unstructured texts to Knowledge Graph (KG), whose rich structures benefit both the attribution performance and working scenarios. Second, we propose a new ``Conscious Incompetence\" setting considering the incomplete knowledge repository, where the model identifies the need for supporting knowledge beyond the provided KG. Third, we propose a comprehensive automatic evaluation metric encompassing text quality, citation quality, and text citation alignment. To implement the above innovations, we build a dataset in biography domain BioKaLMA via evolutionary question generation strategy, to control the question complexity and necessary knowledge to the answer. For evaluation, we develop a baseline solution and demonstrate the room for improvement in LLMs' citation generation, emphasizing the importance of incorporating the \"Conscious Incompetence\" setting, and the critical role of retrieval accuracy.",
+      "authors": [
+        "Xinze Li",
+        "Yixin Cao",
+        "Liangming Pan",
+        "Yubo Ma",
+        "Aixin Sun"
+      ],
+      "published": "2023-10-09",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2310.05634v2",
+      "source_query": "cat:cs.CL AND (abs:\"attribution\" OR abs:\"citation\") AND abs:\"language model\""
+    },
+    {
+      "arxiv_id": "2407.02062",
+      "arxiv_id_versioned": "2407.02062v2",
+      "title": "Are Data Augmentation Methods in Named Entity Recognition Applicable for Uncertainty Estimation?",
+      "abstract": "This work investigates the impact of data augmentation on confidence calibration and uncertainty estimation in Named Entity Recognition (NER) tasks. For the future advance of NER in safety-critical fields like healthcare and finance, it is essential to achieve accurate predictions with calibrated confidence when applying Deep Neural Networks (DNNs), including Pre-trained Language Models (PLMs), as a real-world application. However, DNNs are prone to miscalibration, which limits their applicability. Moreover, existing methods for calibration and uncertainty estimation are computational expensive. Our investigation in NER found that data augmentation improves calibration and uncertainty in cross-genre and cross-lingual setting, especially in-domain setting. Furthermore, we showed that the calibration for NER tends to be more effective when the perplexity of the sentences generated by data augmentation is lower, and that increasing the size of the augmentation further improves calibration and uncertainty.",
+      "authors": [
+        "Wataru Hashimoto",
+        "Hidetaka Kamigaito",
+        "Taro Watanabe"
+      ],
+      "published": "2024-07-02",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2407.02062v2",
+      "source_query": "cat:cs.CL AND (abs:\"uncertainty estimation\" OR abs:\"confidence estimation\" OR abs:\"calibration\") AND abs:\"language model\""
+    },
+    {
+      "arxiv_id": "2507.02949",
+      "arxiv_id_versioned": "2507.02949v2",
+      "title": "RADIANT: Retrieval AugmenteD entIty-context AligNmenT -- Introducing RAG-ability and Entity-Context Divergence",
+      "abstract": "As Large Language Models (LLMs) continue to advance, Retrieval-Augmented Generation (RAG) has emerged as a vital technique to enhance factual accuracy by integrating external knowledge into the generation process. However, LLMs often fail to faithfully integrate retrieved evidence into their generated responses, leading to factual inconsistencies. To quantify this gap, we introduce Entity-Context Divergence (ECD), a metric that measures the extent to which retrieved information is accurately reflected in model outputs. We systematically evaluate contemporary LLMs on their ability to preserve factual consistency in retrieval-augmented settings, a capability we define as RAG-ability. Our empirical analysis reveals that RAG-ability remains low across most LLMs, highlighting significant challenges in entity retention and context fidelity. This paper introduces Radiant (Retrieval AugmenteD entIty-context AligNmenT), a novel framework that merges RAG with alignment designed to optimize the interplay between retrieved evidence and generated content. Radiant extends Direct Preference Optimization (DPO) to teach LLMs how to integrate provided additional information into subsequent generations. As a behavior correction mechanism, Radiant boosts RAG performance across varied retrieval scenarios, such as noisy web contexts, knowledge conflicts, and hallucination reduction. This enables more reliable, contextually grounded, and factually coherent content generation.",
+      "authors": [
+        "Vipula Rawte",
+        "Rajarshi Roy",
+        "Gurpreet Singh",
+        "Danush Khanna",
+        "Yaswanth Narsupalli",
+        "Basab Ghosh",
+        "Abhay Gupta",
+        "Argha Kamal Samanta",
+        "Aditya Shingote",
+        "Aadi Krishna Vikram",
+        "Vinija Jain",
+        "Aman Chadha",
+        "Amit Sheth",
+        "Amitava Das"
+      ],
+      "published": "2025-06-28",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2507.02949v2",
+      "source_query": "cat:cs.CL AND abs:\"hallucination\" AND (abs:\"retrieval-augmented\" OR abs:\"RAG\" OR abs:\"retrieval augmented\")"
+    },
+    {
+      "arxiv_id": "2406.03790",
+      "arxiv_id_versioned": "2406.03790v2",
+      "title": "End-to-End Trainable Retrieval-Augmented Generation for Relation Extraction",
+      "abstract": "This paper addresses a crucial challenge in retrieval-augmented generation-based relation extractors; the end-to-end training is not applicable to conventional retrieval-augmented generation due to the non-differentiable nature of instance retrieval. This problem prevents the instance retrievers from being optimized for the relation extraction task, and conventionally it must be trained with an objective different from that for relation extraction. To address this issue, we propose a novel End-to-end Trainable Retrieval-Augmented Generation (ETRAG), which allows end-to-end optimization of the entire model, including the retriever, for the relation extraction objective by utilizing a differentiable selection of the $k$ nearest instances. We evaluate the relation extraction performance of ETRAG on the TACRED dataset, which is a standard benchmark for relation extraction. ETRAG demonstrates consistent improvements against the baseline model as retrieved instances are added. Furthermore, the analysis of instances retrieved by the end-to-end trained retriever confirms that the retrieved instances contain common relation labels or entities with the query and are specialized for the target task. Our findings provide a promising foundation for future research on retrieval-augmented generation and the broader applications of text generation in Natural Language Processing.",
+      "authors": [
+        "Kohei Makino",
+        "Makoto Miwa",
+        "Yutaka Sasaki"
+      ],
+      "published": "2024-06-06",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2406.03790v2",
+      "source_query": "cat:cs.CL AND abs:\"retrieval-augmented generation\" AND (abs:\"evaluation\" OR abs:\"benchmark\")"
+    },
+    {
+      "arxiv_id": "2212.09968",
+      "arxiv_id_versioned": "2212.09968v2",
+      "title": "On Improving Summarization Factual Consistency from Natural Language Feedback",
+      "abstract": "Despite the recent progress in language generation models, their outputs may not always meet user expectations. In this work, we study whether informational feedback in natural language can be leveraged to improve generation quality and user preference alignment. To this end, we consider factual consistency in summarization, the quality that the summary should only contain information supported by the input documents, as the user-expected preference. We collect a high-quality dataset, DeFacto, containing human demonstrations and informational natural language feedback consisting of corrective instructions, edited summaries, and explanations with respect to the factual consistency of the summary. Using our dataset, we study three natural language generation tasks: (1) editing a summary by following the human feedback, (2) generating human feedback for editing the original summary, and (3) revising the initial summary to correct factual errors by generating both the human feedback and edited summary. We show that DeFacto can provide factually consistent human-edited summaries and further insights into summarization factual consistency thanks to its informational natural language feedback. We further demonstrate that fine-tuned language models can leverage our dataset to improve the summary factual consistency, while large language models lack the zero-shot learning ability in our proposed tasks that require controllable text generation.",
+      "authors": [
+        "Yixin Liu",
+        "Budhaditya Deb",
+        "Milagro Teruel",
+        "Aaron Halfaker",
+        "Dragomir Radev",
+        "Ahmed H. Awadallah"
+      ],
+      "published": "2022-12-20",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2212.09968v2",
+      "source_query": "cat:cs.CL AND (abs:\"factual consistency\" OR abs:\"factuality\") AND abs:\"language model\""
+    },
+    {
+      "arxiv_id": "2403.18381",
+      "arxiv_id_versioned": "2403.18381v1",
+      "title": "Improving Attributed Text Generation of Large Language Models via Preference Learning",
+      "abstract": "Large language models have been widely adopted in natural language processing, yet they face the challenge of generating unreliable content. Recent works aim to reduce misinformation and hallucinations by resorting to attribution as a means to provide evidence (i.e., citations). However, current attribution methods usually focus on the retrieval stage and automatic evaluation that neglect mirroring the citation mechanisms in human scholarly writing to bolster credibility. In this paper, we address these challenges by modelling the attribution task as preference learning and introducing an Automatic Preference Optimization (APO) framework. First, we create a curated collection for post-training with 6,330 examples by collecting and filtering from existing datasets. Second, considering the high cost of labelling preference data, we further propose an automatic method to synthesize attribution preference data resulting in 95,263 pairs. Moreover, inspired by the human citation process, we further propose a progressive preference optimization method by leveraging fine-grained information. Extensive experiments on three datasets (i.e., ASQA, StrategyQA, and ELI5) demonstrate that APO achieves state-of-the-art citation F1 with higher answer quality.",
+      "authors": [
+        "Dongfang Li",
+        "Zetian Sun",
+        "Baotian Hu",
+        "Zhenyu Liu",
+        "Xinshuo Hu",
+        "Xuebo Liu",
+        "Min Zhang"
+      ],
+      "published": "2024-03-27",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2403.18381v1",
+      "source_query": "cat:cs.CL AND (abs:\"attribution\" OR abs:\"citation\") AND abs:\"language model\""
+    },
+    {
+      "arxiv_id": "2602.13540",
+      "arxiv_id_versioned": "2602.13540v1",
+      "title": "On Calibration of Large Language Models: From Response To Capability",
+      "abstract": "Large language models (LLMs) are widely deployed as general-purpose problem solvers, making accurate confidence estimation critical for reliable use. Prior work on LLM calibration largely focuses on response-level confidence, which estimates the correctness of a single generated output. However, this formulation is misaligned with many practical settings where the central question is how likely a model is to solve a query overall. We show that this mismatch results from the stochastic nature of modern LLM decoding, under which single-response correctness fails to reflect underlying model capability. To address this issue, we introduce capability calibration, which targets the model's expected accuracy on a query. We formally distinguish capability calibration from response calibration and show that the two differ both theoretically and empirically. We establish an empirical evaluation setup and study a range of confidence estimation methods. Our results demonstrate that capability-calibrated confidence improves pass@$k$ prediction and inference budget allocation, establishing a foundation with potential for diverse applications.",
+      "authors": [
+        "Sin-Han Yang",
+        "Cheng-Kuang Wu",
+        "Chieh-Yen Lin",
+        "Yun-Nung Chen",
+        "Hung-yi Lee",
+        "Shao-Hua Sun"
+      ],
+      "published": "2026-02-14",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2602.13540v1",
+      "source_query": "cat:cs.CL AND (abs:\"uncertainty estimation\" OR abs:\"confidence estimation\" OR abs:\"calibration\") AND abs:\"language model\""
+    },
+    {
+      "arxiv_id": "2509.10467",
+      "arxiv_id_versioned": "2509.10467v1",
+      "title": "DSRAG: A Domain-Specific Retrieval Framework Based on Document-derived Multimodal Knowledge Graph",
+      "abstract": "Current general-purpose large language models (LLMs) commonly exhibit knowledge hallucination and insufficient domain-specific adaptability in domain-specific tasks, limiting their effectiveness in specialized question answering scenarios. Retrieval-augmented generation (RAG) effectively tackles these challenges by integrating external knowledge to enhance accuracy and relevance. However, traditional RAG still faces limitations in domain knowledge accuracy and context modeling.To enhance domain-specific question answering performance, this work focuses on a graph-based RAG framework, emphasizing the critical role of knowledge graph quality during the generation process. We propose DSRAG (Domain-Specific RAG), a multimodal knowledge graph-driven retrieval-augmented generation framework designed for domain-specific applications. Our approach leverages domain-specific documents as the primary knowledge source, integrating heterogeneous information such as text, images, and tables to construct a multimodal knowledge graph covering both conceptual and instance layers. Building on this foundation, we introduce semantic pruning and structured subgraph retrieval mechanisms, combining knowledge graph context and vector retrieval results to guide the language model towards producing more reliable responses. Evaluations using the Langfuse multidimensional scoring mechanism show that our method excels in domain-specific question answering, validating the efficacy of integrating multimodal knowledge graphs with retrieval-augmented generation.",
+      "authors": [
+        "Mengzheng Yang",
+        "Yanfei Ren",
+        "David Osei Opoku",
+        "Ruochang Li",
+        "Peng Ren",
+        "Chunxiao Xing"
+      ],
+      "published": "2025-08-22",
+      "primary_category": "cs.IR",
+      "url": "http://arxiv.org/abs/2509.10467v1",
+      "source_query": "cat:cs.CL AND abs:\"hallucination\" AND (abs:\"retrieval-augmented\" OR abs:\"RAG\" OR abs:\"retrieval augmented\")"
+    },
+    {
+      "arxiv_id": "2404.07060",
+      "arxiv_id_versioned": "2404.07060v1",
+      "title": "Groundedness in Retrieval-augmented Long-form Generation: An Empirical Study",
+      "abstract": "We present an empirical study of groundedness in long-form question answering (LFQA) by retrieval-augmented large language models (LLMs). In particular, we evaluate whether every generated sentence is grounded in the retrieved documents or the model's pre-training data. Across 3 datasets and 4 model families, our findings reveal that a significant fraction of generated sentences are consistently ungrounded, even when those sentences contain correct ground-truth answers. Additionally, we examine the impacts of factors such as model size, decoding strategy, and instruction tuning on groundedness. Our results show that while larger models tend to ground their outputs more effectively, a significant portion of correct answers remains compromised by hallucinations. This study provides novel insights into the groundedness challenges in LFQA and underscores the necessity for more robust mechanisms in LLMs to mitigate the generation of ungrounded content.",
+      "authors": [
+        "Alessandro Stolfo"
+      ],
+      "published": "2024-04-10",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2404.07060v1",
+      "source_query": "cat:cs.CL AND (abs:\"faithfulness\" OR abs:\"groundedness\") AND abs:\"generation\""
+    },
+    {
+      "arxiv_id": "2409.01864",
+      "arxiv_id_versioned": "2409.01864v1",
+      "title": "The Role of Large Language Models in Musicology: Are We Ready to Trust the Machines?",
+      "abstract": "In this work, we explore the use and reliability of Large Language Models (LLMs) in musicology. From a discussion with experts and students, we assess the current acceptance and concerns regarding this, nowadays ubiquitous, technology. We aim to go one step further, proposing a semi-automatic method to create an initial benchmark using retrieval-augmented generation models and multiple-choice question generation, validated by human experts. Our evaluation on 400 human-validated questions shows that current vanilla LLMs are less reliable than retrieval augmented generation from music dictionaries. This paper suggests that the potential of LLMs in musicology requires musicology driven research that can specialized LLMs by including accurate and reliable domain knowledge.",
+      "authors": [
+        "Pedro Ramoneda",
+        "Emilia Parada-Cabaleiro",
+        "Benno Weck",
+        "Xavier Serra"
+      ],
+      "published": "2024-09-03",
+      "primary_category": "cs.SD",
+      "url": "http://arxiv.org/abs/2409.01864v1",
+      "source_query": "cat:cs.CL AND abs:\"retrieval-augmented generation\" AND (abs:\"evaluation\" OR abs:\"benchmark\")"
+    },
+    {
+      "arxiv_id": "2211.08412",
+      "arxiv_id_versioned": "2211.08412v2",
+      "title": "Evaluating the Factual Consistency of Large Language Models Through News Summarization",
+      "abstract": "While large language models (LLMs) have proven to be effective on a large variety of tasks, they are also known to hallucinate information. To measure whether an LLM prefers factually consistent continuations of its input, we propose a new benchmark called FIB(Factual Inconsistency Benchmark) that focuses on the task of summarization. Specifically, our benchmark involves comparing the scores an LLM assigns to a factually consistent versus a factually inconsistent summary for an input news article. For factually consistent summaries, we use human-written reference summaries that we manually verify as factually consistent. To generate summaries that are factually inconsistent, we generate summaries from a suite of summarization models that we have manually annotated as factually inconsistent. A model's factual consistency is then measured according to its accuracy, i.e.\\ the proportion of documents where it assigns a higher score to the factually consistent summary. To validate the usefulness of FIB, we evaluate 23 large language models ranging from 1B to 176B parameters from six different model families including BLOOM and OPT. We find that existing LLMs generally assign a higher score to factually consistent summaries than to factually inconsistent summaries. However, if the factually inconsistent summaries occur verbatim in the document, then LLMs assign a higher score to these factually inconsistent summaries than factually consistent summaries. We validate design choices in our benchmark including the scoring method and source of distractor summaries. Our code and benchmark data can be found at https://github.com/r-three/fib.",
+      "authors": [
+        "Derek Tam",
+        "Anisha Mascarenhas",
+        "Shiyue Zhang",
+        "Sarah Kwan",
+        "Mohit Bansal",
+        "Colin Raffel"
+      ],
+      "published": "2022-11-15",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2211.08412v2",
+      "source_query": "cat:cs.CL AND (abs:\"factual consistency\" OR abs:\"factuality\") AND abs:\"language model\""
+    },
+    {
+      "arxiv_id": "2412.18004",
+      "arxiv_id_versioned": "2412.18004v1",
+      "title": "Correctness is not Faithfulness in RAG Attributions",
+      "abstract": "Retrieving relevant context is a common approach to reduce hallucinations and enhance answer reliability. Explicitly citing source documents allows users to verify generated responses and increases trust. Prior work largely evaluates citation correctness - whether cited documents support the corresponding statements. But citation correctness alone is insufficient. To establish trust in attributed answers, we must examine both citation correctness and citation faithfulness. In this work, we first disentangle the notions of citation correctness and faithfulness, which have been applied inconsistently in previous studies. Faithfulness ensures that the model's reliance on cited documents is genuine, reflecting actual reference use rather than superficial alignment with prior beliefs, which we call post-rationalization. We design an experiment that reveals the prevalent issue of post-rationalization, which undermines reliable attribution and may result in misplaced trust. Our findings suggest that current attributed answers often lack citation faithfulness (up to 57 percent of the citations), highlighting the need to evaluate correctness and faithfulness for trustworthy attribution in language models.",
+      "authors": [
+        "Jonas Wallat",
+        "Maria Heuss",
+        "Maarten de Rijke",
+        "Avishek Anand"
+      ],
+      "published": "2024-12-23",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2412.18004v1",
+      "source_query": "cat:cs.CL AND (abs:\"attribution\" OR abs:\"citation\") AND abs:\"language model\""
+    },
+    {
+      "arxiv_id": "2601.02179",
+      "arxiv_id_versioned": "2601.02179v2",
+      "title": "Confidence Estimation for LLMs in Multi-turn Interactions",
+      "abstract": "While confidence estimation is a promising direction for mitigating hallucinations in Large Language Models (LLMs), current research overwhelmingly focuses on single-turn settings. The dynamics of model confidence in multi-turn conversations, where context accumulates and ambiguity is progressively resolved, remain largely unexplored. This work presents the first systematic study of confidence estimation in multi-turn interactions, establishing a formal evaluation framework grounded in two key desiderata: per-turn calibration and monotonicity of confidence as more information becomes available. To facilitate this, we introduce novel metrics, including a length-normalized Expected Calibration Error (InfoECE), and a new \"Hinter-Guesser\" paradigm for generating controlled evaluation datasets. Our experiments reveal that widely-used confidence techniques struggle with calibration and monotonicity in multi-turn dialogues. In contrast, a novel logit-based probe we introduce, P(Sufficient), proves comparatively more effective, robustly tracking evidence accumulation and distinguishing it from conversational filler. Our work provides a foundational methodology for developing more reliable and trustworthy conversational agents.",
+      "authors": [
+        "Caiqi Zhang",
+        "Ruihan Yang",
+        "Xiaochen Zhu",
+        "Chengzu Li",
+        "Tiancheng Hu",
+        "Yijiang River Dong",
+        "Deqing Yang",
+        "Nigel Collier"
+      ],
+      "published": "2026-01-05",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2601.02179v2",
+      "source_query": "cat:cs.CL AND (abs:\"uncertainty estimation\" OR abs:\"confidence estimation\" OR abs:\"calibration\") AND abs:\"language model\""
+    },
+    {
+      "arxiv_id": "2410.22874",
+      "arxiv_id_versioned": "2410.22874v1",
+      "title": "Eliciting Critical Reasoning in Retrieval-Augmented Language Models via Contrastive Explanations",
+      "abstract": "Retrieval-augmented generation (RAG) has emerged as a critical mechanism in contemporary NLP to support Large Language Models(LLMs) in systematically accessing richer factual context. However, the integration of RAG mechanisms brings its inherent challenges, as LLMs need to deal with potentially noisy contexts. Recent studies have shown that LLMs still struggle to critically analyse RAG-based in-context information, a limitation that may lead to incorrect inferences and hallucinations. In this paper, we investigate how to elicit critical reasoning in RAG via contrastive explanations. In particular, we propose Contrastive-RAG (C-RAG), a framework that (i) retrieves relevant documents given a query, (ii) selects and exemplifies relevant passages, and (iii) generates explanations that explicitly contrast the relevance of the passages to (iv) support the final answer. We show the impact of C-RAG building contrastive reasoning demonstrations from LLMs to instruct smaller models for retrieval-augmented tasks. Extensive experiments demonstrate that C-RAG improves state-of-the-art RAG models while (a) requiring significantly fewer prompts and demonstrations and (b) being robust to perturbations in the retrieved documents.",
+      "authors": [
+        "Leonardo Ranaldi",
+        "Marco Valentino",
+        "Andrè Freitas"
+      ],
+      "published": "2024-10-30",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2410.22874v1",
+      "source_query": "cat:cs.CL AND abs:\"hallucination\" AND (abs:\"retrieval-augmented\" OR abs:\"RAG\" OR abs:\"retrieval augmented\")"
+    },
+    {
+      "arxiv_id": "2303.03278",
+      "arxiv_id_versioned": "2303.03278v1",
+      "title": "Faithfulness-Aware Decoding Strategies for Abstractive Summarization",
+      "abstract": "Despite significant progress in understanding and improving faithfulness in abstractive summarization, the question of how decoding strategies affect faithfulness is less studied. We present a systematic study of the effect of generation techniques such as beam search and nucleus sampling on faithfulness in abstractive summarization. We find a consistent trend where beam search with large beam sizes produces the most faithful summaries while nucleus sampling generates the least faithful ones. We propose two faithfulness-aware generation methods to further improve faithfulness over current generation techniques: (1) ranking candidates generated by beam search using automatic faithfulness metrics and (2) incorporating lookahead heuristics that produce a faithfulness score on the future summary. We show that both generation methods significantly improve faithfulness across two datasets as evaluated by four automatic faithfulness metrics and human evaluation. To reduce computational cost, we demonstrate a simple distillation approach that allows the model to generate faithful summaries with just greedy decoding. Our code is publicly available at https://github.com/amazon-science/faithful-summarization-generation",
+      "authors": [
+        "David Wan",
+        "Mengwen Liu",
+        "Kathleen McKeown",
+        "Markus Dreyer",
+        "Mohit Bansal"
+      ],
+      "published": "2023-03-06",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2303.03278v1",
+      "source_query": "cat:cs.CL AND (abs:\"faithfulness\" OR abs:\"groundedness\") AND abs:\"generation\""
+    },
+    {
+      "arxiv_id": "2505.17503",
+      "arxiv_id_versioned": "2505.17503v1",
+      "title": "CReSt: A Comprehensive Benchmark for Retrieval-Augmented Generation with Complex Reasoning over Structured Documents",
+      "abstract": "Large Language Models (LLMs) have made substantial progress in recent years, yet evaluating their capabilities in practical Retrieval-Augmented Generation (RAG) scenarios remains challenging. In practical applications, LLMs must demonstrate complex reasoning, refuse to answer appropriately, provide precise citations, and effectively understand document layout. These capabilities are crucial for advanced task handling, uncertainty awareness, maintaining reliability, and structural understanding. While some of the prior works address these aspects individually, there is a need for a unified framework that evaluates them collectively in practical RAG scenarios. To address this, we present CReSt (A Comprehensive Benchmark for Retrieval-Augmented Generation with Complex Reasoning over Structured Documents), a benchmark designed to assess these key dimensions holistically. CReSt comprises 2,245 human-annotated examples in English and Korean, designed to capture practical RAG scenarios that require complex reasoning over structured documents. It also introduces a tailored evaluation methodology to comprehensively assess model performance in these critical areas. Our evaluation shows that even advanced LLMs struggle to perform consistently across these dimensions, underscoring key areas for improvement. We release CReSt to support further research and the development of more robust RAG systems. The dataset and code are available at: https://github.com/UpstageAI/CReSt.",
+      "authors": [
+        "Minsoo Khang",
+        "Sangjun Park",
+        "Teakgyu Hong",
+        "Dawoon Jung"
+      ],
+      "published": "2025-05-23",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2505.17503v1",
+      "source_query": "cat:cs.CL AND abs:\"retrieval-augmented generation\" AND (abs:\"evaluation\" OR abs:\"benchmark\")"
+    },
+    {
+      "arxiv_id": "2402.15162",
+      "arxiv_id_versioned": "2402.15162v1",
+      "title": "Entity-level Factual Adaptiveness of Fine-tuning based Abstractive Summarization Models",
+      "abstract": "Abstractive summarization models often generate factually inconsistent content particularly when the parametric knowledge of the model conflicts with the knowledge in the input document. In this paper, we analyze the robustness of fine-tuning based summarization models to the knowledge conflict, which we call factual adaptiveness. We utilize pre-trained language models to construct evaluation sets and find that factual adaptiveness is not strongly correlated with factual consistency on original datasets. Furthermore, we introduce a controllable counterfactual data augmentation method where the degree of knowledge conflict within the augmented data can be adjustable. Our experimental results on two pre-trained language models (PEGASUS and BART) and two fine-tuning datasets (XSum and CNN/DailyMail) demonstrate that our method enhances factual adaptiveness while achieving factual consistency on original datasets on par with the contrastive learning baseline.",
+      "authors": [
+        "Jongyoon Song",
+        "Nohil Park",
+        "Bongkyu Hwang",
+        "Jaewoong Yun",
+        "Seongho Joe",
+        "Youngjune L. Gwon",
+        "Sungroh Yoon"
+      ],
+      "published": "2024-02-23",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2402.15162v1",
+      "source_query": "cat:cs.CL AND (abs:\"factual consistency\" OR abs:\"factuality\") AND abs:\"language model\""
+    },
+    {
+      "arxiv_id": "2406.13663",
+      "arxiv_id_versioned": "2406.13663v4",
+      "title": "Model Internals-based Answer Attribution for Trustworthy Retrieval-Augmented Generation",
+      "abstract": "Ensuring the verifiability of model answers is a fundamental challenge for retrieval-augmented generation (RAG) in the question answering (QA) domain. Recently, self-citation prompting was proposed to make large language models (LLMs) generate citations to supporting documents along with their answers. However, self-citing LLMs often struggle to match the required format, refer to non-existent sources, and fail to faithfully reflect LLMs' context usage throughout the generation. In this work, we present MIRAGE --Model Internals-based RAG Explanations -- a plug-and-play approach using model internals for faithful answer attribution in RAG applications. MIRAGE detects context-sensitive answer tokens and pairs them with retrieved documents contributing to their prediction via saliency methods. We evaluate our proposed approach on a multilingual extractive QA dataset, finding high agreement with human answer attribution. On open-ended QA, MIRAGE achieves citation quality and efficiency comparable to self-citation while also allowing for a finer-grained control of attribution parameters. Our qualitative evaluation highlights the faithfulness of MIRAGE's attributions and underscores the promising application of model internals for RAG answer attribution.",
+      "authors": [
+        "Jirui Qi",
+        "Gabriele Sarti",
+        "Raquel Fernández",
+        "Arianna Bisazza"
+      ],
+      "published": "2024-06-19",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2406.13663v4",
+      "source_query": "cat:cs.CL AND (abs:\"attribution\" OR abs:\"citation\") AND abs:\"language model\""
+    },
+    {
+      "arxiv_id": "2509.07925",
+      "arxiv_id_versioned": "2509.07925v1",
+      "title": "GENUINE: Graph Enhanced Multi-level Uncertainty Estimation for Large Language Models",
+      "abstract": "Uncertainty estimation is essential for enhancing the reliability of Large Language Models (LLMs), particularly in high-stakes applications. Existing methods often overlook semantic dependencies, relying on token-level probability measures that fail to capture structural relationships within the generated text. We propose GENUINE: Graph ENhanced mUlti-level uncertaINty Estimation for Large Language Models, a structure-aware framework that leverages dependency parse trees and hierarchical graph pooling to refine uncertainty quantification. By incorporating supervised learning, GENUINE effectively models semantic and structural relationships, improving confidence assessments. Extensive experiments across NLP tasks show that GENUINE achieves up to 29% higher AUROC than semantic entropy-based approaches and reduces calibration errors by over 15%, demonstrating the effectiveness of graph-based uncertainty modeling. The code is available at https://github.com/ODYSSEYWT/GUQ.",
+      "authors": [
+        "Tuo Wang",
+        "Adithya Kulkarni",
+        "Tyler Cody",
+        "Peter A. Beling",
+        "Yujun Yan",
+        "Dawei Zhou"
+      ],
+      "published": "2025-09-09",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2509.07925v1",
+      "source_query": "cat:cs.CL AND (abs:\"uncertainty estimation\" OR abs:\"confidence estimation\" OR abs:\"calibration\") AND abs:\"language model\""
+    },
+    {
+      "arxiv_id": "2502.06864",
+      "arxiv_id_versioned": "2502.06864v1",
+      "title": "Knowledge Graph-Guided Retrieval Augmented Generation",
+      "abstract": "Retrieval-augmented generation (RAG) has emerged as a promising technology for addressing hallucination issues in the responses generated by large language models (LLMs). Existing studies on RAG primarily focus on applying semantic-based approaches to retrieve isolated relevant chunks, which ignore their intrinsic relationships. In this paper, we propose a novel Knowledge Graph-Guided Retrieval Augmented Generation (KG$^2$RAG) framework that utilizes knowledge graphs (KGs) to provide fact-level relationships between chunks, improving the diversity and coherence of the retrieved results. Specifically, after performing a semantic-based retrieval to provide seed chunks, KG$^2$RAG employs a KG-guided chunk expansion process and a KG-based chunk organization process to deliver relevant and important knowledge in well-organized paragraphs. Extensive experiments conducted on the HotpotQA dataset and its variants demonstrate the advantages of KG$^2$RAG compared to existing RAG-based approaches, in terms of both response quality and retrieval quality.",
+      "authors": [
+        "Xiangrong Zhu",
+        "Yuexiang Xie",
+        "Yi Liu",
+        "Yaliang Li",
+        "Wei Hu"
+      ],
+      "published": "2025-02-08",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2502.06864v1",
+      "source_query": "cat:cs.CL AND abs:\"hallucination\" AND (abs:\"retrieval-augmented\" OR abs:\"RAG\" OR abs:\"retrieval augmented\")"
+    },
+    {
+      "arxiv_id": "2607.17883",
+      "arxiv_id_versioned": "2607.17883v1",
+      "title": "Zero Hallucination, by Construction: Hallucination-Aware Layered Oversight for Trustworthy Enterprise AI",
+      "abstract": "Enterprises will not deploy AI agents they cannot trust, and the most-cited reason for distrust is hallucination: confident, fluent output that is simply not true. The common response is to wait for a model that does not hallucinate. We argue that this is the wrong target. Large language models are, by construction, capable of generating unsupported text, and no amount of scale removes the possibility; a faithfulness judge bolted onto a raw model catches some errors but still ships others, and even well-curated retrieval pipelines have been shown to fabricate citations. We reframe the goal: \"zero hallucination\" is not a property a model possesses but a property a system enforces. We present HALO (Hallucination-Aware Layered Oversight), an assurance architecture which treats hallucination as a containable failure mode rather than an eliminable one. HALO composes six layers of defense: grounded generation over retrieved, approved content; constrained, deterministic execution that bounds where the model can err; multi-signal verification that scores every output for groundedness and hallucination using both an LLM judge and evidence-based checks against the source text; calibrated abstention, so the system declines rather than guesses when grounding is insufficient; total traceability of every retrieval, tool call, and generation; and continuous oversight that detects drift, alerts on threshold breaches, and closes the loop by regenerating and statistically validating improved agents. We detail each layer, give particular attention to evidence-based confidence (which verifies extractions against the source document rather than trusting the model's self-reported certainty), and illustrate the architecture on a regulated claims-extraction workload",
+      "authors": [
+        "Bogdan Raduta",
+        "Horia Velicu",
+        "Alexandru Preda",
+        "Serban Chiricescu"
+      ],
+      "published": "2026-07-20",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2607.17883v1",
+      "source_query": "cat:cs.CL AND (abs:\"faithfulness\" OR abs:\"groundedness\") AND abs:\"generation\""
+    },
+    {
+      "arxiv_id": "2310.08372",
+      "arxiv_id_versioned": "2310.08372v3",
+      "title": "Improving Factual Consistency for Knowledge-Grounded Dialogue Systems via Knowledge Enhancement and Alignment",
+      "abstract": "Pretrained language models (PLMs) based knowledge-grounded dialogue systems are prone to generate responses that are factually inconsistent with the provided knowledge source. In such inconsistent responses, the dialogue models fail to accurately express the external knowledge they rely upon. Inspired by previous work which identified that feed-forward networks (FFNs) within Transformers are responsible for factual knowledge expressions, we investigate two methods to efficiently improve the factual expression capability {of FFNs} by knowledge enhancement and alignment respectively. We first propose \\textsc{K-Dial}, which {explicitly} introduces {extended FFNs in Transformers to enhance factual knowledge expressions} given the specific patterns of knowledge-grounded dialogue inputs. Additionally, we apply the reinforcement learning for factual consistency (RLFC) method to implicitly adjust FFNs' expressions in responses by aligning with gold knowledge for the factual consistency preference. To comprehensively assess the factual consistency and dialogue quality of responses, we employ extensive automatic measures and human evaluations including sophisticated fine-grained NLI-based metrics. Experimental results on WoW and CMU\\_DoG datasets demonstrate that our methods efficiently enhance the ability of the FFN module to convey factual knowledge, validating the efficacy of improving factual consistency for knowledge-grounded dialogue systems.",
+      "authors": [
+        "Boyang Xue",
+        "Weichao Wang",
+        "Hongru Wang",
+        "Fei Mi",
+        "Rui Wang",
+        "Yasheng Wang",
+        "Lifeng Shang",
+        "Xin Jiang",
+        "Qun Liu",
+        "Kam-Fai Wong"
+      ],
+      "published": "2023-10-12",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2310.08372v3",
+      "source_query": "cat:cs.CL AND (abs:\"factual consistency\" OR abs:\"factuality\") AND abs:\"language model\""
+    },
+    {
+      "arxiv_id": "2509.20859",
+      "arxiv_id_versioned": "2509.20859v2",
+      "title": "Concise and Sufficient Sub-Sentence Citations for Retrieval-Augmented Generation",
+      "abstract": "In retrieval-augmented generation (RAG) question answering systems, generating citations for large language model (LLM) outputs enhances verifiability and helps users identify potential hallucinations. However, we observe two problems in the citations produced by existing attribution methods. First, the citations are typically provided at the sentence or even paragraph level. Long sentences or paragraphs may include a substantial amount of irrelevant content. Second, sentence-level citations may omit information that is essential for verifying the output, forcing users to read the surrounding context. In this paper, we propose generating sub-sentence citations that are both concise and sufficient, thereby reducing the effort required by users to confirm the correctness of the generated output. To this end, we first develop annotation guidelines for such citations and construct a corresponding dataset. Then, we propose an attribution framework for generating citations that adhere to our standards. This framework leverages LLMs to automatically generate fine-tuning data for our task and employs a credit model to filter out low-quality examples. Our experiments on the constructed dataset demonstrate that the propose approach can generate high-quality and more readable citations.",
+      "authors": [
+        "Guo Chen",
+        "Qiuyuan Li",
+        "Qiuxian Li",
+        "Hongliang Dai",
+        "Xiang Chen",
+        "Piji Li"
+      ],
+      "published": "2025-09-25",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2509.20859v2",
+      "source_query": "cat:cs.CL AND (abs:\"attribution\" OR abs:\"citation\") AND abs:\"language model\""
+    },
+    {
+      "arxiv_id": "2510.10913",
+      "arxiv_id_versioned": "2510.10913v3",
+      "title": "ADVICE: Answer-Dependent Verbalized Confidence Estimation",
+      "abstract": "Recent progress in large language models (LLMs) has enabled them to communicate their confidence in natural language, improving transparency and reliability. However, this expressiveness is often accompanied by systematic overconfidence, whose underlying causes remain poorly understood. In this work, we analyze the dynamics of verbalized confidence estimation and identify answer-independence -- the failure to condition confidence on the model's own answer -- as a primary driver of this behavior. To address this, we introduce ADVICE (Answer-Dependent Verbalized Confidence Estimation), a fine-tuning framework that promotes answer-grounded confidence estimation. Extensive experiments show that ADVICE substantially improves confidence calibration, while exhibiting strong generalization to unseen settings without degrading task performance. We further demonstrate that these gains stem from enhanced answer dependence, shedding light on the origins of overconfidence and enabling trustworthy confidence verbalization.",
+      "authors": [
+        "Ki Jung Seo",
+        "Sehun Lim",
+        "Taeuk Kim"
+      ],
+      "published": "2025-10-13",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2510.10913v3",
+      "source_query": "cat:cs.CL AND (abs:\"uncertainty estimation\" OR abs:\"confidence estimation\" OR abs:\"calibration\") AND abs:\"language model\""
+    },
+    {
+      "arxiv_id": "2506.21288",
+      "arxiv_id_versioned": "2506.21288v1",
+      "title": "Small Encoders Can Rival Large Decoders in Detecting Groundedness",
+      "abstract": "Augmenting large language models (LLMs) with external context significantly improves their performance in natural language processing (NLP) tasks. However, LLMs struggle to answer queries reliably when the provided context lacks information, often resorting to ungrounded speculation or internal knowledge. Groundedness - generating responses strictly supported by the context - is essential for ensuring factual consistency and trustworthiness. This study focuses on detecting whether a given query is grounded in a document provided in context before the costly answer generation by LLMs. Such a detection mechanism can significantly reduce both inference time and resource consumption. We show that lightweight, task specific encoder models such as RoBERTa and NomicBERT, fine-tuned on curated datasets, can achieve accuracy comparable to state-of-the-art LLMs, such as Llama3 8B and GPT4o, in groundedness detection while reducing inference latency by orders of magnitude. The code is available at : https://github.com/chandarlab/Hallucinate-less",
+      "authors": [
+        "Istabrak Abbes",
+        "Gabriele Prato",
+        "Quentin Fournier",
+        "Fernando Rodriguez",
+        "Alaa Boukhary",
+        "Adam Elwood",
+        "Sarath Chandar"
+      ],
+      "published": "2025-06-26",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2506.21288v1",
+      "source_query": "cat:cs.CL AND (abs:\"faithfulness\" OR abs:\"groundedness\") AND abs:\"generation\""
+    },
+    {
+      "arxiv_id": "2309.12455",
+      "arxiv_id_versioned": "2309.12455v2",
+      "title": "LongDocFACTScore: Evaluating the Factuality of Long Document Abstractive Summarisation",
+      "abstract": "Maintaining factual consistency is a critical issue in abstractive text summarisation, however, it cannot be assessed by traditional automatic metrics used for evaluating text summarisation, such as ROUGE scoring. Recent efforts have been devoted to developing improved metrics for measuring factual consistency using pre-trained language models, but these metrics have restrictive token limits, and are therefore not suitable for evaluating long document text summarisation. Moreover, there is limited research and resources available for evaluating whether existing automatic evaluation metrics are fit for purpose when applied in long document settings. In this work, we evaluate the efficacy of automatic metrics for assessing the factual consistency of long document text summarisation. We create a human-annotated data set for evaluating automatic factuality metrics, LongSciVerify, which contains fine-grained factual consistency annotations for long document summaries from the scientific domain. We also propose a new evaluation framework, LongDocFACTScore, which is suitable for evaluating long document summarisation. This framework allows metrics to be efficiently extended to any length document and outperforms existing state-of-the-art metrics in its ability to correlate with human measures of factuality when used to evaluate long document summarisation data sets. We make our code and LongSciVerify data set publicly available: https://github.com/jbshp/LongDocFACTScore.",
+      "authors": [
+        "Jennifer A Bishop",
+        "Qianqian Xie",
+        "Sophia Ananiadou"
+      ],
+      "published": "2023-09-21",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2309.12455v2",
+      "source_query": "cat:cs.CL AND (abs:\"factual consistency\" OR abs:\"factuality\") AND abs:\"language model\""
+    },
+    {
+      "arxiv_id": "2211.07066",
+      "arxiv_id_versioned": "2211.07066v2",
+      "title": "Controllable Citation Sentence Generation with Language Models",
+      "abstract": "Citation generation aims to generate a citation sentence that refers to a chosen paper in the context of a manuscript. However, a rigid citation generation process is at odds with an author's desire to control specific attributes, such as 1) the citation intent, e.g., either introducing background information or comparing results, and 2) keywords that should appear in the citation text. To provide these degrees of controllability during citation generation, we propose to integrate the manuscript context, the context of the referenced paper, and the desired control attributes into a structured template and use it to fine-tune a language model (LM) via next-token prediction. We then utilize Proximal Policy Optimization to directly optimize the LM in favor of a high score of our proposed controllability metric. The proposed workflow harmoniously combines citation attribute suggestion and conditional citation generation into one LM, allowing for better user control.",
+      "authors": [
+        "Nianlong Gu",
+        "Richard H. R. Hahnloser"
+      ],
+      "published": "2022-11-14",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2211.07066v2",
+      "source_query": "cat:cs.CL AND (abs:\"attribution\" OR abs:\"citation\") AND abs:\"language model\""
+    },
+    {
+      "arxiv_id": "2509.24202",
+      "arxiv_id_versioned": "2509.24202v1",
+      "title": "Can Large Language Models Express Uncertainty Like Human?",
+      "abstract": "Large language models (LLMs) are increasingly used in high-stakes settings, where overconfident responses can mislead users. Reliable confidence estimation has been shown to enhance trust and task accuracy. Yet existing methods face practical barriers: logits are often hidden, multi-sampling is computationally expensive, and verbalized numerical uncertainty (e.g., giving a 0-100 score) deviates from natural communication. We revisit linguistic confidence (LC), where models express uncertainty through hedging language (e.g., probably, might), offering a lightweight and human-centered alternative. To advance this direction, we (1) release the first diverse, large-scale dataset of hedging expressions with human-annotated confidence scores, and (2) propose a lightweight mapper that converts hedges into confidence scores at near-zero cost. Building on these resources, we (3) conduct the first systematic study of LC across modern LLMs and QA benchmarks, revealing that while most LLMs underperform in expressing reliable LC, carefully designed prompting achieves competitive calibration and discriminability. Finally, we (4) introduce a fine-tuning framework that further improves LC reliability. Taken together, our work positions linguistic confidence as a scalable, efficient, and human-aligned approach to LLM uncertainty estimation, and calls for deeper exploration of this promising yet underexplored direction.",
+      "authors": [
+        "Linwei Tao",
+        "Yi-Fan Yeh",
+        "Bo Kai",
+        "Minjing Dong",
+        "Tao Huang",
+        "Tom A. Lamb",
+        "Jialin Yu",
+        "Philip H. S. Torr",
+        "Chang Xu"
+      ],
+      "published": "2025-09-29",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2509.24202v1",
+      "source_query": "cat:cs.CL AND (abs:\"uncertainty estimation\" OR abs:\"confidence estimation\" OR abs:\"calibration\") AND abs:\"language model\""
+    },
+    {
+      "arxiv_id": "2601.09036",
+      "arxiv_id_versioned": "2601.09036v1",
+      "title": "SpectraQuery: A Hybrid Retrieval-Augmented Conversational Assistant for Battery Science",
+      "abstract": "Scientific reasoning increasingly requires linking structured experimental data with the unstructured literature that explains it, yet most large language model (LLM) assistants cannot reason jointly across these modalities. We introduce SpectraQuery, a hybrid natural-language query framework that integrates a relational Raman spectroscopy database with a vector-indexed scientific literature corpus using a Structured and Unstructured Query Language (SUQL)-inspired design. By combining semantic parsing with retrieval-augmented generation, SpectraQuery translates open-ended questions into coordinated SQL and literature retrieval operations, producing cited answers that unify numerical evidence with mechanistic explanation. Across SQL correctness, answer groundedness, retrieval effectiveness, and expert evaluation, SpectraQuery demonstrates strong performance: approximately 80 percent of generated SQL queries are fully correct, synthesized answers reach 93-97 percent groundedness with 10-15 retrieved passages, and battery scientists rate responses highly across accuracy, relevance, grounding, and clarity (4.1-4.6/5). These results show that hybrid retrieval architectures can meaningfully support scientific workflows by bridging data and discourse for high-volume experimental datasets.",
+      "authors": [
+        "Sreya Vangara",
+        "Jagjit Nanda",
+        "Yan-Kai Tzeng",
+        "Eric Darve"
+      ],
+      "published": "2026-01-14",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2601.09036v1",
+      "source_query": "cat:cs.CL AND (abs:\"faithfulness\" OR abs:\"groundedness\") AND abs:\"generation\""
+    },
+    {
+      "arxiv_id": "2603.05698",
+      "arxiv_id_versioned": "2603.05698v2",
+      "title": "Towards Robust Retrieval-Augmented Generation Based on Knowledge Graph: A Comparative Analysis",
+      "abstract": "Retrieval-Augmented Generation (RAG) was introduced to enhance the capabilities of Large Language Models (LLMs) beyond their encoded prior knowledge. This is achieved by providing LLMs with an external source of knowledge, which helps reduce factual hallucinations and enables access to new information not available during pretraining. However, inconsistent retrieved information can negatively affect LLM responses. The Retrieval-Augmented Generation Benchmark (RGB) was introduced to evaluate the robustness of RAG systems under such conditions. In this work, we use the RGB corpus to evaluate LLMs in four scenarios: noise robustness, information integration, negative rejection, and counterfactual robustness. We perform a comparative analysis between the RGB RAG baseline and GraphRAG, a knowledge graph based retrieval system. We test three GraphRAG customizations to improve robustness. Results show improvements over the RGB baseline and provide insights for designing more reliable RAG systems for real world scenarios.",
+      "authors": [
+        "Hazem Amamou",
+        "Stéphane Gagnon",
+        "Alan Davoust",
+        "Anderson R. Avila"
+      ],
+      "published": "2026-03-05",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2603.05698v2",
+      "source_query": "cat:cs.CL AND abs:\"retrieval-augmented generation\" AND (abs:\"evaluation\" OR abs:\"benchmark\")"
+    },
+    {
+      "arxiv_id": "2302.12369",
+      "arxiv_id_versioned": "2302.12369v1",
+      "title": "Factual Consistency Oriented Speech Recognition",
+      "abstract": "This paper presents a novel optimization framework for automatic speech recognition (ASR) with the aim of reducing hallucinations produced by an ASR model. The proposed framework optimizes the ASR model to maximize an expected factual consistency score between ASR hypotheses and ground-truth transcriptions, where the factual consistency score is computed by a separately trained estimator. Experimental results using the AMI meeting corpus and the VoxPopuli corpus show that the ASR model trained with the proposed framework generates ASR hypotheses that have significantly higher consistency scores with ground-truth transcriptions while maintaining the word error rates close to those of cross entropy-trained ASR models. Furthermore, it is shown that training the ASR models with the proposed framework improves the speech summarization quality as measured by the factual consistency of meeting conversation summaries generated by a large language model.",
+      "authors": [
+        "Naoyuki Kanda",
+        "Takuya Yoshioka",
+        "Yang Liu"
+      ],
+      "published": "2023-02-24",
+      "primary_category": "eess.AS",
+      "url": "http://arxiv.org/abs/2302.12369v1",
+      "source_query": "cat:cs.CL AND (abs:\"factual consistency\" OR abs:\"factuality\") AND abs:\"language model\""
+    },
+    {
+      "arxiv_id": "2410.03726",
+      "arxiv_id_versioned": "2410.03726v1",
+      "title": "Neurosymbolic AI approach to Attribution in Large Language Models",
+      "abstract": "Attribution in large language models (LLMs) remains a significant challenge, particularly in ensuring the factual accuracy and reliability of the generated outputs. Current methods for citation or attribution, such as those employed by tools like Perplexity.ai and Bing Search-integrated LLMs, attempt to ground responses by providing real-time search results and citations. However, so far, these approaches suffer from issues such as hallucinations, biases, surface-level relevance matching, and the complexity of managing vast, unfiltered knowledge sources. While tools like Perplexity.ai dynamically integrate web-based information and citations, they often rely on inconsistent sources such as blog posts or unreliable sources, which limits their overall reliability. We present that these challenges can be mitigated by integrating Neurosymbolic AI (NesyAI), which combines the strengths of neural networks with structured symbolic reasoning. NesyAI offers transparent, interpretable, and dynamic reasoning processes, addressing the limitations of current attribution methods by incorporating structured symbolic knowledge with flexible, neural-based learning. This paper explores how NesyAI frameworks can enhance existing attribution models, offering more reliable, interpretable, and adaptable systems for LLMs.",
+      "authors": [
+        "Deepa Tilwani",
+        "Revathy Venkataramanan",
+        "Amit P. Sheth"
+      ],
+      "published": "2024-09-30",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2410.03726v1",
+      "source_query": "cat:cs.CL AND (abs:\"attribution\" OR abs:\"citation\") AND abs:\"language model\""
+    },
+    {
+      "arxiv_id": "2503.02623",
+      "arxiv_id_versioned": "2503.02623v6",
+      "title": "Rewarding Doubt: A Reinforcement Learning Approach to Calibrated Confidence Expression of Large Language Models",
+      "abstract": "A safe and trustworthy use of Large Language Models (LLMs) requires an accurate expression of confidence in their answers. We propose a novel Reinforcement Learning approach that allows to directly fine-tune LLMs to express calibrated confidence estimates alongside their answers to factual questions. Our method optimizes a reward based on the logarithmic scoring rule, explicitly penalizing both over- and under-confidence. This encourages the model to align its confidence estimates with the actual predictive accuracy. The optimal policy under our reward design would result in perfectly calibrated confidence expressions. Unlike prior approaches that decouple confidence estimation from response generation, our method integrates confidence calibration seamlessly into the generative process of the LLM. Empirically, we demonstrate that models trained with our approach exhibit substantially improved calibration and generalize to unseen tasks without further fine-tuning, suggesting the emergence of general confidence awareness.",
+      "authors": [
+        "David Bani-Harouni",
+        "Chantal Pellegrini",
+        "Paul Stangel",
+        "Ege Özsoy",
+        "Kamilia Zaripova",
+        "Nassir Navab",
+        "Matthias Keicher"
+      ],
+      "published": "2025-03-04",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2503.02623v6",
+      "source_query": "cat:cs.CL AND (abs:\"uncertainty estimation\" OR abs:\"confidence estimation\" OR abs:\"calibration\") AND abs:\"language model\""
+    },
+    {
+      "arxiv_id": "2412.12318",
+      "arxiv_id_versioned": "2412.12318v3",
+      "title": "Graph-Guided Textual Explanation Generation Framework",
+      "abstract": "Natural language explanations (NLEs) are commonly used to provide plausible free-text explanations of a model's reasoning about its predictions. However, recent work has questioned their faithfulness, as they may not accurately reflect the model's internal reasoning process regarding its predicted answer. In contrast, highlight explanations--input fragments critical for the model's predicted answers--exhibit measurable faithfulness. Building on this foundation, we propose G-Tex, a Graph-Guided Textual Explanation Generation framework designed to enhance the faithfulness of NLEs. Specifically, highlight explanations are first extracted as faithful cues reflecting the model's reasoning logic toward answer prediction. They are subsequently encoded through a graph neural network layer to guide the NLE generation, which aligns the generated explanations with the model's underlying reasoning toward the predicted answer. Experiments on T5 and BART using three reasoning datasets show that G-Tex improves NLE faithfulness by up to 12.18% compared to baseline methods. Additionally, G-Tex generates NLEs with greater semantic and lexical similarity to human-written ones. Human evaluations show that G-Tex can decrease redundant content and enhance the overall quality of NLEs. Our work presents a novel method for explicitly guiding NLE generation to enhance faithfulness, serving as a foundation for addressing broader criteria in NLE and generated text.",
+      "authors": [
+        "Shuzhou Yuan",
+        "Jingyi Sun",
+        "Ran Zhang",
+        "Michael Färber",
+        "Steffen Eger",
+        "Pepa Atanasova",
+        "Isabelle Augenstein"
+      ],
+      "published": "2024-12-16",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2412.12318v3",
+      "source_query": "cat:cs.CL AND (abs:\"faithfulness\" OR abs:\"groundedness\") AND abs:\"generation\""
+    },
+    {
+      "arxiv_id": "2503.08890",
+      "arxiv_id_versioned": "2503.08890v4",
+      "title": "PlainQAFact: Retrieval-augmented Factual Consistency Evaluation Metric for Biomedical Plain Language Summarization",
+      "abstract": "Hallucinated outputs from large language models (LLMs) pose risks in the medical domain, especially for lay audiences making health-related decisions. Existing automatic factual consistency evaluation methods, such as entailment- and question-answering (QA) -based, struggle with plain language summarization (PLS) due to elaborative explanation phenomenon, which introduces external content (e.g., definitions, background, examples) absent from the scientific abstract to enhance comprehension. To address this, we introduce PlainQAFact, an automatic factual consistency evaluation metric trained on a fine-grained, human-annotated dataset PlainFact, for evaluating factual consistency of both source-simplified and elaborately explained sentences. PlainQAFact first classifies sentence type, then applies a retrieval-augmented QA scoring method. Empirical results show that existing evaluation metrics fail to evaluate the factual consistency in PLS, especially for elaborative explanations, whereas PlainQAFact consistently outperforms them across all evaluation settings. We further analyze PlainQAFact's effectiveness across external knowledge sources, answer extraction strategies, answer overlap measures, and document granularity levels, refining its overall factual consistency assessment. Taken together, our work presents a sentence-aware, retrieval-augmented metric targeted at elaborative explanations in biomedical PLS tasks, providing the community with both a new benchmark and a practical evaluation tool to advance reliable and safe plain language communication in the medical domain. PlainQAFact and PlainFact are available at: https://github.com/zhiwenyou103/PlainQAFact",
+      "authors": [
+        "Zhiwen You",
+        "Yue Guo"
+      ],
+      "published": "2025-03-11",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2503.08890v4",
+      "source_query": "cat:cs.CL AND (abs:\"factual consistency\" OR abs:\"factuality\") AND abs:\"language model\""
+    },
+    {
+      "arxiv_id": "2311.12233",
+      "arxiv_id_versioned": "2311.12233v1",
+      "title": "Unifying Corroborative and Contributive Attributions in Large Language Models",
+      "abstract": "As businesses, products, and services spring up around large language models, the trustworthiness of these models hinges on the verifiability of their outputs. However, methods for explaining language model outputs largely fall across two distinct fields of study which both use the term \"attribution\" to refer to entirely separate techniques: citation generation and training data attribution. In many modern applications, such as legal document generation and medical question answering, both types of attributions are important. In this work, we argue for and present a unified framework of large language model attributions. We show how existing methods of different types of attribution fall under the unified framework. We also use the framework to discuss real-world use cases where one or both types of attributions are required. We believe that this unified framework will guide the use case driven development of systems that leverage both types of attribution, as well as the standardization of their evaluation.",
+      "authors": [
+        "Theodora Worledge",
+        "Judy Hanwen Shen",
+        "Nicole Meister",
+        "Caleb Winston",
+        "Carlos Guestrin"
+      ],
+      "published": "2023-11-20",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2311.12233v1",
+      "source_query": "cat:cs.CL AND (abs:\"attribution\" OR abs:\"citation\") AND abs:\"language model\""
+    },
+    {
+      "arxiv_id": "2608.07827",
+      "arxiv_id_versioned": "2608.07827v1",
+      "title": "From token probabilities to calibrated confidence: An empirical study of mathematical question answering",
+      "abstract": "Confidence estimation for large language models (LLMs) aims to estimate the probability that a generated answer is correct, while calibration aligns these estimates with empirical accuracy. Prior work has shown that token probabilities are often overconfident, we investigate whether these readily available signals can nevertheless provide well-calibrated confidence estimation for mathematical question answering. We compare single-pass estimators, which reuse token probabilities from the original generation, with multi-pass estimators, which obtain additional confidence signals through verification or stochastic forward passes. While individual token probabilities can be highly saturated, we find that aggregating token probabilities over the full sequence captures small but consistent differences between correct and incorrect generations, yielding more informative confidence estimates. Multi-pass methods can yield calibrated confidence estimates. We study two such approaches: self-verification through re-prompting, including a lower-cost in-situ variant, and Monte Carlo Dropout, which derives confidence from variation across stochastic forward passes. We further evaluate two post-hoc calibration methods, Platt scaling and isotonic regression, both of which substantially reduce in-domain calibration error. However, their data efficiency varies with dataset difficulty, and the calibration mappings often transfer asymmetrically across datasets and models.",
+      "authors": [
+        "Avery Ma",
+        "Lorne Schell",
+        "Vin Bhaskara",
+        "Leila Pishdad"
+      ],
+      "published": "2026-08-08",
+      "primary_category": "cs.LG",
+      "url": "http://arxiv.org/abs/2608.07827v1",
+      "source_query": "cat:cs.CL AND (abs:\"uncertainty estimation\" OR abs:\"confidence estimation\" OR abs:\"calibration\") AND abs:\"language model\""
+    },
+    {
+      "arxiv_id": "2307.04642",
+      "arxiv_id_versioned": "2307.04642v2",
+      "title": "TRAQ: Trustworthy Retrieval Augmented Question Answering via Conformal Prediction",
+      "abstract": "When applied to open-domain question answering, large language models (LLMs) frequently generate incorrect responses based on made-up facts, which are called $\\textit{hallucinations}$. Retrieval augmented generation (RAG) is a promising strategy to avoid hallucinations, but it does not provide guarantees on its correctness. To address this challenge, we propose the Trustworthy Retrieval Augmented Question Answering, or $\\textit{TRAQ}$, which provides the first end-to-end statistical correctness guarantee for RAG. TRAQ uses conformal prediction, a statistical technique for constructing prediction sets that are guaranteed to contain the semantically correct response with high probability. Additionally, TRAQ leverages Bayesian optimization to minimize the size of the constructed sets. In an extensive experimental evaluation, we demonstrate that TRAQ provides the desired correctness guarantee while reducing prediction set size by 16.2% on average compared to an ablation. The implementation is available at $\\href{https://github.com/shuoli90/TRAQ.git}{TRAQ}$.",
+      "authors": [
+        "Shuo Li",
+        "Sangdon Park",
+        "Insup Lee",
+        "Osbert Bastani"
+      ],
+      "published": "2023-07-07",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2307.04642v2",
+      "source_query": "cat:cs.CL AND abs:\"hallucination\" AND (abs:\"retrieval-augmented\" OR abs:\"RAG\" OR abs:\"retrieval augmented\")"
+    },
+    {
+      "arxiv_id": "2603.06290",
+      "arxiv_id_versioned": "2603.06290v1",
+      "title": "The EpisTwin: A Knowledge Graph-Grounded Neuro-Symbolic Architecture for Personal AI",
+      "abstract": "Personal Artificial Intelligence is currently hindered by the fragmentation of user data across isolated silos. While Retrieval-Augmented Generation offers a partial remedy, its reliance on unstructured vector similarity fails to capture the latent semantic topology and temporal dependencies essential for holistic sensemaking. We introduce EpisTwin, a neuro-symbolic framework that grounds generative reasoning in a verifiable, user-centric Personal Knowledge Graph. EpisTwin leverages Multimodal Language Models to lift heterogeneous, cross-application data into semantic triples. At inference, EpisTwin enables complex reasoning over the personal semantic graph via an agentic coordinator that combines Graph Retrieval-Augmented Generation with Online Deep Visual Refinement, dynamically re-grounding symbolic entities in their raw visual context. We also introduce PersonalQA-71-100, a synthetic benchmark designed to simulate a realistic user's digital footprint and evaluate EpisTwin performance. Our framework demonstrates robust results across a suite of state-of-the-art judge models, offering a promising direction for trustworthy Personal AI.",
+      "authors": [
+        "Giovanni Servedio",
+        "Potito Aghilar",
+        "Alessio Mattiace",
+        "Gianni Carmosino",
+        "Francesco Musicco",
+        "Gabriele Conte",
+        "Vito Walter Anelli",
+        "Tommaso Di Noia",
+        "Francesco Maria Donini"
+      ],
+      "published": "2026-03-06",
+      "primary_category": "cs.AI",
+      "url": "http://arxiv.org/abs/2603.06290v1",
+      "source_query": "cat:cs.CL AND abs:\"retrieval-augmented generation\" AND (abs:\"evaluation\" OR abs:\"benchmark\")"
+    },
+    {
+      "arxiv_id": "2602.16843",
+      "arxiv_id_versioned": "2602.16843v1",
+      "title": "BanglaSummEval: Reference-Free Factual Consistency Evaluation for Bangla Summarization",
+      "abstract": "Evaluating factual consistency is essential for reliable text summarization, particularly in high-stakes domains such as healthcare and news. However, most existing evaluation metrics overlook Bangla, a widely spoken yet under-resourced language, and often depend on reference summaries. We introduce BanglaSummEval, a reference-free, question-answering-based framework for evaluating factual consistency in Bangla summarization. The proposed method assesses both factual accuracy and content coverage through automatically generated questions and answers derived from the source document and the summary. A single multilingual instruction-tuned language model handles question generation, question answering, candidate answer extraction, and question importance weighting. This unified design reduces system complexity and computational cost. To capture semantic consistency beyond surface-level overlap, we use BERTScore-Recall for answer comparison. We validate BanglaSummEval on 300 human-written summaries from educational and medical domains, demonstrating strong correlation with expert human judgments (Pearson's $r = 0.694$, Spearman's $ρ= 0.763$). By providing interpretable, step-wise diagnostics alongside reliable evaluation scores, BanglaSummEval offers a practical and transparent solution for factual consistency evaluation in low-resource language settings.",
+      "authors": [
+        "Ahmed Rafid",
+        "Rumman Adib",
+        "Fariya Ahmed",
+        "Ajwad Abrar",
+        "Mohammed Saidul Islam"
+      ],
+      "published": "2026-02-18",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2602.16843v1",
+      "source_query": "cat:cs.CL AND (abs:\"factual consistency\" OR abs:\"factuality\") AND abs:\"language model\""
+    },
+    {
+      "arxiv_id": "2605.00199",
+      "arxiv_id_versioned": "2605.00199v2",
+      "title": "RSAT: Structured Attribution Makes Small Language Models Faithful Table Reasoners",
+      "abstract": "When a language model answers a table question, users have no way to verify which cells informed which reasoning steps. We introduce RSAT, a method that trains small language models (SLMs, 1-8B) to produce step-by-step reasoning with cell-level citations grounded in table evidence. Phase 1 (SFT) teaches a structured JSON output format from verified reasoning traces. Phase 2 (GRPO) optimizes a composite reward centered on NLI-based faithfulness, alongside citation validity and parsimony. Across six models from two families-Qwen 2.5 (1.5B/3B/7B) and Llama 3 (1B/3B/8B)-RSAT improves faithfulness 3.7$\\times$ over SFT alone (0.224$\\rightarrow$0.826), with near-perfect citation validity (0.992). Post-hoc attribution collapses below 13% format success, confirming that attribution must be integrated into reasoning, not retrofitted. Ablations show the faithfulness reward is essential: removing it drops faithfulness from 0.97 to 0.03.",
+      "authors": [
+        "Jugal Gajjar",
+        "Kamalasankari Subramaniakuppusamy"
+      ],
+      "published": "2026-04-30",
+      "primary_category": "cs.CL",
+      "url": "http://arxiv.org/abs/2605.00199v2",
+      "source_query": "cat:cs.CL AND (abs:\"attribution\" OR abs:\"citation\") AND abs:\"language model\""
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "stage": "index_corpus",
+  "timestamp_utc": "2026-08-26T07:03:47.624385+00:00",
+  "args": {
+    "corpus": "E:\\Coding\\Hallucination research\\data\\corpus.json",
+    "index_dir": "E:\\Coding\\Hallucination research\\data",
+    "model": "sentence-transformers/all-MiniLM-L6-v2",
+    "device": "cpu",
+    "batch_size": 32,
+    "seed": 42,
+    "query": null,
+    "k": 5
+  },
+  "python": "3.12.0",
+  "platform": "win32"
+}

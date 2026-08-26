@@ -1,0 +1,26 @@
+{
+  "stage": "run_pipeline",
+  "timestamp_utc": "2026-08-26T07:43:07.218583+00:00",
+  "args": {
+    "qa_pairs": "E:\\Coding\\Hallucination research\\data\\qa_pairs.csv",
+    "index_dir": "E:\\Coding\\Hallucination research\\data",
+    "out": "data/smoke_3b.jsonl",
+    "backend": "ollama",
+    "model": "qwen2.5:3b-instruct-q4_K_M",
+    "host": "http://localhost:11434",
+    "k": 1,
+    "num_predict": 256,
+    "num_ctx": 2048,
+    "n_samples": 5,
+    "sample_temp": 0.7,
+    "keep_alive": "5m",
+    "timeout": 600,
+    "seed": 42,
+    "smoke_test": 3,
+    "check": false,
+    "unload_when_done": false
+  },
+  "python": "3.12.0",
+  "platform": "win32",
+  "prompt_template": "Context: {context}\nQuestion: {question}\nAnswer:"
+}

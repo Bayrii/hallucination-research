@@ -1,0 +1,17 @@
+{
+  "stage": "generate_qa_pairs",
+  "timestamp_utc": "2026-08-26T07:17:38.992594+00:00",
+  "args": {
+    "corpus": "E:\\Coding\\Hallucination research\\data\\corpus.json",
+    "out": "E:\\Coding\\Hallucination research\\data\\qa_pairs.csv",
+    "index_dir": "E:\\Coding\\Hallucination research\\data",
+    "templates": "default",
+    "force": false,
+    "assign_distractors": 25,
+    "strategy": "dissimilar",
+    "only_condition": "well_supported",
+    "seed": 42
+  },
+  "python": "3.12.0",
+  "platform": "win32"
+}
