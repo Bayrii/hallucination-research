@@ -64,6 +64,32 @@ Not whether the answer is true in the world. Not whether it is well written.
 
   n  add a note      b  back (redo previous)      k  skip      q  save & quit
   ?  show this help
+
+TRICKY CASES you WILL hit (measured on ~69% of poorly-supported items)
+----------------------------------------------------------------------
+The question names a paper. When the context is a DIFFERENT paper, the model
+can tell, and it responds in one of three ways. They get different labels:
+
+ 1. "This does not appear to relate to the context. I cannot answer."
+    -> r   Clean refusal. Asserts nothing ungrounded.
+
+ 2. "This isn't the right context, but the paper you mention seems to propose
+     attention-based auditing..."
+    -> p or u   It is guessing content from the TITLE IN THE QUESTION, not from
+    the context. Those claims are NOT context-supported. Judge how much of the
+    answer is that guessing: a sentence or two -> p, the whole answer -> u.
+
+ 3. "The context is for paper Y, not paper X. Paper Y introduces ETRAG, which
+     does <accurate summary of Y>..."
+    -> s + n   This is genuinely supported: every claim IS in the context. It
+    just answers about the wrong paper. Label it supported and ADD A NOTE
+    ("answered about context paper"), because it is a real failure that our
+    grounding signals cannot see and we want to count it separately.
+
+The rule that resolves all three: ask only "is each claim in this answer
+backed by the context in front of me?" -- never "did it answer my question?"
+That second question matters, but it is not what the signals measure, so it
+belongs in a note rather than in the label.
 """
 
 

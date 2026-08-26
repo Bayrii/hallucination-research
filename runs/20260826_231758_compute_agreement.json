@@ -1,0 +1,15 @@
+{
+  "stage": "compute_agreement",
+  "timestamp_utc": "2026-08-26T19:17:58.400104+00:00",
+  "args": {
+    "a1": "data/labels_a1.jsonl",
+    "a2": "data/labels_a1.jsonl",
+    "generations": "E:\\Coding\\Hallucination research\\data\\generations.jsonl",
+    "export_disagreements": null,
+    "resolve": false,
+    "final_out": "E:\\Coding\\Hallucination research\\data\\labels_final.jsonl",
+    "width": 78
+  },
+  "python": "3.12.0",
+  "platform": "win32"
+}

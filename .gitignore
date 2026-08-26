@@ -7,3 +7,7 @@ data/signals_smoke.jsonl
 data/labels_synthetic.jsonl
 data/results/smoke_*
 data/smoke_*.jsonl
+data/labels_a1.jsonl
+data/labels_a2.jsonl
+data/labels_testrun.jsonl
+data/disagreements_smoke.csv
