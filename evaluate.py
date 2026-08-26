@@ -58,15 +58,22 @@ SIGNAL_SPECS: list[tuple[str, str, str]] = [
     ("logprob_min",           "LogProb (min)",        "logprob"),
     ("consistency_nli",       "SelfConsist (NLI)",    "consistency"),
     ("consistency_embedding", "SelfConsist (embed)",  "consistency"),
-    ("nli_entail_min",        "NLI entail (min)",     "nli"),
     ("nli_entail_mean",       "NLI entail (mean)",    "nli"),
+    ("nli_non_contradiction", "NLI non-contradict",   "nli"),
+    ("nli_entail_min",        "NLI entail (min)",     "nli"),
     ("nli_entail_whole",      "NLI entail (whole)",   "nli"),
     ("baseline_cosine",       "Baseline (cosine)",    "baseline"),
     ("baseline_rouge_l",      "Baseline (ROUGE-L)",   "baseline"),
 ]
 
 # One representative per family, for the headline figure and combined model.
-PRIMARY = ["logprob_mean", "consistency_nli", "nli_entail_min", "baseline_cosine"]
+#
+# nli_entail_MEAN, not min. The min variant saturates at ~0 for every item
+# regardless of condition, because LLM answers are compound sentences and one
+# unsupported sub-clause makes the whole sentence non-entailed. See the long
+# comment on grounding_score() in compute_signals.py. min is still evaluated and
+# reported so the collapse is visible in the results rather than hidden.
+PRIMARY = ["logprob_mean", "consistency_nli", "nli_entail_mean", "baseline_cosine"]
 
 TIMING_FOR_SIGNAL = {
     "logprob_mean": "logprob",
@@ -75,6 +82,7 @@ TIMING_FOR_SIGNAL = {
     "consistency_embedding": "consistency_embedding",
     "nli_entail_min": "nli_entailment",
     "nli_entail_mean": "nli_entailment",
+    "nli_non_contradiction": "nli_entailment",
     "nli_entail_whole": "nli_entailment",
     "baseline_cosine": "baseline",
     "baseline_rouge_l": "baseline",
@@ -474,10 +482,19 @@ def main() -> None:
     if n_pos < 10 or (len(items) - n_pos) < 10:
         warn("one class has <10 items — every metric below will be very unstable.")
 
-    hits = [it["retrieval_hit"] for it in items if it["retrieval_hit"] is not None]
+    # Only rows that actually went through the retriever. Forced-distractor rows
+    # are retrieval_hit=False by construction, so including them would report a
+    # deliberate experimental manipulation as retriever failure and understate
+    # retrieval quality in the paper.
+    hits = [
+        it["retrieval_hit"]
+        for it in items
+        if it["retrieval_hit"] is not None and not it["strategy"]
+    ]
     if hits:
         info(f"retrieval hit rate: {100.0 * sum(hits) / len(hits):.1f}% "
-             f"(source abstract present in retrieved context)")
+             f"of {len(hits)} retrieved rows had the source abstract in "
+             f"context (forced-distractor rows excluded)")
 
     # --- overall ------------------------------------------------------------
     overall = []

@@ -152,66 +152,129 @@ def entailment_index(model) -> int:
     return 1
 
 
+def nli_class_probs(model, pairs: list[tuple[str, str]], batch_size: int):
+    """
+    Full (N, 3) class-probability matrix for each (premise, hypothesis) pair.
+
+    Returns all three classes, not just entailment, because the
+    neutral-vs-contradiction split carries real signal here: an answer that adds
+    unsupported-but-uncontradicted elaboration scores NEUTRAL, which corresponds
+    to `partially_supported`, while an answer the context actively denies scores
+    CONTRADICTION. Collapsing to a single entailment number throws that away.
+    """
+    import numpy as np
+
+    if not pairs:
+        return np.zeros((0, 3), dtype=float)
+
+    scores = np.asarray(
+        model.predict(pairs, batch_size=batch_size, convert_to_numpy=True), dtype=float
+    )
+    if scores.ndim == 1:  # single pair squeezed by some versions
+        scores = scores.reshape(1, -1)
+
+    # predict() returns raw logits on some versions and probabilities on others.
+    # Softmax only if the rows are not already normalized.
+    if not np.allclose(scores.sum(axis=1), 1.0, atol=1e-3):
+        e = np.exp(scores - scores.max(axis=1, keepdims=True))
+        scores = e / e.sum(axis=1, keepdims=True)
+    return scores
+
+
 def nli_entail_probs(model, pairs: list[tuple[str, str]], batch_size: int, ent_idx: int):
     """Entailment probability for each (premise, hypothesis) pair."""
     import numpy as np
 
-    if not pairs:
+    probs = nli_class_probs(model, pairs, batch_size)
+    if probs.size == 0:
         return np.array([], dtype=float)
+    return probs[:, ent_idx]
 
-    scores = model.predict(pairs, batch_size=batch_size, convert_to_numpy=True)
-    scores = np.asarray(scores, dtype=float)
 
-    if scores.ndim == 1:  # binary/regression head
-        return scores
-
-    # predict() returns raw logits on some versions and probabilities on others.
-    # Softmax only if the rows are not already normalized.
-    row_sums = scores.sum(axis=1)
-    if not np.allclose(row_sums, 1.0, atol=1e-3):
-        e = np.exp(scores - scores.max(axis=1, keepdims=True))
-        scores = e / e.sum(axis=1, keepdims=True)
-
-    return scores[:, ent_idx]
+def contradiction_index(model) -> int:
+    """Column meaning 'contradiction'. Same defensive lookup as entailment."""
+    cfg = getattr(model, "config", None)
+    if cfg is None:
+        cfg = getattr(getattr(model, "model", None), "config", None)
+    for i, name in (getattr(cfg, "id2label", None) or {}).items():
+        if "contradict" in str(name).lower():
+            return int(i)
+    warn("could not read id2label — assuming contradiction index 0")
+    return 0
 
 
 def grounding_score(
-    model, context: str, answer: str, batch_size: int, ent_idx: int
+    model, context: str, answer: str, batch_size: int, con_idx: int, ent_idx: int
 ) -> dict:
     """
-    Sentence-chunked entailment of `answer` against `context`.
+    Sentence-chunked NLI of `answer` against `context`.
 
-    Returns the strict (min-over-claims) and lenient (mean-over-claims) variants
-    plus the naive whole-passage score, so the chunking decision can be
-    justified with numbers rather than asserted.
+    ON THE min-OVER-CLAIMS VARIANT
+    ------------------------------
+    `nli_entail_min` was originally the headline (SummaC-style: the weakest claim
+    determines groundedness). Measured on real generations it SATURATES AT ZERO
+    for every item, including correctly-answered ones, so it carries no
+    information. The cause is claim granularity, not a bug:
+
+        premise : "RGB divides the instances ... into 4 separate testbeds ..."
+        claim   : "The RGB divides the instances ... into four separate testbeds,
+                   allowing for a systematic investigation of how well the models
+                   perform in each area."
+        -> neutral 1.000, entailment 0.000
+
+    The model is right: the trailing clause is not in the premise, and a sentence
+    is entailed only if all of it is. But LLM answers are long compound sentences
+    that mix supported content with unsupported elaboration, so at least one
+    sentence always fails and the min collapses. Splitting into ATOMIC facts
+    (FactScore-style) rather than sentences would fix it properly; that is future
+    work. `nli_entail_min` is still stored, but use `nli_entail_mean` as the
+    headline entailment signal.
+
+    WHY CONTRADICTION IS TRACKED SEPARATELY
+    ---------------------------------------
+    In the example above the model returned NEUTRAL, not CONTRADICTION. That
+    distinction maps directly onto this study's label scheme: unsupported-but-
+    uncontradicted elaboration is `partially_supported`, whereas something the
+    context actively denies is `unsupported`. `nli_non_contradiction` is stored
+    as 1 - max contradiction so that, like every other signal here, HIGHER MEANS
+    MORE SUPPORTED.
     """
     import numpy as np
 
     premises = split_sentences(context)
     claims = split_sentences(answer)
 
+    empty = {
+        "nli_entail_min": None,
+        "nli_entail_mean": None,
+        "nli_entail_whole": None,
+        "nli_non_contradiction": None,
+        "nli_contradiction_max": None,
+        "nli_n_claims": len(claims),
+        "nli_n_premises": len(premises),
+    }
     if not premises or not claims:
-        return {
-            "nli_entail_min": None,
-            "nli_entail_mean": None,
-            "nli_entail_whole": None,
-            "nli_n_claims": len(claims),
-            "nli_n_premises": len(premises),
-        }
+        return empty
 
     pairs = [(p, c) for c in claims for p in premises]
-    probs = nli_entail_probs(model, pairs, batch_size, ent_idx)
-    matrix = probs.reshape(len(claims), len(premises))
+    probs = nli_class_probs(model, pairs, batch_size)  # (claims*premises, 3)
 
-    per_claim = matrix.max(axis=1)  # best supporting sentence for each claim
-    whole = nli_entail_probs(model, [(context, answer)], batch_size, ent_idx)
+    ent = probs[:, ent_idx].reshape(len(claims), len(premises))
+    con = probs[:, con_idx].reshape(len(claims), len(premises))
+
+    per_claim_ent = ent.max(axis=1)  # best supporting sentence for each claim
+    # A claim is contradicted if ANY premise contradicts it; take the worst claim.
+    per_claim_con = con.max(axis=1)
+
+    whole = nli_class_probs(model, [(context, answer)], batch_size)
 
     return {
-        # Strict: one ungrounded claim drags the whole answer down. This is the
-        # variant that matches the annotation guideline.
-        "nli_entail_min": float(per_claim.min()),
-        "nli_entail_mean": float(per_claim.mean()),
-        "nli_entail_whole": float(whole[0]) if len(whole) else None,
+        "nli_entail_min": float(per_claim_ent.min()),
+        "nli_entail_mean": float(per_claim_ent.mean()),
+        "nli_entail_whole": float(whole[0, ent_idx]) if len(whole) else None,
+        # Oriented so higher = more supported, matching every other signal.
+        "nli_non_contradiction": float(1.0 - per_claim_con.max()),
+        "nli_contradiction_max": float(per_claim_con.max()),
         "nli_n_claims": int(len(claims)),
         "nli_n_premises": int(len(premises)),
     }
@@ -437,7 +500,8 @@ def main() -> None:
     rule("Phase 3/3 — NLI entailment")
     nli = load_nli(args.device, args.nli_model)
     ent_idx = entailment_index(nli)
-    info(f"entailment class index = {ent_idx}")
+    con_idx = contradiction_index(nli)
+    info(f"class indices: entailment={ent_idx}, contradiction={con_idx}")
 
     need_nli_cons = args.consistency_method in ("nli", "both")
     for g in tqdm(gens, unit="item", desc="nli"):
@@ -447,7 +511,7 @@ def main() -> None:
             r.update(
                 grounding_score(
                     nli, g.get("context", ""), g.get("answer", ""),
-                    args.batch_size, ent_idx,
+                    args.batch_size, con_idx, ent_idx,
                 )
             )
         r["timing_ms"]["nli_entailment"] = round(t.ms, 3)

@@ -1,0 +1,20 @@
+{
+  "stage": "evaluate",
+  "timestamp_utc": "2026-08-26T13:54:07.238204+00:00",
+  "args": {
+    "signals": "data/signals_smoke.jsonl",
+    "labels": "data/labels_synthetic.jsonl",
+    "generations": "E:\\Coding\\Hallucination research\\data\\generations.jsonl",
+    "judge_files": null,
+    "partial": "unsupported",
+    "abstention": "supported",
+    "n_boot": 300,
+    "cv_folds": 5,
+    "combined": true,
+    "out_csv": "data/results/smoke_summary.csv",
+    "out_png": "data/results/smoke_chart.png",
+    "seed": 42
+  },
+  "python": "3.12.0",
+  "platform": "win32"
+}
