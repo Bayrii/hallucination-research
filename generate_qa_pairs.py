@@ -63,14 +63,20 @@ from common import (
 
 # --- Question templates -----------------------------------------------------
 #
-# Deliberately generic so the same wording applies to every abstract — a fixed
-# template set keeps question phrasing from becoming an uncontrolled variable
-# across conditions.
+# A fixed template set keeps question phrasing from becoming an uncontrolled
+# variable across conditions -- only {title} varies between rows.
+#
+# {title} IS REQUIRED, NOT DECORATION. An earlier version asked "...does this
+# paper propose?" with no identifying content, so the retriever had nothing to
+# match on and returned an essentially random abstract: measured top-1 hit rate
+# was 2/100 at mean cosine 0.263. Naming the paper takes it to 95/100 at 0.683.
+# Never remove {title} to "keep the wording generic" -- that breaks the
+# well_supported and partially_supported conditions silently.
 
 TEMPLATES: dict[str, str] = {
-    "method": "What method or approach does this paper propose?",
-    "dataset": "What dataset(s) or benchmark(s) does this paper use?",
-    "finding": "What is the main finding or result reported in this paper?",
+    "method": 'What method or approach does the paper "{title}" propose?',
+    "dataset": 'What dataset(s) or benchmark(s) does the paper "{title}" use?',
+    "finding": 'What is the main finding or result reported in the paper "{title}"?',
     # --- optional extras, enabled with --templates all ---
     #
     # 'limitation' is the useful one: abstracts almost never state limitations,
@@ -79,8 +85,8 @@ TEMPLATES: dict[str, str] = {
     # WITHOUT having to fake bad retrieval — the retrieval is correct, the
     # context simply underdetermines the answer. Worth including if you want
     # that condition to be well populated.
-    "limitation": "What limitations or weaknesses does this paper acknowledge?",
-    "metric": "What evaluation metrics does this paper report?",
+    "limitation": 'What limitations or weaknesses does the paper "{title}" acknowledge?',
+    "metric": 'What evaluation metrics does the paper "{title}" report?',
 }
 
 DEFAULT_TEMPLATES = ["method", "dataset", "finding"]
@@ -125,9 +131,12 @@ def draft_pairs(corpus: list[dict], template_keys: list[str]) -> list[dict]:
                 {
                     "qa_id": make_qa_id(rec["arxiv_id"], key),
                     "source_arxiv_id": rec["arxiv_id"],
+                    # Truncated for spreadsheet readability only. The QUESTION
+                    # uses the FULL title -- a clipped title would degrade the
+                    # retrieval match this template exists to make possible.
                     "source_title": truncate(rec.get("title", ""), 90),
                     "template_type": key,
-                    "question": TEMPLATES[key],
+                    "question": TEMPLATES[key].format(title=rec.get("title", "").strip()),
                     # Default assumes correct retrieval. Change by hand during
                     # review, or via --assign-distractors.
                     "intended_condition": "well_supported",
