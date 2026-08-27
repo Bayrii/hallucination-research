@@ -4,28 +4,25 @@ We need to decide, for each answer the model wrote, whether it is actually
 supported by the text it was given. This is the answer key the whole paper is
 measured against.
 
-**Bayram labels all 150 items. valiyyaddin labels the same 50 of them.**
-The 50 overlapping items are what we use to show two people agree — that's the
-reliability check reviewers expect. It saves valiyyaddin about 70% of the work.
+**We both label all 150 items.** Agreement is then computed over the full set
+rather than a sample, which gives a tighter and more defensible reliability
+estimate. Budget about 1.5–2 hours each.
 
 ---
 
-## Bayram — label everything
+## Bayram
 
 ```powershell
 cd "E:\Coding\Hallucination research"
 .venv\Scripts\python.exe label_ground_truth.py --annotator annotator1
 ```
 
-## valiyyaddin — label the 50-item subset
+## valiyyaddin
 
 ```powershell
 cd "E:\Coding\Hallucination research"
-.venv\Scripts\python.exe label_ground_truth.py --annotator annotator2 --subset 50
+.venv\Scripts\python.exe label_ground_truth.py --annotator annotator2
 ```
-
-**Do not change `--subset 50`, and do not add `--subset-seed`.** Both of us must
-get the same 50 items or the agreement score cannot be computed.
 
 ### If valiyyaddin works on a different computer
 
@@ -34,11 +31,25 @@ git clone https://github.com/Bayrii/hallucination-research.git
 cd hallucination-research
 python -m venv .venv
 .venv\Scripts\python.exe -m pip install -r requirements.txt
-.venv\Scripts\python.exe label_ground_truth.py --annotator annotator2 --subset 50
+.venv\Scripts\python.exe label_ground_truth.py --annotator annotator2
 ```
 
-No GPU needed. When finished, send `data/labels_annotator2.jsonl` to Bayram, who
-puts it in his own `data/` folder.
+No GPU needed. When finished, push the labels so Bayram can pull them:
+
+```powershell
+git add data/labels_annotator2.jsonl
+git commit -m "annotator2 labels"
+git push
+```
+
+> **Already started with `--subset 50`? Do not delete anything.** Just run the
+> command without the flag. The tool resumes from your labels file, not from the
+> flag, so your existing labels are kept and it simply continues through the
+> remaining items. A label is the same judgement regardless of which pool it was
+> drawn from.
+>
+> The `--subset N` option still exists if a future study wants a
+> sampled reliability pass; it is just not what we are doing here.
 
 ---
 
