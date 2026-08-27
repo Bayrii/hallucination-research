@@ -52,12 +52,19 @@ from common import (
     warn,
 )
 
-JUDGE_PROMPT_VERSION = "v1"
-
 # Deliberately mirrors the human annotation guideline in label_ground_truth.py.
 # If the two drift apart, judge-vs-human kappa stops measuring agreement and
 # starts measuring the difference between two rubrics.
-JUDGE_PROMPT = """You are evaluating whether an answer is supported by a context passage.
+#
+# v1 states the abstention rule inline, as one clause inside the `supported`
+# definition. Measured over the 40 refusal-style answers in our data, the judge
+# violated that rule on 40/40 (100%): it returned `unsupported` 39 times and
+# `partially_supported` once, never `supported`. v2 exists to separate two
+# explanations - that judges systematically penalise abstention regardless of
+# instruction, versus that v1 simply buried the rule. Run both and report the
+# difference; do not silently replace v1, since the comparison is the result.
+JUDGE_PROMPTS = {
+    "v1": """You are evaluating whether an answer is supported by a context passage.
 
 Context:
 \"\"\"
@@ -81,7 +88,43 @@ partially_supported  some claims are backed by the context and some are not.
 unsupported          the central claims are absent from or contradicted by the
                      context.
 
-Your answer:"""
+Your answer:""",
+    # Same rubric, but the abstention rule is lifted out of the `supported`
+    # definition into its own rule, stated before the labels and given a worked
+    # example. Nothing else changes.
+    "v2": """You are evaluating whether an answer is supported by a context passage.
+
+Context:
+\"\"\"
+{context}
+\"\"\"
+
+Question: {question}
+
+Answer: {answer}
+
+Decide how well the CONTEXT supports the ANSWER. Judge only whether the context
+backs up the claims in the answer — not whether the answer is true in general,
+not whether it is well written, and NOT whether it answered the question.
+
+IMPORTANT RULE ABOUT REFUSALS. If the answer declines to answer — for example
+"the context does not contain this information", "this does not appear to relate
+to the context", or "I cannot determine this from the provided text" — then it
+makes no claim that the context fails to support. Such an answer is SUPPORTED.
+Do not mark a refusal as unsupported. Only judge a refusal as unsupported if it
+also asserts specific facts that the context does not back up.
+
+Reply with exactly one of these words and nothing else:
+
+supported            every claim in the answer is stated in or directly follows
+                     from the context — INCLUDING an answer that only declines
+                     to answer, per the rule above.
+partially_supported  some claims are backed by the context and some are not.
+unsupported          the central claims are absent from or contradicted by the
+                     context.
+
+Your answer:""",
+}
 
 
 # =============================================================================
@@ -258,6 +301,13 @@ def main() -> None:
         help="pause between calls; raise if you keep hitting per-minute limits",
     )
     ap.add_argument("--limit", type=int, default=None)
+    ap.add_argument(
+        "--prompt-version",
+        choices=sorted(JUDGE_PROMPTS),
+        default="v1",
+        help="v1 states the abstention rule inline; v2 promotes it to its own "
+             "rule with an example. Run both and compare - see JUDGE_PROMPTS.",
+    )
     ap.add_argument("--seed", type=int, default=42)
     args = ap.parse_args()
 
@@ -269,7 +319,7 @@ def main() -> None:
         )
     out_path = Path(args.out) if args.out else DATA_DIR / f"judge_{args.judge}.jsonl"
 
-    log_run_config("run_judge_baseline", args, extra={"prompt": JUDGE_PROMPT_VERSION})
+    log_run_config("run_judge_baseline", args, extra={"prompt": args.prompt_version})
     require_file(args.generations, "python run_pipeline.py")
 
     # --- build judge --------------------------------------------------------
@@ -310,7 +360,7 @@ def main() -> None:
 
     n_ok = n_fail = n_unparsed = 0
     for g in tqdm(todo, unit="qa", desc=f"judging ({args.judge})"):
-        prompt = JUDGE_PROMPT.format(
+        prompt = JUDGE_PROMPTS[args.prompt_version].format(
             context=g.get("context", ""),
             question=g.get("question", ""),
             answer=g.get("answer", ""),
@@ -338,7 +388,7 @@ def main() -> None:
                 "judge_model": args.model,
                 "label": label,
                 "raw_response": raw.strip()[:500],
-                "prompt_version": JUDGE_PROMPT_VERSION,
+                "prompt_version": args.prompt_version,
                 "elapsed_ms": round(t.ms, 1),
                 "prompt_tokens": usage.get("prompt_tokens"),
                 "completion_tokens": usage.get("completion_tokens"),
