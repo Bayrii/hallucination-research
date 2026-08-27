@@ -179,4 +179,43 @@ Within those mismatch responses we observe three distinct behaviours, which the 
 *[Fill in]*
 
 ## References
-*[Add full citations for SelfCheckGPT (Manakul et al., 2023), the RAG paper (Lewis et al., 2020), and any others used — format per your chosen style: APA/Chicago/OSCOLA]*
+
+*Style: APA 7th. Author lists, venues and years below were checked against the
+ACL Anthology / publisher records. Items marked ⚠ still need page numbers or a
+DOI confirmed before submission — do not copy those fields from memory.*
+
+He, P., Liu, X., Gao, J., & Chen, W. (2021). DeBERTa: Decoding-enhanced BERT with
+disentangled attention. *International Conference on Learning Representations
+(ICLR 2021).*
+
+Laban, P., Schnabel, T., Bennett, P. N., & Hearst, M. A. (2022). SummaC:
+Re-visiting NLI-based models for inconsistency detection in summarization.
+*Transactions of the Association for Computational Linguistics, 10.* ⚠ *pages*
+
+Landis, J. R., & Koch, G. G. (1977). The measurement of observer agreement for
+categorical data. *Biometrics, 33*(1). ⚠ *pages — verify before submission*
+
+Lewis, P., Perez, E., Piktus, A., Petroni, F., Karpukhin, V., Goyal, N.,
+Küttler, H., Lewis, M., Yih, W., Rocktäschel, T., Riedel, S., & Kiela, D.
+(2020). Retrieval-augmented generation for knowledge-intensive NLP tasks.
+*Advances in Neural Information Processing Systems, 33.* ⚠ *pages*
+
+Manakul, P., Liusie, A., & Gales, M. J. F. (2023). SelfCheckGPT: Zero-resource
+black-box hallucination detection for generative large language models.
+*Proceedings of the 2023 Conference on Empirical Methods in Natural Language
+Processing*, 9004–9017. Singapore.
+
+Min, S., Krishna, K., Lyu, X., Lewis, M., Yih, W., Koh, P. W., Iyyer, M.,
+Zettlemoyer, L., & Hajishirzi, H. (2023). FActScore: Fine-grained atomic
+evaluation of factual precision in long form text generation. *Proceedings of
+the 2023 Conference on Empirical Methods in Natural Language Processing.*
+⚠ *pages; confirm full author list*
+
+Reimers, N., & Gurevych, I. (2019). Sentence-BERT: Sentence embeddings using
+Siamese BERT-networks. *Proceedings of the 2019 Conference on Empirical Methods
+in Natural Language Processing and the 9th International Joint Conference on
+Natural Language Processing (EMNLP-IJCNLP)*, 3982–3992. Hong Kong, China.
+
+⚠ *Still to add: a citation for Qwen2.5 (the generator) and for the
+`cross-encoder/nli-deberta-v3-base` checkpoint — cite the model card or its
+associated report, not just the HuggingFace URL.*

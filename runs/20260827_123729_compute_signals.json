@@ -1,0 +1,18 @@
+{
+  "stage": "compute_signals",
+  "timestamp_utc": "2026-08-27T08:37:29.985673+00:00",
+  "args": {
+    "generations": "E:\\Coding\\Hallucination research\\data\\generations.jsonl",
+    "out": "E:\\Coding\\Hallucination research\\data\\signals.jsonl",
+    "consistency_method": "nli",
+    "nli_model": "cross-encoder/nli-deberta-v3-base",
+    "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+    "device": "cuda",
+    "batch_size": 32,
+    "limit": null,
+    "resume": false,
+    "seed": 42
+  },
+  "python": "3.12.0",
+  "platform": "win32"
+}

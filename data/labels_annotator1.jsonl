@@ -20,3 +20,4 @@
 {"qa_id": "2505.17503__dataset", "annotator": "annotator1", "label": "supported", "is_abstention": false, "note": "", "blind": true, "timestamp_utc": "2026-08-26T21:18:06.569756+00:00"}
 {"qa_id": "2505.17503__finding", "annotator": "annotator1", "label": "supported", "is_abstention": false, "note": "", "blind": true, "timestamp_utc": "2026-08-26T21:18:20.634356+00:00"}
 {"qa_id": "2606.03728__dataset", "annotator": "annotator1", "label": "supported", "is_abstention": false, "note": "", "blind": true, "timestamp_utc": "2026-08-26T21:18:34.210394+00:00"}
+{"qa_id": "2410.03726__dataset", "annotator": "annotator1", "label": "supported", "is_abstention": false, "note": "", "blind": true, "timestamp_utc": "2026-08-27T08:37:31.646034+00:00"}
