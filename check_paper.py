@@ -73,8 +73,21 @@ def main() -> None:
             fails.append("%s -> %s" % (label, got))
 
     print("\nCITATIONS")
-    cited = set(re.findall(R + r"cite\{([^}]*)\}", t))
+    cited = set()
+    for grp in re.findall(R + r"cite[tp]?\*?(?:\[[^\]]*\])*\{([^}]*)\}", t):
+        cited.update(k.strip() for k in grp.split(",") if k.strip())
+
+    # Keys may come from a manual thebibliography or, as now, a .bib file.
     defined = set(re.findall(R + r"bibitem\[[^\]]*\]\{([^}]*)\}", t))
+    try:
+        bib = open("references.bib", encoding="utf-8").read()
+        defined |= set(re.findall(r"@\w+\s*\{\s*([^,\s]+)\s*,", bib))
+        todos = len(re.findall(r"TODO", bib))
+        if todos:
+            print("  NOTE: %d TODO field(s) in references.bib "
+                  "(missing page numbers)" % todos)
+    except FileNotFoundError:
+        pass
     print("  cited     : %d" % len(cited))
     print("  defined   : %d" % len(defined))
     print("  undefined : %s" % (sorted(cited - defined) or "none"))

@@ -13,6 +13,9 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{booktabs}
 \usepackage{graphicx}
+% Finds the figure whether it sits beside paper.tex (as on Overleaf) or in the
+% repository's data/results/ directory.
+\graphicspath{{./}{figures/}{data/results/}}
 \usepackage{amsmath}
 \usepackage{siunitx}
 \usepackage[hidelinks]{hyperref}
@@ -449,6 +452,17 @@ score.}
 \label{tab:overall}
 \end{table}
 
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{signals_comparison}
+\caption{Left: detection performance with 95\% bootstrap confidence intervals.
+Centre: cross-validated $F_1$ by retrieval condition. Right: the accuracy--cost
+relationship, with per-query latency on a log scale. The rightmost panel is the
+paper's central observation---the points do not trend upward, and the leading
+signal sits at the extreme left of the cost axis.}
+\label{fig:signals}
+\end{figure}
+
 Mean token log-probability is the strongest single signal at AUROC $0.849$, and
 it is free---\SI{0.02}{\milli\second}, essentially the cost of averaging a list
 of numbers the generator has already produced. The NLI cross-encoder, at
@@ -463,6 +477,11 @@ compared against, and it does not perform the role well. Its $F_1$ of $0.589$ is
 below the free signal's $0.685$, at roughly \num{200000} times the cost, and its
 binary agreement with the human consensus is only $0.693$. The hardened second
 prompt performed marginally worse than the first.
+
+Figure~\ref{fig:signals} plots the same data against cost. If detection quality
+were purchased with compute, the rightmost panel would trend upward; it does not.
+The two cheapest signals occupy the top of the accuracy axis and the far left of
+the cost axis simultaneously.
 
 The combined logistic regression ($0.835$) does not improve on its best
 component. With four correlated features and 150 items this is unsurprising, but
@@ -705,53 +724,6 @@ behave identically across model sizes.
 
 % ===========================================================================
 \bibliographystyle{apacite}
-\begin{thebibliography}{9}
-
-\bibitem[He et al.(2021)]{he2021deberta}
-He, P., Liu, X., Gao, J., \& Chen, W. (2021).
-DeBERTa: Decoding-enhanced BERT with disentangled attention.
-\emph{International Conference on Learning Representations (ICLR 2021)}.
-
-\bibitem[Laban et al.(2022)]{laban2022summac}
-Laban, P., Schnabel, T., Bennett, P. N., \& Hearst, M. A. (2022).
-SummaC: Re-visiting NLI-based models for inconsistency detection in
-summarization.
-\emph{Transactions of the Association for Computational Linguistics}, 10.
-
-\bibitem[Landis \& Koch(1977)]{landis1977measurement}
-Landis, J. R., \& Koch, G. G. (1977).
-The measurement of observer agreement for categorical data.
-\emph{Biometrics}, 33(1).
-
-\bibitem[Lewis et al.(2020)]{lewis2020retrieval}
-Lewis, P., Perez, E., Piktus, A., Petroni, F., Karpukhin, V., Goyal, N.,
-K\"uttler, H., Lewis, M., Yih, W., Rockt\"aschel, T., Riedel, S., \& Kiela, D.
-(2020).
-Retrieval-augmented generation for knowledge-intensive NLP tasks.
-\emph{Advances in Neural Information Processing Systems}, 33.
-
-\bibitem[Manakul et al.(2023)]{manakul2023selfcheckgpt}
-Manakul, P., Liusie, A., \& Gales, M. J. F. (2023).
-SelfCheckGPT: Zero-resource black-box hallucination detection for generative
-large language models.
-\emph{Proceedings of the 2023 Conference on Empirical Methods in Natural
-Language Processing}, 9004--9017.
-
-\bibitem[Min et al.(2023)]{min2023factscore}
-Min, S., Krishna, K., Lyu, X., Lewis, M., Yih, W., Koh, P. W., Iyyer, M.,
-Zettlemoyer, L., \& Hajishirzi, H. (2023).
-FActScore: Fine-grained atomic evaluation of factual precision in long form
-text generation.
-\emph{Proceedings of the 2023 Conference on Empirical Methods in Natural
-Language Processing}.
-
-\bibitem[Reimers \& Gurevych(2019)]{reimers2019sentencebert}
-Reimers, N., \& Gurevych, I. (2019).
-Sentence-BERT: Sentence embeddings using Siamese BERT-networks.
-\emph{Proceedings of the 2019 Conference on Empirical Methods in Natural
-Language Processing and the 9th International Joint Conference on Natural
-Language Processing (EMNLP-IJCNLP)}, 3982--3992.
-
-\end{thebibliography}
+\bibliography{references}
 
 \end{document}
