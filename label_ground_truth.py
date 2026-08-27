@@ -65,31 +65,57 @@ Not whether the answer is true in the world. Not whether it is well written.
   n  add a note      b  back (redo previous)      k  skip      q  save & quit
   ?  show this help
 
-TRICKY CASES you WILL hit (measured on ~69% of poorly-supported items)
-----------------------------------------------------------------------
-The question names a paper. When the context is a DIFFERENT paper, the model
-can tell, and it responds in one of three ways. They get different labels:
+THE ONE MISTAKE TO AVOID
+------------------------
+Do NOT label an answer `supported` because it looks CORRECT. An answer can be
+completely true and still be UNSUPPORTED, because the context does not say it.
+"Supported" means "the context in front of me states this", nothing else.
 
- 1. "This does not appear to relate to the context. I cannot answer."
-    -> r   Clean refusal. Asserts nothing ungrounded.
+If you find yourself thinking "yes, that is what that paper does" -- stop. Ask
+instead: "can I point at the sentence in THIS context that says so?" If you
+cannot, it is not supported, however right it sounds.
 
- 2. "This isn't the right context, but the paper you mention seems to propose
-     attention-based auditing..."
-    -> p or u   It is guessing content from the TITLE IN THE QUESTION, not from
-    the context. Those claims are NOT context-supported. Judge how much of the
-    answer is that guessing: a sentence or two -> p, the whole answer -> u.
 
- 3. "The context is for paper Y, not paper X. Paper Y introduces ETRAG, which
-     does <accurate summary of Y>..."
-    -> s + n   This is genuinely supported: every claim IS in the context. It
-    just answers about the wrong paper. Label it supported and ADD A NOTE
-    ("answered about context paper"), because it is a real failure that our
-    grounding signals cannot see and we want to count it separately.
+TRICKY CASES you WILL hit (~2/3 of poorly-supported items)
+-----------------------------------------------------------
+Some items were deliberately given the WRONG paper. The model usually notices,
+then reacts in one of four ways. Cases 3 and 4 look similar and are OPPOSITES.
 
-The rule that resolves all three: ask only "is each claim in this answer
-backed by the context in front of me?" -- never "did it answer my question?"
-That second question matters, but it is not what the signals measure, so it
-belongs in a note rather than in the label.
+ 1. REFUSES.
+    "This does not appear to relate to the context. I cannot answer."
+    -> r    Asserts nothing ungrounded.
+
+ 2. REFUSES, THEN GUESSES FROM THE TITLE.
+    "Not the right context, but that paper seems to be about attention-based
+     auditing..."
+    -> p or u    It is inventing from the TITLE IN THE QUESTION, not reading the
+    context. A sentence or two of this -> p. A whole answer of it -> u.
+
+ 3. DESCRIBES THE PAPER IT WAS GIVEN.        <-- SUPPORTED
+    "The context is for paper Y, not paper X. Paper Y introduces ETRAG, which
+     <accurate summary of the context>..."
+    -> s + n note "answered about context paper"
+    Every claim IS in the context. It answered the wrong question, which is a
+    real failure, but not an ungrounded one. The note is how we count it.
+
+ 4. ANSWERS ABOUT THE REQUESTED PAPER FROM MEMORY.    <-- UNSUPPORTED
+    "Paper X does not relate to this context. Paper X proposes a layered
+     oversight method that..."
+    -> u + n note "answered from parametric knowledge"
+    The model recognised paper X from its training data and described it. Those
+    claims are NOT in the context, so they are not supported -- even if every
+    word is factually right. THIS IS THE CENTRAL CASE OUR STUDY IS ABOUT: the
+    model ignoring the retrieved document and falling back on what it memorised.
+    Labelling these `supported` because they are accurate would erase exactly
+    the failure we are trying to detect.
+
+ 3 vs 4 in one line: does the answer describe THE PAPER IN FRONT OF YOU (3, ->s)
+ or THE PAPER NAMED IN THE QUESTION (4, ->u)?
+
+The rule that resolves all four: ask only "is each claim in this answer backed
+by the context in front of me?" -- never "is it true?" and never "did it answer
+my question?" Those matter, but they are not what the signals measure, so they
+belong in a note rather than in the label.
 """
 
 

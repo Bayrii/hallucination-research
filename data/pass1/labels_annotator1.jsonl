@@ -120,3 +120,31 @@
 {"qa_id": "2503.02623__dataset", "annotator": "annotator1", "label": "partially_supported", "is_abstention": false, "note": "", "blind": true, "timestamp_utc": "2026-08-27T09:21:00.632088+00:00"}
 {"qa_id": "2601.16503__dataset", "annotator": "annotator1", "label": "supported", "is_abstention": false, "note": "answered about paper X via web search", "blind": true, "timestamp_utc": "2026-08-27T09:23:03.135966+00:00"}
 {"qa_id": "2602.13540__dataset", "annotator": "annotator1", "label": "partially_supported", "is_abstention": false, "note": "", "blind": true, "timestamp_utc": "2026-08-27T09:23:12.320115+00:00"}
+{"qa_id": "2503.08890__dataset", "annotator": "annotator1", "label": "partially_supported", "is_abstention": false, "note": "answered about paper X via web search", "blind": true, "timestamp_utc": "2026-08-27T09:23:30.296195+00:00"}
+{"qa_id": "2606.03728__finding", "annotator": "annotator1", "label": "partially_supported", "is_abstention": false, "note": "answered about paper X via web search", "blind": true, "timestamp_utc": "2026-08-27T09:23:55.279585+00:00"}
+{"qa_id": "2507.02949__method", "annotator": "annotator1", "label": "partially_supported", "is_abstention": false, "note": "answered about paper X via web search", "blind": true, "timestamp_utc": "2026-08-27T09:24:18.368084+00:00"}
+{"qa_id": "2510.10913__finding", "annotator": "annotator1", "label": "supported", "is_abstention": false, "note": "", "blind": true, "timestamp_utc": "2026-08-27T09:24:33.967539+00:00"}
+{"qa_id": "2307.04642__method", "annotator": "annotator1", "label": "supported", "is_abstention": false, "note": "", "blind": true, "timestamp_utc": "2026-08-27T09:24:45.808056+00:00"}
+{"qa_id": "2601.02179__dataset", "annotator": "annotator1", "label": "supported", "is_abstention": false, "note": "", "blind": true, "timestamp_utc": "2026-08-27T09:25:01.951603+00:00"}
+{"qa_id": "2411.19203__finding", "annotator": "annotator1", "label": "supported", "is_abstention": false, "note": "", "blind": true, "timestamp_utc": "2026-08-27T09:25:09.520275+00:00"}
+{"qa_id": "2412.18004__method", "annotator": "annotator1", "label": "supported", "is_abstention": false, "note": "", "blind": true, "timestamp_utc": "2026-08-27T09:25:17.495826+00:00"}
+{"qa_id": "2404.07060__finding", "annotator": "annotator1", "label": "supported", "is_abstention": false, "note": "", "blind": true, "timestamp_utc": "2026-08-27T09:25:25.608451+00:00"}
+{"qa_id": "2507.02949__finding", "annotator": "annotator1", "label": "partially_supported", "is_abstention": false, "note": "answered about paper X via web search", "blind": true, "timestamp_utc": "2026-08-27T09:25:40.784121+00:00"}
+{"qa_id": "2509.26011__finding", "annotator": "annotator1", "label": "supported", "is_abstention": false, "note": "", "blind": true, "timestamp_utc": "2026-08-27T09:25:48.760333+00:00"}
+{"qa_id": "2505.17503__method", "annotator": "annotator1", "label": "supported", "is_abstention": false, "note": "", "blind": true, "timestamp_utc": "2026-08-27T09:26:00.808404+00:00"}
+{"qa_id": "2509.20859__dataset", "annotator": "annotator1", "label": "supported", "is_abstention": false, "note": "", "blind": true, "timestamp_utc": "2026-08-27T09:26:08.424019+00:00"}
+{"qa_id": "2410.03726__finding", "annotator": "annotator1", "label": "supported", "is_abstention": false, "note": "", "blind": true, "timestamp_utc": "2026-08-27T09:26:16.071613+00:00"}
+{"qa_id": "2502.01142__finding", "annotator": "annotator1", "label": "supported", "is_abstention": false, "note": "", "blind": true, "timestamp_utc": "2026-08-27T09:26:25.904006+00:00"}
+{"qa_id": "2503.08890__finding", "annotator": "annotator1", "label": "partially_supported", "is_abstention": false, "note": "answered about paper X via web search", "blind": true, "timestamp_utc": "2026-08-27T09:26:44.047173+00:00"}
+{"qa_id": "2510.10913__method", "annotator": "annotator1", "label": "partially_supported", "is_abstention": false, "note": "answered about paper X via web search", "blind": true, "timestamp_utc": "2026-08-27T09:26:58.584353+00:00"}
+{"qa_id": "2601.16503__method", "annotator": "annotator1", "label": "partially_supported", "is_abstention": false, "note": "answered about paper X via web search", "blind": true, "timestamp_utc": "2026-08-27T09:27:13.837610+00:00"}
+{"qa_id": "2507.02949__dataset", "annotator": "annotator1", "label": "partially_supported", "is_abstention": false, "note": "answered about paper X via web search", "blind": true, "timestamp_utc": "2026-08-27T09:27:46.287401+00:00"}
+{"qa_id": "2303.03278__dataset", "annotator": "annotator1", "label": "supported", "is_abstention": false, "note": "", "blind": true, "timestamp_utc": "2026-08-27T09:28:00.064416+00:00"}
+{"qa_id": "2409.01864__finding", "annotator": "annotator1", "label": "partially_supported", "is_abstention": false, "note": "answered about paper X via web search", "blind": true, "timestamp_utc": "2026-08-27T09:28:15.840021+00:00"}
+{"qa_id": "2510.10913__dataset", "annotator": "annotator1", "label": "supported", "is_abstention": false, "note": "", "blind": true, "timestamp_utc": "2026-08-27T09:28:26.608094+00:00"}
+{"qa_id": "2503.02623__finding", "annotator": "annotator1", "label": "supported", "is_abstention": false, "note": "", "blind": true, "timestamp_utc": "2026-08-27T09:28:34.911417+00:00"}
+{"qa_id": "2406.03790__method", "annotator": "annotator1", "label": "supported", "is_abstention": false, "note": "", "blind": true, "timestamp_utc": "2026-08-27T09:28:42.487921+00:00"}
+{"qa_id": "2303.03278__method", "annotator": "annotator1", "label": "supported", "is_abstention": false, "note": "", "blind": true, "timestamp_utc": "2026-08-27T09:28:50.584366+00:00"}
+{"qa_id": "2605.00199__method", "annotator": "annotator1", "label": "supported", "is_abstention": false, "note": "", "blind": true, "timestamp_utc": "2026-08-27T09:28:58.808512+00:00"}
+{"qa_id": "2509.07925__finding", "annotator": "annotator1", "label": "partially_supported", "is_abstention": false, "note": "answered about paper X via web search", "blind": true, "timestamp_utc": "2026-08-27T09:31:21.400621+00:00"}
+{"qa_id": "2307.04642__dataset", "annotator": "annotator1", "label": "partially_supported", "is_abstention": false, "note": "answered about paper X via web search", "blind": true, "timestamp_utc": "2026-08-27T09:33:13.111954+00:00"}
