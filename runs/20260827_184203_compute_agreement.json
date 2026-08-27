@@ -1,0 +1,15 @@
+{
+  "stage": "compute_agreement",
+  "timestamp_utc": "2026-08-27T14:42:03.406167+00:00",
+  "args": {
+    "a1": "/home/admin123/Research/hallucination-research/data/labels_annotator1.jsonl",
+    "a2": "/home/admin123/Research/hallucination-research/data/labels_annotator2.jsonl",
+    "generations": "/home/admin123/Research/hallucination-research/data/generations.jsonl",
+    "export_disagreements": null,
+    "resolve": false,
+    "final_out": "/home/admin123/Research/hallucination-research/data/labels_final.jsonl",
+    "width": 78
+  },
+  "python": "3.10.12",
+  "platform": "linux"
+}

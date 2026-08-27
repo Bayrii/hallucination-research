@@ -1,0 +1,19 @@
+{
+  "stage": "label_ground_truth",
+  "timestamp_utc": "2026-08-27T14:41:40.247161+00:00",
+  "args": {
+    "generations": "/home/admin123/Research/hallucination-research/data/generations.jsonl",
+    "qa_pairs": "/home/admin123/Research/hallucination-research/data/qa_pairs.csv",
+    "annotator": "annotator1",
+    "out": null,
+    "width": 78,
+    "limit": null,
+    "subset": null,
+    "subset_seed": 42,
+    "no_shuffle": false,
+    "show_condition": false,
+    "no_clear": true
+  },
+  "python": "3.10.12",
+  "platform": "linux"
+}
