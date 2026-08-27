@@ -1,0 +1,110 @@
+% ---------------------------------------------------------------------------
+% COVER LETTER — submitted separately from the manuscript.
+%
+% This document is NOT anonymised. It is the place for names, affiliations and
+% the student-eligibility statement, all of which must stay out of paper.tex.
+%
+% FILL IN every [BRACKETED] field before submitting.
+% ---------------------------------------------------------------------------
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{lmodern}
+\usepackage{parskip}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent
+[YOUR NAME]\\
+[YOUR INSTITUTION]\\
+[YOUR EMAIL]
+
+\vspace{1em}
+\noindent [DATE]
+
+\vspace{1.5em}
+\noindent
+To the Editors,
+
+\vspace{1em}
+
+We are pleased to submit our manuscript, \textit{``Detecting Hallucinations in
+Retrieval-Augmented Generation: Can Lightweight Confidence Signals Catch
+Unsupported Claims?''}, for consideration.
+
+The paper addresses a practical problem in deploying retrieval-augmented
+generation: such systems still produce claims their retrieved context does not
+support, and the standard remedy---checking each output with a second, larger
+judge model---assumes a compute budget that many teams do not have. We ask how
+much of that checking can be recovered from signals already available at
+inference time on modest hardware, and we treat computational cost as a reported
+outcome rather than an afterthought.
+
+Our central finding runs against the ordering the literature's framing implies.
+Across 150 question--context pairs, evaluated against a two-annotator consensus
+($\kappa = 0.78$), mean token log-probability---which is free, requiring nothing
+beyond numbers the generator has already computed---achieved the highest
+detection performance (AUROC 0.849). A 184M-parameter NLI cross-encoder reached
+0.669 at 2.6 seconds per query, and a 7B LLM-as-judge scored a lower $F_1$ than
+the free signal at 5.0 seconds, agreeing with our human annotators only 69.3\%
+of the time. We verify that the log-probability result is not reducible to
+answer length, and we are explicit about the mechanism we believe underlies it
+and about the conditions under which we would expect it to fail.
+
+We think the work suits the venue for three reasons. It is a complete empirical
+study with a negative-to-surprising result, conducted end to end on a single
+6\,GB consumer GPU, which makes it directly reproducible by readers with similar
+constraints. It reports two secondary findings we did not set out to test: that
+an instruction-tuned model frequently refuses rather than fabricates when handed
+the wrong document, and that an LLM judge systematically violated an explicit
+instruction in its own rubric on essentially every applicable case. And it is
+candid about its limits---we state plainly where our sample is small, where our
+conditions are milder than intended, and where we would expect our headline
+result not to transfer.
+
+\vspace{0.5em}
+\noindent\textbf{Student eligibility.} [NAME] is currently a
+[undergraduate/graduate] student at [INSTITUTION], satisfying the requirement
+that at least one author be a student or have graduated within the last twelve
+months.
+
+\vspace{0.5em}
+\noindent\textbf{Originality.} This manuscript is original, unpublished, and is
+not under consideration at any other venue.
+
+\vspace{0.5em}
+\noindent\textbf{Anonymisation.} The manuscript file contains no names,
+affiliations, acknowledgements or funding statements.
+
+\vspace{0.5em}
+\noindent\textbf{Ethical approval.} The study involved no human subjects. The
+only human input was annotation of model-generated text by the authors
+themselves; no data was collected from or about any person, and no personal
+data was processed. We understand this to fall outside the scope of human
+subjects research and have therefore not sought ethical approval. We are glad to
+supply a formal exemption determination from our institution if the editors
+would prefer one. \textit{[Confirm this framing with your institution's ethics
+office before submitting, and delete this note.]}
+
+\vspace{0.5em}
+\noindent\textbf{Word count.} Approximately 4{,}600 words excluding references.
+
+\vspace{0.5em}
+\noindent\textbf{Data and code.} All code, the corpus, the generated outputs and
+the annotation files are available and will be released on acceptance. \textit{[If
+you link a repository, make sure the link is in this letter only---never in the
+manuscript---and that the repository is anonymised or private until the review
+is complete.]}
+
+\vspace{1.5em}
+\noindent
+Thank you for your time and consideration.
+
+\vspace{1em}
+\noindent
+Sincerely,\\
+[YOUR NAME], on behalf of both authors
+
+\end{document}
