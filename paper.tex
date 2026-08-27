@@ -24,6 +24,9 @@
 \onehalfspacing
 
 \sisetup{detect-weight=true, detect-family=true}
+% FLOP/s is not an SI unit, so siunitx does not define it. Declaring it here
+% keeps the throughput figures typeset consistently with the others.
+\DeclareSIUnit{\flop}{FLOP}
 
 \title{\textbf{Detecting Hallucinations in Retrieval-Augmented Generation:\\
 Can Lightweight Confidence Signals Catch Unsupported Claims?}}
@@ -353,7 +356,7 @@ convert a finding into a hidden researcher degree of freedom.
 \section{Experimental Setup}
 \label{sec:setup}
 
-\begin{table}[h]
+\begin{table}[htbp]
 \centering
 \small
 \begin{tabular}{@{}lll@{}}
@@ -375,7 +378,8 @@ Total generations & 900 & --- \\
 \label{tab:setup}
 \end{table}
 
-The \SI{6}{\giga\byte} budget cannot hold the generator and the scoring models
+Table~\ref{tab:setup} summarises the configuration. The \SI{6}{\giga\byte}
+budget cannot hold the generator and the scoring models
 at once, so models are loaded strictly one at a time and each is freed before
 the next. This constraint shapes the pipeline into discrete stages communicating
 through files on disk, which has the incidental benefit of making every stage
@@ -386,7 +390,7 @@ firmware-limited to a \SI{20}{\watt} board power budget against an
 \SI{80}{\watt} default, holding the SM clock at \SI{210}{\mega\hertz} of a
 possible \SI{2100}{\mega\hertz} even at full utilisation; a raw fp16 matrix
 multiply benchmarks at \SI{2.96}{\tera\flop\per\second} against the
-\SIrange{15}{20}{} expected of this part. Generation accordingly took
+15--20 expected of this part. Generation accordingly took
 \SI{15.6}{\hour} at a median of \SI{327}{\second} per item, rather than the
 roughly \SI{50}{\minute} the hardware should support. This affects wall-clock
 cost only, not any reported accuracy. Because all signals were timed on the same
@@ -423,7 +427,7 @@ Section~\ref{sec:discussion}.
 Table~\ref{tab:overall} gives the main result. The ordering is not the one we
 expected.
 
-\begin{table}[h]
+\begin{table}[htbp]
 \centering
 \small
 \begin{tabular}{@{}lccccr@{}}
@@ -452,9 +456,9 @@ score.}
 \label{tab:overall}
 \end{table}
 
-\begin{figure}[h]
+\begin{figure}[htbp]
 \centering
-\includegraphics[width=\textwidth]{signals_comparison}
+\includegraphics[width=\textwidth]{signals-comparison}
 \caption{Left: detection performance with 95\% bootstrap confidence intervals.
 Centre: cross-validated $F_1$ by retrieval condition. Right: the accuracy--cost
 relationship, with per-query latency on a log scale. The rightmost panel is the
@@ -500,7 +504,7 @@ hedges and elaborates when it cannot ground itself.
 
 \subsection{Breakdown by retrieval condition}
 
-\begin{table}[h]
+\begin{table}[htbp]
 \centering
 \small
 \begin{tabular}{@{}lccc@{}}
@@ -522,7 +526,8 @@ NLI non-contradict  & 0.570 & 0.488 & 0.431 \\
 \label{tab:condition}
 \end{table}
 
-Log-probability is the most stable signal across conditions, varying only
+Table~\ref{tab:condition} breaks performance down by retrieval condition.
+Log-probability is the most stable signal, varying only
 between $0.754$ and $0.852$. Most others move considerably more. ROUGE-L reaches
 $0.979$ on partially supported items, where the retrieved abstract is correct
 but silent on the specific fact asked for; in that setting a model that

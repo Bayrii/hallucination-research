@@ -19,3 +19,4 @@ data/labels_final_test.jsonl
 data/disagreements_smoke.csv
 data/results/smoke_*
 data/smoke_*.jsonl
+data/results/signals_comparison.png

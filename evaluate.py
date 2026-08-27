@@ -430,7 +430,7 @@ def main() -> None:
     ap.add_argument("--combined", action="store_true",
                     help="also fit a CV'd logistic regression over the signals")
     ap.add_argument("--out-csv", default=str(RESULTS_DIR / "summary.csv"))
-    ap.add_argument("--out-png", default=str(RESULTS_DIR / "signals_comparison.png"))
+    ap.add_argument("--out-png", default=str(RESULTS_DIR / "signals-comparison.png"))
     ap.add_argument("--seed", type=int, default=42)
     args = ap.parse_args()
 
