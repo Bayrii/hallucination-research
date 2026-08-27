@@ -59,15 +59,6 @@ git commit -m "annotator2 labels"
 git push
 ```
 
-> **Already started with `--subset 50`? Do not delete anything.** Just run the
-> command without the flag. The tool resumes from your labels file, not from the
-> flag, so your existing labels are kept and it simply continues through the
-> remaining items. A label is the same judgement regardless of which pool it was
-> drawn from.
->
-> The `--subset N` option still exists if a future study wants a
-> sampled reliability pass; it is just not what we are doing here.
-
 ---
 
 ## What you do for each item
@@ -100,8 +91,7 @@ Other keys: `n` add a note · `b` go back and redo the last one · `k` skip ·
 Press `q` whenever you want. Running the command again continues exactly where
 you stopped — nothing is lost.
 
-Roughly 30 seconds per item, so about **1.5–2 hours** for Bayram and
-**30–40 minutes** for valiyyaddin.
+Roughly 25–30 seconds per item, so about **1–1.5 hours** each.
 
 ---
 
@@ -193,8 +183,12 @@ results. After that the rest is automatic:
 
 ---
 
-## You can start now
+## Notes
 
-You do not need to wait for the generation run to finish. The tool reads
-whatever is ready and skips what you have already done, so label some tonight
-and the rest whenever.
+All 150 generations are complete, so every item is available now. Press `q`
+whenever you like and re-run to continue — nothing is lost.
+
+Your first-pass labels are archived in `data/pass1/`. Do not copy them back into
+`data/`; the point of this pass is an independent second judgement, and the
+first-pass numbers are still needed to report how much the clarified guideline
+changed agreement.
