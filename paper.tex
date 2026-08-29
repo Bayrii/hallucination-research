@@ -200,8 +200,9 @@ Generation requires 900 calls (150 pairs $\times$ six samples each), which
 exceeds the free-tier daily quotas available to us, and free-tier support for
 log-probabilities is inconsistent across providers. Routing generation through a
 hosted API would also sit awkwardly with a paper arguing for cheap, local,
-reproducible detection. An API model is used only as a judge baseline
-(Section~\ref{sec:eval}), where the call budget is 150 rather than 900.
+reproducible detection. Every model reported in this paper, including the judge
+baseline of Section~\ref{sec:eval}, therefore runs locally on the hardware
+described in Section~\ref{sec:setup}.
 
 Three fixed question templates are applied to every abstract, asking about the
 proposed method, the datasets used, and the main finding. Each template names
