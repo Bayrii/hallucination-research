@@ -1,11 +1,11 @@
-% ---------------------------------------------------------------------------
-% COVER LETTER — submitted separately from the manuscript.
+% -------------------------------------------------------------------------
+% COVER LETTER, submitted separately from the manuscript.
 %
 % This document is NOT anonymised. It is the place for names, affiliations and
 % the student-eligibility statement, all of which must stay out of paper.tex.
 %
 % FILL IN every [BRACKETED] field before submitting.
-% ---------------------------------------------------------------------------
+% -------------------------------------------------------------------------
 \documentclass[11pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -36,16 +36,16 @@ Unsupported Claims?''}, for consideration.
 
 The paper addresses a practical problem in deploying retrieval-augmented
 generation: such systems still produce claims their retrieved context does not
-support, and the standard remedy---checking each output with a second, larger
-judge model---assumes a compute budget that many teams do not have. We ask how
+support, and the standard remedy, checking each output with a second, larger
+judge model, assumes a compute budget that many teams do not have. We ask how
 much of that checking can be recovered from signals already available at
 inference time on modest hardware, and we treat computational cost as a reported
 outcome rather than an afterthought.
 
 Our central finding runs against the ordering the literature's framing implies.
 Across 150 question--context pairs, evaluated against a two-annotator consensus
-($\kappa = 0.78$), mean token log-probability---which is free, requiring nothing
-beyond numbers the generator has already computed---achieved the highest
+($\kappa = 0.78$), mean token log-probability, which is free and requires nothing
+beyond numbers the generator has already computed, achieved the highest
 detection performance (AUROC 0.849). A 184M-parameter NLI cross-encoder reached
 0.669 at 2.6 seconds per query, and a 7B LLM-as-judge scored a lower $F_1$ than
 the free signal at 5.0 seconds, agreeing with our human annotators only 69.3\%
@@ -60,7 +60,7 @@ constraints. It reports two secondary findings we did not set out to test: that
 an instruction-tuned model frequently refuses rather than fabricates when handed
 the wrong document, and that an LLM judge systematically violated an explicit
 instruction in its own rubric on essentially every applicable case. And it is
-candid about its limits---we state plainly where our sample is small, where our
+candid about its limits: we state plainly where our sample is small, where our
 conditions are milder than intended, and where we would expect our headline
 result not to transfer.
 
@@ -94,8 +94,8 @@ office before submitting, and delete this note.]}
 \vspace{0.5em}
 \noindent\textbf{Data and code.} All code, the corpus, the generated outputs and
 the annotation files are available and will be released on acceptance. \textit{[If
-you link a repository, make sure the link is in this letter only---never in the
-manuscript---and that the repository is anonymised or private until the review
+you link a repository, make sure the link is in this letter only, never in the
+manuscript, and that the repository is anonymised or private until the review
 is complete.]}
 
 \vspace{1.5em}

@@ -46,9 +46,9 @@ a second, larger judge model, which is impractical for teams without that
 budget. We ask how far one can get using only signals already available at
 inference time on modest hardware. Over 150 question--context pairs built from
 50 arXiv abstracts, generated with a 4-bit Qwen2.5-7B on a single 6\,GB consumer
-GPU, we compare three such signals---token log-probability, self-consistency
+GPU, we compare three such signals (token log-probability, self-consistency
 across sampled generations, and NLI entailment against the retrieved
-context---against a near-free lexical baseline and a 7B LLM-as-judge. Ground
+context) against a near-free lexical baseline and a 7B LLM-as-judge. Ground
 truth is a two-annotator consensus ($\kappa = 0.78$). The ordering we found
 inverts the one the literature assumes. Mean token log-probability, which costs
 nothing beyond the generation itself, achieves the highest detection performance
@@ -84,7 +84,7 @@ the most frequently cited obstacles to deploying them.
 The dominant response is to check the output with a second model. An LLM judge,
 prompted with the context and the answer, is asked whether the latter follows
 from the former. This works, but it doubles inference cost and presumes access
-to a model large enough to be trusted as an arbiter---an assumption that fails
+to a model large enough to be trusted as an arbiter, an assumption that fails
 precisely for the teams most exposed to the problem. A student group, a small
 company, or anyone running on a single consumer GPU cannot casually add a
 frontier-model call to every query.
@@ -139,7 +139,7 @@ the granularity of the training data and the task differ. SummaC
 computing pairwise entailment, and aggregating the resulting matrix, which
 recovered much of the performance earlier work had failed to obtain. FActScore
 \cite{min2023factscore} pushed the decomposition further, breaking generations
-into atomic facts and scoring each independently---a distinction that becomes
+into atomic facts and scoring each independently, a distinction that becomes
 relevant to our results in Section~\ref{sec:results}.
 
 \paragraph{Probability-based signals.}
@@ -205,7 +205,7 @@ reproducible detection. An API model is used only as a judge baseline
 
 Three fixed question templates are applied to every abstract, asking about the
 proposed method, the datasets used, and the main finding. Each template names
-the target paper explicitly---for example, \emph{``What method or approach does
+the target paper explicitly. For example, \emph{``What method or approach does
 the paper `X' propose?''} This is not cosmetic. A deictic formulation
 (``\ldots does \emph{this} paper propose?'') contains nothing a retriever can
 match on; measured over the 100 items that use live retrieval, top-1 hit rate
@@ -224,7 +224,7 @@ Answer:} and held constant across all conditions.
 Each question--context pair is assigned to one of three conditions. Under
 \textbf{well-supported}, retrieval proceeds normally and returns the source
 abstract. Under \textbf{partially supported}, retrieval is also normal, but the
-abstract does not contain the specific fact asked for---most often a dataset
+abstract does not contain the specific fact asked for, most often a dataset
 name that the abstract never states. Under \textbf{poorly supported},
 retrieval is overridden and a different abstract is supplied, simulating
 retriever failure.
@@ -245,7 +245,7 @@ The observed hit rate was 97/100.
 \subsection{Ground truth}
 
 Two annotators independently labelled all 150 generated answers on a three-point
-scale---\emph{supported}, \emph{partially supported}, \emph{unsupported}---
+scale (\emph{supported}, \emph{partially supported}, \emph{unsupported})
 rather than a binary. Collapsing to binary is deferred to evaluation time and
 treated as a reported analysis choice rather than a labelling decision.
 
@@ -270,7 +270,7 @@ the conventional interpretation \cite{landis1977measurement}. We report the
 linearly weighted figure as the headline because the label scale is ordinal:
 unweighted $\kappa$ penalises a supported/partially-supported near-miss as
 heavily as a supported/unsupported inversion, and so understates real
-agreement. There were no inversions---no item on which one annotator recorded
+agreement. There were no inversions: no item on which one annotator recorded
 \emph{supported} and the other \emph{unsupported}. The fifteen disagreements
 were all a single step apart on the ordinal scale and were settled by discussion
 into the consensus set used throughout.
@@ -303,7 +303,8 @@ claims, an entailment matrix is computed over all pairs, and per-claim scores
 are taken as the maximum over context sentences.
 
 We aggregate across claims by mean rather than the stricter minimum. The
-minimum variant---the natural choice, and our initial default---proved unusable,
+minimum variant, which was the natural choice and our initial default, proved
+unusable,
 saturating near zero for nearly every item including correctly answered ones.
 The cause is claim granularity rather than any defect in the model. Sentence-level
 ``claims'' produced by an LLM are compound, mixing supported content with
@@ -395,7 +396,7 @@ multiply benchmarks at \SI{2.96}{\tera\flop\per\second} against the
 roughly \SI{50}{\minute} the hardware should support. This affects wall-clock
 cost only, not any reported accuracy. Because all signals were timed on the same
 machine, their relative ordering is unaffected, but absolute latencies should be
-read as upper bounds---and the gap between the CPU-side log-probability
+read as upper bounds. The gap between the CPU-side log-probability
 computation and the GPU-bound NLI models is, if anything, understated.
 
 Random seeds are fixed throughout. The greedy pass is decoded at temperature $0$
@@ -462,13 +463,13 @@ score.}
 \caption{Left: detection performance with 95\% bootstrap confidence intervals.
 Centre: cross-validated $F_1$ by retrieval condition. Right: the accuracy--cost
 relationship, with per-query latency on a log scale. The rightmost panel is the
-paper's central observation---the points do not trend upward, and the leading
+paper's central observation: the points do not trend upward, and the leading
 signal sits at the extreme left of the cost axis.}
 \label{fig:signals}
 \end{figure}
 
 Mean token log-probability is the strongest single signal at AUROC $0.849$, and
-it is free---\SI{0.02}{\milli\second}, essentially the cost of averaging a list
+it is free, at \SI{0.02}{\milli\second}, essentially the cost of averaging a list
 of numbers the generator has already produced. The NLI cross-encoder, at
 \SI{2.6}{\second} per query, reaches $0.669$. Self-consistency, the most
 expensive signal at \SI{3.2}{\second}, reaches $0.673$. The confidence intervals
@@ -556,7 +557,7 @@ sensitive to distractor difficulty than the expensive one.
 The result is easier to accept once one is precise about what mean
 log-probability measures. It is not a measure of truth, and not really a measure
 of grounding either. It measures how predictable the generated tokens were given
-the prompt---and when a relevant document sits in the prompt, the most
+the prompt. When a relevant document sits in the prompt, the most
 predictable continuation is one that reuses it. Copying is cheap in
 log-probability terms; composing from parametric memory is not.
 
@@ -568,8 +569,8 @@ distractor conditions do not produce many such cases, and a dataset built to
 contain them would probably show a different ordering.
 
 The corollary for the NLI signal is less comfortable. It underperforms not
-because the model is weak---on controlled pairs it behaves exactly as
-documented---but because the unit it is asked to score does not match the unit
+because the model is weak (on controlled pairs it behaves exactly as
+documented) but because the unit it is asked to score does not match the unit
 LLMs produce. Model answers are long, compound sentences that interleave
 supported content with unsupported elaboration, and sentence-level NLI has no
 way to report ``three-quarters of this is fine''. The min aggregation collapses
@@ -597,7 +598,7 @@ The consequence is that our positive class is smaller and less adversarial than
 intended, and that abstention handling is an analysis flag rather than a
 convention. It also suggests that for the wrong-document failure mode
 specifically, a well-behaved instruction-tuned model may need less external
-checking than assumed---the interesting residue being the minority of cases
+checking than assumed, with the interesting residue being the minority of cases
 where it fails to notice.
 
 \subsection{The judge is not a reliable ceiling}
@@ -623,7 +624,7 @@ shortfall: where a rubric and the model's prior disagree, the prior wins, and
 further instruction does not recover it. This bears on the framing of the paper.
 The usual argument for cheap signals is cost. This suggests a second axis. A
 prompted judge can misread a rubric silently and systematically, whereas a
-mechanical signal has no rubric to misread---it emits a number, and the mapping
+mechanical signal has no rubric to misread: it emits a number, and the mapping
 from that number to a decision is the experimenter's, inspectable and adjustable
 after the fact. The judge's failure here was invisible without exactly the kind
 of audit we happened to perform.
@@ -637,7 +638,7 @@ together cost under \SI{50}{\milli\second} and, on this data, outperform
 everything more expensive. Whether that ordering holds on data containing
 context-mimicking hallucinations is an open question, and the honest form of the
 recommendation is to measure the free signals on one's own data before
-provisioning a judge---not to assume, as the literature's framing invites, that
+provisioning a judge, rather than assuming, as the literature's framing invites, that
 detection quality must be purchased.
 
 % ===========================================================================
@@ -684,7 +685,7 @@ failure, which is a harder and arguably more realistic setting.
 Our annotation criterion asks whether the context supports the answer's claims,
 which is close to what an NLI model computes. Had the NLI signal performed well,
 that closeness would warrant caution. It performed poorly, so the concern does
-not arise in this instance---but it would apply to any future work that improves
+not arise in this instance, but it would apply to any future work that improves
 the decomposition.
 
 \paragraph{Hardware.}
@@ -698,16 +699,16 @@ since all were timed identically, but absolute figures are upper bounds.
 We compared three inference-time hallucination-detection signals on a
 150-item RAG benchmark under a strict hardware constraint, measuring cost
 alongside accuracy. On our data the ordering runs opposite to the one the
-literature's framing implies. Mean token log-probability---free, requiring
-nothing beyond numbers the generator already computes---achieved the highest
+literature's framing implies. Mean token log-probability, which is free and requires
+nothing beyond numbers the generator already computes, achieved the highest
 detection performance at AUROC $0.849$, while an NLI cross-encoder reached
 $0.669$ at \SI{2.6}{\second} per query and a 7B LLM judge scored a lower $F_1$
 than the free signal at \SI{5.0}{\second}, agreeing with human annotators only
 69.3\% of the time.
 
 We do not claim log-probability is a better hallucination detector in general.
-The mechanism we propose---that it separates copied text from composed
-text---predicts that it should fail on fabrications which mimic the retrieved
+The mechanism we propose, that it separates copied text from composed
+text, predicts that it should fail on fabrications which mimic the retrieved
 context closely, and our data contains few of those. What we do claim is
 narrower and, we think, more useful: that the assumption of a monotonic
 relationship between detector cost and detector quality does not survive
@@ -718,7 +719,7 @@ Two further findings emerged that we did not set out to test. A well-behaved
 instruction-tuned model refuses rather than fabricates in a substantial fraction
 of wrong-document cases, which shifts where detection effort is best spent. And
 an LLM judge violated an explicit, repeatedly emphasised instruction in its own
-rubric on essentially every applicable case---a reminder that a judge baseline
+rubric on essentially every applicable case, a reminder that a judge baseline
 is an object of study rather than a source of truth.
 
 Future work should test the log-probability result against adversarially
