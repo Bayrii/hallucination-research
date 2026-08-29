@@ -51,8 +51,9 @@ across sampled generations, and NLI entailment against the retrieved
 context) against a near-free lexical baseline and a 7B LLM-as-judge. Ground
 truth is a two-annotator consensus ($\kappa = 0.78$). The ordering we found
 inverts the one the literature assumes. Mean token log-probability, which costs
-nothing beyond the generation itself, achieves the highest detection performance
-(AUROC $0.849$), while the NLI cross-encoder reaches only $0.669$ at
+nothing beyond the generation itself, leads on AUROC at $0.849$ and is
+statistically indistinguishable from a lexical baseline costing
+\SI{41}{\milli\second}, while the NLI cross-encoder reaches only $0.669$ at
 \SI{2.6}{\second} per query and the LLM judge attains a lower $F_1$ than the free
 signal at \SI{5.0}{\second}. A stratified analysis shows the log-probability
 result is not reducible to answer length. We also find the judge systematically
@@ -473,10 +474,18 @@ Mean token log-probability is the strongest single signal at AUROC $0.849$, and
 it is free, at \SI{0.02}{\milli\second}, essentially the cost of averaging a list
 of numbers the generator has already produced. The NLI cross-encoder, at
 \SI{2.6}{\second} per query, reaches $0.669$. Self-consistency, the most
-expensive signal at \SI{3.2}{\second}, reaches $0.673$. The confidence intervals
-for log-probability $[0.76, 0.91]$ and NLI-mean $[0.58, 0.75]$ barely overlap,
-so we regard that gap as real; the difference between log-probability and
-ROUGE-L, whose intervals overlap heavily, we do not.
+expensive signal at \SI{3.2}{\second}, reaches $0.673$.
+
+Because every signal is computed on the same items, the appropriate comparison
+is a paired bootstrap of the AUROC \emph{difference} rather than an inspection
+of separate intervals, which is both indirect and underpowered. Over 2{,}000
+paired resamples, log-probability exceeds NLI-mean by $\Delta = 0.180$
+($95\%$ CI $[0.073, 0.279]$, $p < 0.001$) and self-consistency by
+$\Delta = 0.177$ ($[0.054, 0.291]$, $p = 0.002$). Its advantage over ROUGE-L is
+$\Delta = 0.013$ ($[-0.039, 0.064]$, $p = 0.62$), which is no advantage at all.
+We therefore treat the gap to the two expensive signals as established and the
+gap to the lexical baseline as absent: the correct reading is that the two
+cheapest signals are jointly ahead, not that log-probability alone leads.
 
 The judge arm is the reference point the cheap signals were meant to be
 compared against, and it does not perform the role well. Its $F_1$ of $0.589$ is
@@ -492,6 +501,35 @@ the cost axis simultaneously.
 The combined logistic regression ($0.835$) does not improve on its best
 component. With four correlated features and 150 items this is unsurprising, but
 it is worth stating: on this data there is no combination bonus to be had.
+
+\subsection{Robustness to the binarisation choice}
+
+Collapsing three labels to two involves two decisions, so we repeated the
+analysis under all nine combinations of the \emph{partially supported} and
+abstention mappings. Log-probability ranges from $0.850$ to $0.979$ across them
+and exceeds NLI-mean under every one. The configuration reported above, in which
+partial items count as unsupported and abstentions as supported, is the one
+under which our headline figure is \emph{lowest}; treating partial items as
+supported raises it to $0.923$, and excluding both ambiguous categories raises
+it to $0.979$ on the 100 items that remain. We report the least favourable
+mapping as the default because it is the most conservative, not because it
+flatters the result.
+
+\subsection{Is the signal merely detecting refusals?}
+
+Twenty-eight items are abstentions, which the default mapping counts as
+supported, and they concentrate in the poorly-supported condition. This admits
+an alternative explanation: if refusals are formulaic and therefore highly
+predictable text, log-probability might be separating refusals from
+non-refusals rather than grounded answers from ungrounded ones.
+
+It is not. Used to discriminate abstentions from everything else,
+log-probability achieves AUROC $0.309$, meaning refusals are if anything
+\emph{less} predictable than other answers. Removing abstentions from the
+evaluation entirely leaves 122 items and raises log-probability's AUROC from
+$0.850$ to $0.907$; NLI-mean rises to $0.777$ and the ordering is unchanged. The
+signal is not a refusal detector in disguise, and its performance does not
+depend on the abstention convention.
 
 \subsection{Is this just answer length?}
 
@@ -562,12 +600,17 @@ the prompt. When a relevant document sits in the prompt, the most
 predictable continuation is one that reuses it. Copying is cheap in
 log-probability terms; composing from parametric memory is not.
 
-That gives a plausible mechanism for the result, and also its main limitation.
-On this data the signal works because ungrounded answers are ones the model had
-to compose rather than copy. A hallucination that closely mirrors the wording of
-the retrieved passage while altering its substance would likely evade it. Our
-distractor conditions do not produce many such cases, and a dataset built to
-contain them would probably show a different ordering.
+We should be clear that this is an explanation consistent with the data rather
+than one we have tested. Measuring lexical overlap between each answer and its
+context, and asking whether that overlap mediates the relationship between
+log-probability and the label, would test it directly; we have not done so, and
+the strong showing of ROUGE-L, which measures precisely that overlap, is at
+least suggestive. If the account is right it also identifies the signal's main
+limitation. On this data it works because ungrounded answers are ones the model
+had to compose rather than copy. A hallucination that closely mirrors the
+wording of the retrieved passage while altering its substance would likely evade
+it. Our distractor conditions do not produce many such cases, and a dataset
+built to contain them would probably show a different ordering.
 
 The corollary for the NLI signal is less comfortable. It underperforms not
 because the model is weak (on controlled pairs it behaves exactly as
@@ -636,7 +679,17 @@ For a team deploying RAG on constrained hardware, the ordering in
 Table~\ref{tab:overall} suggests a straightforward policy: compute the free
 signals first. Mean token log-probability and ROUGE-L recall against the context
 together cost under \SI{50}{\milli\second} and, on this data, outperform
-everything more expensive. Whether that ordering holds on data containing
+everything more expensive.
+
+To make that actionable, an operating point is needed rather than an AUROC. Our
+cross-validated threshold flags an answer when its mean token log-probability
+falls below $-0.213$, giving precision $0.69$ and recall $0.71$ while flagging
+roughly a quarter of answers for review. A deployment prioritising coverage over
+reviewer effort can move the threshold to $-0.196$ for $80\%$ recall at
+precision $0.56$, flagging $38\%$ of answers. These thresholds are properties of
+this generator and this corpus and should be re-fitted rather than transferred;
+what transfers is the procedure of fitting them on held-out data, which costs
+one pass over a labelled sample and no additional inference. Whether that ordering holds on data containing
 context-mimicking hallucinations is an open question, and the honest form of the
 recommendation is to measure the free signals on one's own data before
 provisioning a judge, rather than assuming, as the literature's framing invites, that
@@ -701,11 +754,14 @@ We compared three inference-time hallucination-detection signals on a
 150-item RAG benchmark under a strict hardware constraint, measuring cost
 alongside accuracy. On our data the ordering runs opposite to the one the
 literature's framing implies. Mean token log-probability, which is free and requires
-nothing beyond numbers the generator already computes, achieved the highest
-detection performance at AUROC $0.849$, while an NLI cross-encoder reached
+nothing beyond numbers the generator already computes, led on AUROC at $0.849$
+and beat both expensive signals by a paired margin of roughly $0.18$
+($p \le 0.002$), while an NLI cross-encoder reached
 $0.669$ at \SI{2.6}{\second} per query and a 7B LLM judge scored a lower $F_1$
 than the free signal at \SI{5.0}{\second}, agreeing with human annotators only
-69.3\% of the time.
+69.3\% of the time. It was not, however, distinguishable from a
+\SI{41}{\milli\second} lexical baseline, so the finding is better stated as
+cheap signals outperforming expensive ones than as any single signal winning.
 
 We do not claim log-probability is a better hallucination detector in general.
 The mechanism we propose, that it separates copied text from composed
