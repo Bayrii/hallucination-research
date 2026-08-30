@@ -361,7 +361,7 @@ def make_plots(overall, per_condition, out_path: Path) -> None:
         [n for n, k in zip(names, ok) if k],
         [v for v, k in zip(vals, ok) if k],
         xerr=[[e for e, k in zip(errs[0], ok) if k], [e for e, k in zip(errs[1], ok) if k]],
-        color="#4C72B0", capsize=3,
+        color="0.55", edgecolor="black", linewidth=0.6, capsize=3,
     )
     ax.axvline(0.5, color="grey", ls="--", lw=1, label="chance")
     ax.set_xlim(0, 1)
@@ -377,10 +377,17 @@ def make_plots(overall, per_condition, out_path: Path) -> None:
         sig_names = list(dict.fromkeys(n for c in conds for n, _ in per_condition[c]))
         width = 0.8 / max(1, len(conds))
         x = np.arange(len(sig_names))
+        # Hatching, not colour alone: the venue requires figures to stay legible
+        # in greyscale at print size, and three series separated only by hue are
+        # indistinguishable once printed.
+        hatches = ["", "///", "xxx"]
+        greys = ["0.35", "0.60", "0.85"]
         for i, c in enumerate(conds):
             lookup = dict(per_condition[c])
             ys = [lookup[n]["f1"] if n in lookup else np.nan for n in sig_names]
-            ax.bar(x + i * width, ys, width, label=c.replace("_", " "))
+            ax.bar(x + i * width, ys, width, label=c.replace("_", " "),
+                   color=greys[i % len(greys)], hatch=hatches[i % len(hatches)],
+                   edgecolor="black", linewidth=0.6)
         ax.set_xticks(x + width * (len(conds) - 1) / 2)
         ax.set_xticklabels(sig_names, rotation=35, ha="right", fontsize=8)
         ax.legend(fontsize=8)
@@ -393,7 +400,10 @@ def make_plots(overall, per_condition, out_path: Path) -> None:
     for n, m in overall:
         if m["auroc"] != m["auroc"] or m["latency_ms"] != m["latency_ms"]:
             continue
-        ax.scatter(max(m["latency_ms"], 1e-3), m["auroc"], s=70)
+        # Every point carries its own text label, so a single greyscale marker
+        # stays readable in print; colour would add nothing here.
+        ax.scatter(max(m["latency_ms"], 1e-3), m["auroc"], s=70,
+                   color="0.25", edgecolor="black", linewidth=0.6, zorder=3)
         ax.annotate(
             n, (max(m["latency_ms"], 1e-3), m["auroc"]),
             textcoords="offset points", xytext=(6, 4), fontsize=8,
@@ -407,7 +417,7 @@ def make_plots(overall, per_condition, out_path: Path) -> None:
 
     fig.tight_layout()
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(out_path, dpi=150)
+    fig.savefig(out_path, dpi=300)   # venue asks for 300 dpi minimum
     info(f"chart -> {out_path}")
 
 
