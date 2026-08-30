@@ -45,8 +45,8 @@ Judges at Detecting Unsupported Retrieval-Augmented Generation Answers}}
 \textbf{Section} & Computer Sciences \\
 \textbf{Article type} & Original research \\
 \textbf{Running head} & Low-cost signals for RAG hallucination detection \\
-\textbf{Abstract word count} & 245 \\
-\textbf{Manuscript word count} & 5,842 (excluding references and appendices) \\
+\textbf{Abstract word count} & 246 \\
+\textbf{Manuscript word count} & 5,862 (excluding references and appendices) \\
 \end{tabular}
 \end{center}
 
@@ -62,7 +62,7 @@ a second, larger judge model, which is impractical for teams without that
 budget. We ask how far one can get using only signals already available at
 inference time on modest hardware. Over 150 question--context pairs built from
 50 arXiv abstracts, generated with a 4-bit Qwen2.5-7B on a single 6\,GB consumer
-GPU, we compare three such signals (token log-probability, self-consistency
+graphics card, we compare three such signals (token log-probability, self-consistency
 across sampled generations, and natural language inference (NLI) entailment
 against the retrieved context) against a near-free lexical baseline and a 7B
 large language model used as a judge. Ground truth is a two-annotator consensus
@@ -104,8 +104,8 @@ prompted with the context and the answer, is asked whether the latter follows
 from the former. This works, but it doubles inference cost and presumes access
 to a model large enough to be trusted as an arbiter, an assumption that fails
 precisely for the teams most exposed to the problem. A student group, a small
-company, or anyone running on a single consumer GPU cannot casually add a
-frontier-model call to every query.
+company, or anyone running on a single consumer graphics processing unit (GPU)
+cannot casually add a frontier-model call to every query.
 
 That constraint motivates a narrower question. Rather than asking what the best
 possible detector is, we ask how much can be recovered from signals that are
@@ -391,8 +391,10 @@ paired signal comparisons rather than to the marginal intervals, since every
 signal is computed on the same items. Given the dataset size the marginal
 intervals are wide, and we treat overlapping intervals as a failure to
 distinguish two signals rather than as a ranking. Analyses were run in Python
-3.12 with scikit-learn 1.9, SciPy 1.18 and NumPy 2.5; generation used Ollama
-0.32 and the models listed in Table~\ref{tab:setup}.
+3.12.0 with scikit-learn 1.9.0, SciPy 1.18.1 and NumPy 2.5.2; signal scoring used
+PyTorch 2.6.0 (CUDA 12.4), transformers 4.57.6 and sentence-transformers 5.7.0;
+generation and the judge arm used Ollama 0.32.15 with the models listed in
+Table~\ref{tab:setup}.
 
 Two reference arms bound the comparison: a cross-validated logistic regression
 over the primary signals, and an LLM-as-judge baseline in which the local 7B
@@ -426,7 +428,10 @@ Total generations & 900 & --- \\
 \bottomrule
 \end{tabular}
 \smallskip
-{\footnotesize \textit{Note.} VRAM = video memory required to hold the model. Q4\_K\_M denotes 4-bit quantisation. NLI = natural language inference.}
+\begin{minipage}{\linewidth}
+\footnotesize \raggedright
+\textit{Note.} VRAM = video memory required to hold the model. Q4\_K\_M denotes 4-bit quantisation. NLI = natural language inference.
+\end{minipage}
 \end{table}
 
 Table~\ref{tab:setup} summarises the configuration. The \SI{6}{\giga\byte}
@@ -514,7 +519,10 @@ Judge (7B, v2)      & ---   & ---          & ---   & 0.571 & 4632 \\
 \bottomrule
 \end{tabular}
 \smallskip
-{\footnotesize \textit{Note.} AUROC = area under the receiver operating characteristic curve; AUPRC = area under the precision--recall curve; $F_1$ (cv) = $F_1$ from stratified $k$-fold cross-validation with the threshold fitted on training folds; CI = bootstrap confidence interval. Cost is mean wall-clock time per query on the hardware of Table~\ref{tab:setup}. AUROC is undefined for the judge arms, which emit hard labels rather than a score.}
+\begin{minipage}{\linewidth}
+\footnotesize \raggedright
+\textit{Note.} AUROC = area under the receiver operating characteristic curve; AUPRC = area under the precision--recall curve; $F_1$ (cv) = $F_1$ from stratified $k$-fold cross-validation with the threshold fitted on training folds; CI = bootstrap confidence interval. Cost is mean wall-clock time per query on the hardware of Table~\ref{tab:setup}. Bold marks the best value in its column. AUROC is undefined for the judge arms, which emit hard labels rather than a score.
+\end{minipage}
 \end{table}
 
 \begin{figure}[htbp]
@@ -623,7 +631,10 @@ NLI non-contradict  & 0.570 & 0.488 & 0.431 \\
 \bottomrule
 \end{tabular}
 \smallskip
-{\footnotesize \textit{Note.} AUROC = area under the receiver operating characteristic curve. Well, Partial and Poor denote the well-supported, partially supported and poorly supported retrieval conditions of Section~\ref{sec:conditions}. Bold marks the best signal within a column.}
+\begin{minipage}{\linewidth}
+\footnotesize \raggedright
+\textit{Note.} AUROC = area under the receiver operating characteristic curve. Well, Partial and Poor denote the well-supported, partially supported and poorly supported retrieval conditions of Section~\ref{sec:conditions}. Bold marks the best signal within a column.
+\end{minipage}
 \end{table}
 
 Table~\ref{tab:condition} breaks performance down by retrieval condition.
