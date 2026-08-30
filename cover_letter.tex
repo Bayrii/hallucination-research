@@ -40,20 +40,17 @@ Retrieval-Augmented Generation Answers'' for consideration as original research
 in the Computer Sciences section of the International Collegiate Research Review.
 The manuscript is 5{,}862 words, excluding references and appendices.
 
-Language models are increasingly asked to answer questions using a document
-retrieved for them, and they sometimes produce confident answers that the
-document does not actually support. The standard way to catch this is to pay a
-second, larger model to check the first one, which is out of reach for anyone
+Language models asked to answer from a retrieved document sometimes produce
+confident claims the document does not support, and the standard remedy is to
+pay a second, larger model to check the first, which is out of reach for anyone
 without that budget. We asked whether cheaper signals already produced during
 generation can do the same job, and tested three of them on 150 answers against
-labels we produced by hand. The expected ordering reversed: the cheapest signal
-of all, the model's own token probabilities, detected unsupported answers better
-than a dedicated inference model costing 2.6 seconds per query and better than a
-7-billion-parameter judge costing 5 seconds. The judge also agreed with our human
-labels only 69\% of the time, which matters for anyone treating such a judge as
-a source of truth. The practical upshot for a reader outside this field is that
-the assumption that better checking must be bought does not survive measurement,
-at least here.
+labels we made by hand. The expected ordering reversed: the model's own token
+probabilities, which are free, detected unsupported answers better than a
+dedicated inference model costing 2.6 seconds per query and better than a
+7-billion-parameter judge costing 5 seconds, and that judge agreed with our human
+labels only 69\% of the time. The upshot for a reader outside this field is that
+the assumption that better checking must be bought does not survive measurement.
 
 The work was carried out end to end on one consumer graphics card, which we
 think makes it directly useful to the student readership ICRR reaches: every
