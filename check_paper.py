@@ -64,9 +64,13 @@ def main() -> None:
     print("  identifying strings : %s" % (", ".join(hits) if hits else "none"))
     if hits:
         fails.append("identifying strings present: %s" % hits)
+    # ICRR requires an anonymised Funding declaration, so the presence of the
+    # word is expected. What must not appear is a named funder or grant number.
     for label, pat, want in (("empty \\author", R + r"author\{\}", True),
                              ("acknowledgements", r"acknowledg", False),
-                             ("funding/grant", r"\b(funding|grant)\b", False)):
+                             ("named funder/grant no.",
+                              r"grant (no|number|#)|funded by the|"
+                              r"supported by (a |an |the )?[A-Z]", False)):
         got = bool(re.search(pat, t, re.I))
         print("  %-19s : %s" % (label, got))
         if got != want:
