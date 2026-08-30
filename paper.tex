@@ -28,13 +28,29 @@
 % keeps the throughput figures typeset consistently with the others.
 \DeclareSIUnit{\flop}{FLOP}
 
-\title{\textbf{Detecting Hallucinations in Retrieval-Augmented Generation:\\
-Can Lightweight Confidence Signals Catch Unsupported Claims?}}
+% ICRR requires a title under 20 words that states what the paper does, with no
+% question form and no subtitle. The previous title was a question with a
+% subtitle and broke both rules.
+\title{\textbf{Low-Cost Inference-Time Signals Outperform NLI Models and LLM
+Judges at Detecting Unsupported Retrieval-Augmented Generation Answers}}
 \date{}
 \author{}
 
 \begin{document}
 \maketitle
+\thispagestyle{empty}
+
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\textbf{Section} & Natural Sciences \\
+\textbf{Article type} & Original research \\
+\textbf{Running head} & Low-cost signals for RAG hallucination detection \\
+\textbf{Abstract word count} & 232 \\
+\textbf{Manuscript word count} & 5,650 (excluding references and appendices) \\
+\end{tabular}
+\end{center}
+
+\vspace{1em}
 
 % ===========================================================================
 \begin{abstract}
@@ -64,9 +80,10 @@ free signals before paying for expensive ones.
 \end{abstract}
 
 \vspace{0.5em}
-\noindent\textbf{Keywords:} retrieval-augmented generation; hallucination
-detection; natural language inference; self-consistency; uncertainty
-estimation; low-resource evaluation
+% ICRR: four to six keywords, and none that already appear in the title.
+\noindent\textbf{Keywords:} token log-probability; self-consistency; factual
+consistency; uncertainty estimation; annotation reliability; low-resource
+evaluation
 
 \vspace{1em}
 
@@ -118,8 +135,15 @@ than merely ranking against one another. And we report a result that runs
 against the expected ordering: on our data the cheapest signal is the most
 accurate, and the two most expensive are among the least.
 
+We state the research question directly. \emph{Among detection signals available
+at inference time on a single consumer GPU, how does detection accuracy relate to
+computational cost, and is any signal's advantage large enough to justify its
+expense?} Our hypothesis on entering the study was that NLI entailment would
+lead, followed by self-consistency, with log-probability a distant third. The
+data reversed that ordering.
+
 % ===========================================================================
-\section{Related Work}
+\section{Background and literature}
 
 \paragraph{Self-consistency.}
 SelfCheckGPT \cite{manakul2023selfcheckgpt} introduced a family of zero-resource,
@@ -158,9 +182,23 @@ explicitly resource-constrained setup with cost measured alongside accuracy,
 which is the gap this study addresses.
 
 % ===========================================================================
-\section{Methodology}
+\section{Methods}
 
-\subsection{Task and corpus}
+\subsection{Design}
+
+This is a quantitative benchmarking study with a within-items design: every
+detection signal is computed on the same 150 generated answers, so signals are
+compared on identical material rather than across separate samples. Retrieval
+quality is manipulated in three levels (Section~\ref{sec:conditions}) to test
+whether signal behaviour depends on how the retrieval failed, and the outcome
+measure is agreement with a human consensus label. The design suits the question
+because the comparison of interest is relative, not absolute: we need to know
+which signal separates supported from unsupported answers best on a fixed budget,
+which requires holding the generator, the corpus, the prompt and the hardware
+constant while varying only the detector.
+
+
+\subsection{Data, materials, and sources}
 
 The task is closed-domain question answering over scientific abstracts, with
 verification against the retrieved passage. We chose abstracts because their
@@ -183,7 +221,9 @@ distractor difficulty, which Section~\ref{sec:conditions} uses as a controlled
 variable. Survey papers and abstracts shorter than 700 characters were excluded
 during construction, since neither supports the question templates below.
 
-\subsection{RAG pipeline}
+\subsection{Procedure and analysis}
+
+\subsubsection{RAG pipeline}
 
 Retrieval is embedding-based, using \texttt{all-MiniLM-L6-v2}
 \cite{reimers2019sentencebert} with cosine similarity over L2-normalised
@@ -220,7 +260,7 @@ The prompt template is fixed at \texttt{Context: \{context\}}
 \texttt{\textbackslash n Question: \{question\}} \texttt{\textbackslash n
 Answer:} and held constant across all conditions.
 
-\subsection{Retrieval conditions}
+\subsubsection{Retrieval conditions}
 \label{sec:conditions}
 
 Each question--context pair is assigned to one of three conditions. Under
@@ -244,7 +284,7 @@ topically tight, a retriever can miss the source abstract for a nominally
 well-supported question, which would silently contaminate the positive class.
 The observed hit rate was 97/100.
 
-\subsection{Ground truth}
+\subsubsection{Ground truth}
 
 Two annotators independently labelled all 150 generated answers on a three-point
 scale (\emph{supported}, \emph{partially supported}, \emph{unsupported})
@@ -277,7 +317,7 @@ agreement. There were no inversions: no item on which one annotator recorded
 were all a single step apart on the ordinal scale and were settled by discussion
 into the consensus set used throughout.
 
-\subsection{Detection signals}
+\subsubsection{Detection signals}
 
 All signals are oriented so that a higher value means more supported; the
 detection score for the unsupported class is therefore the negated signal.
@@ -331,7 +371,7 @@ Embedding cosine similarity and ROUGE-L recall between answer and context. This
 costs almost nothing and exists to establish whether the more expensive signals
 earn their cost.
 
-\subsection{Evaluation protocol}
+\subsubsection{Evaluation protocol}
 \label{sec:eval}
 
 The three-point labels are collapsed to a binary supported/unsupported target.
@@ -356,7 +396,7 @@ rule is stated. Both are reported; selecting whichever scored better would
 convert a finding into a hidden researcher degree of freedom.
 
 % ===========================================================================
-\section{Experimental Setup}
+\subsection{Implementation and hardware}
 \label{sec:setup}
 
 \begin{table}[htbp]
@@ -406,6 +446,16 @@ and the five sampled passes use fixed, distinct seeds. The resolved
 configuration of every run is written to disk, as are the exact arXiv queries and
 fetch date; because arXiv relevance ranking drifts, the corpus file itself rather
 than the query is the artifact of record.
+
+% ===========================================================================
+\subsection{Ethics}
+
+Not applicable. This study involved no human participants, no identifiable
+personal data, and no animals, and therefore did not require ethical approval.
+The only human input was the annotation of model-generated text by the authors
+themselves. No data were collected from or about any person, no participants
+were recruited, and the annotators functioned as instruments of measurement
+rather than as subjects of study.
 
 % ===========================================================================
 \section{Results}
@@ -696,7 +746,7 @@ provisioning a judge, rather than assuming, as the literature's framing invites,
 detection quality must be purchased.
 
 % ===========================================================================
-\section{Limitations}
+\subsection{Limitations}
 
 \paragraph{Sample size.}
 With 150 items and 41 positives, confidence intervals are wide and small
@@ -784,6 +834,45 @@ context-mimicking hallucinations, implement atomic-fact decomposition so that
 the NLI comparison is a fair one, and repeat the comparison across generator
 scales, since a signal read off a decoder's own probabilities is unlikely to
 behave identically across model sizes.
+
+% ===========================================================================
+\section*{Declarations}
+
+\paragraph{Funding.}
+No funding was received for this work.
+
+\paragraph{Conflicts of interest.}
+The authors declare no conflicts of interest.
+
+\paragraph{Data availability.}
+The corpus, the 150 generated answers with their token log-probabilities and
+sampled generations, the per-annotator and consensus label files, all signal
+scores, and the full analysis pipeline are available from the corresponding
+author on request and will be released publicly on acceptance. Because arXiv
+relevance ranking drifts over time, the corpus file rather than the search query
+is the artifact of record, and it is included.
+
+\paragraph{Use of generative AI.}
+A large language model (Anthropic Claude, Opus 5) was used substantially in this
+work, and we set out its role in full. It wrote the experimental pipeline: the
+retrieval index, the generation harness, the signal computation, and the
+evaluation and plotting scripts. It performed the statistical analyses reported
+in Section~\ref{sec:results}, including the bootstrap intervals, the paired
+comparisons, and the length-stratified check. It produced drafts of the
+manuscript text, which the authors revised. It also proposed the initial
+reference list.
+
+Three things were not done by the tool. The authors designed the study and made
+every experimental decision, including the corpus construction, the retrieval
+conditions, and the choice of signals. The authors produced all annotation
+personally; no label in the ground-truth set originated from a generative model,
+and the human labels are what every result in this paper is measured against.
+And the authors verified every reference against the publisher record rather
+than accepting the tool's output: page numbers and author lists were corrected
+where the initial output was incomplete or wrong.
+
+The authors take responsibility for the entire content of the manuscript,
+including any error that survived this process.
 
 % ===========================================================================
 \bibliographystyle{apacite}

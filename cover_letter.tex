@@ -1,8 +1,11 @@
 % -------------------------------------------------------------------------
-% COVER LETTER, submitted separately from the manuscript.
+% COVER LETTER, submitted as a separate file. NOT anonymous.
+% Structured to the ICRR cover letter template: letter body, then the ten
+% required declaration sections. Every field must be filled; a blank field
+% returns the manuscript and costs a review cycle.
 %
-% This document is NOT anonymised. It is the place for names, affiliations and
-% the student-eligibility statement, all of which must stay out of paper.tex.
+% ONE FIELD IS STILL INCOMPLETE: the contribution statement in section 1
+% needs Emin Bayramov's actual role before you submit. See the note there.
 % -------------------------------------------------------------------------
 \documentclass[11pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
@@ -14,97 +17,153 @@
 
 \begin{document}
 
-\noindent
-Bayram Aliyev\\
-French-Azerbaijani University\\
-aliyevbayram08@gmail.com
-
-\vspace{1em}
 \noindent 30 August 2026
 
-\vspace{1.5em}
-\noindent
-To the Editors,
-
 \vspace{1em}
-
-We are pleased to submit our manuscript, \textit{``Detecting Hallucinations in
-Retrieval-Augmented Generation: Can Lightweight Confidence Signals Catch
-Unsupported Claims?''}, for consideration.
-
-The paper addresses a practical problem in deploying retrieval-augmented
-generation: such systems still produce claims their retrieved context does not
-support, and the standard remedy, checking each output with a second, larger
-judge model, assumes a compute budget that many teams do not have. We ask how
-much of that checking can be recovered from signals already available at
-inference time on modest hardware, and we treat computational cost as a reported
-outcome rather than an afterthought.
-
-Our central finding runs against the ordering the literature's framing implies.
-Across 150 question--context pairs, evaluated against a two-annotator consensus
-($\kappa = 0.78$), mean token log-probability, which is free and requires nothing
-beyond numbers the generator has already computed, achieved the highest
-detection performance (AUROC 0.849). A 184M-parameter NLI cross-encoder reached
-0.669 at 2.6 seconds per query, and a 7B LLM-as-judge scored a lower $F_1$ than
-the free signal at 5.0 seconds, agreeing with our human annotators only 69.3\%
-of the time. We verify that the log-probability result is not reducible to
-answer length, and we are explicit about the mechanism we believe underlies it
-and about the conditions under which we would expect it to fail.
-
-We think the work suits the venue for three reasons. It is a complete empirical
-study with a negative-to-surprising result, conducted end to end on a single
-6\,GB consumer GPU, which makes it directly reproducible by readers with similar
-constraints. It reports two secondary findings we did not set out to test: that
-an instruction-tuned model frequently refuses rather than fabricates when handed
-the wrong document, and that an LLM judge systematically violated an explicit
-instruction in its own rubric on essentially every applicable case. And it is
-candid about its limits: we state plainly where our sample is small, where our
-conditions are milder than intended, and where we would expect our headline
-result not to transfer.
-
-\vspace{0.5em}
-\noindent\textbf{Authors.} Bayram Aliyev (aliyevbayram08@gmail.com),
-Veliyyeddin Aliyev (eliyevveliyeddin3@gmail.com) and Emin Bayramov
-(eminbayka0006@gmail.com), all of French-Azerbaijani University. Bayram Aliyev
-is the corresponding author.
-
-\vspace{0.5em}
-\noindent\textbf{Student eligibility.} All three authors are currently students
-at French-Azerbaijani University, satisfying the requirement that at least one
-author be a student or have graduated within the last twelve months.
-
-\vspace{0.5em}
-\noindent\textbf{Originality.} This manuscript is original, unpublished, and is
-not under consideration at any other venue.
-
-\vspace{0.5em}
-\noindent\textbf{Anonymisation.} The manuscript file contains no names,
-affiliations, acknowledgements or funding statements.
-
-\vspace{0.5em}
-\noindent\textbf{Ethical approval.} The study involved no human subjects. The
-only human input was annotation of model-generated text by two of the authors;
-no data was collected from or about any person, and no personal data was
-processed. We understand this to fall outside the scope of human subjects
-research and have therefore not sought ethical approval. We would be glad to
-supply a formal exemption determination from our institution if the editors
-would prefer one.
-
-\vspace{0.5em}
-\noindent\textbf{Word count.} Approximately 4{,}600 words excluding references.
-
-\vspace{0.5em}
-\noindent\textbf{Data and code.} All code, the corpus, the generated outputs and
-the annotation files are available on request, and will be released publicly on
-acceptance.
-
-\vspace{1.5em}
 \noindent
-Thank you for your time and consideration.
+The Editors\\
+International Collegiate Research Review\\
+icrrjournal@gmail.com
 
 \vspace{1em}
 \noindent
-Sincerely,\\
-Bayram Aliyev, on behalf of all three authors
+Re: Submission of ``Low-Cost Inference-Time Signals Outperform NLI Models and
+LLM Judges at Detecting Unsupported Retrieval-Augmented Generation Answers'' to
+the Natural Sciences section
+
+\vspace{1em}
+\noindent
+Dear Editors,
+
+\vspace{0.5em}
+
+I am submitting the manuscript titled ``Low-Cost Inference-Time Signals
+Outperform NLI Models and LLM Judges at Detecting Unsupported
+Retrieval-Augmented Generation Answers'' for consideration as original research
+in the Natural Sciences section of the International Collegiate Research Review.
+The manuscript is 5{,}650 words, excluding references and appendices.
+
+Language models are increasingly asked to answer questions using a document
+retrieved for them, and they sometimes produce confident answers that the
+document does not actually support. The standard way to catch this is to pay a
+second, larger model to check the first one, which is out of reach for anyone
+without that budget. We asked whether cheaper signals already produced during
+generation can do the same job, and tested three of them on 150 answers against
+labels we produced by hand. The expected ordering reversed: the cheapest signal
+of all, the model's own token probabilities, detected unsupported answers better
+than a dedicated inference model costing 2.6 seconds per query and better than a
+7-billion-parameter judge costing 5 seconds. The judge also agreed with our human
+labels only 69\% of the time, which matters for anyone treating such a judge as
+a source of truth. The practical upshot for a reader outside this field is that
+the assumption that better checking must be bought does not survive measurement,
+at least here.
+
+The work was carried out end to end on one consumer graphics card, which we
+think makes it directly useful to the student readership ICRR reaches: every
+result in the paper can be reproduced on hardware a student is likely to own.
+
+\vspace{0.5em}
+\noindent
+Thank you for considering this submission. I confirm that I am the corresponding
+author and that I have the agreement of all co-authors to submit on their behalf.
+
+\vspace{1em}
+\noindent
+Yours sincerely,\\
+Bayram Aliyev\\
+BSc Computer Science, final year\\
+French-Azerbaijani University $\cdot$ aliyevbayram08@gmail.com
+
+\vspace{1.5em}
+\hrule
+\vspace{1em}
+
+\section*{Declarations}
+
+\paragraph{1. Authors}
+\textbf{Author 1 (corresponding)} Bayram Aliyev, French-Azerbaijani University,
+aliyevbayram08@gmail.com\\
+\textbf{Author 2} Veliyyeddin Aliyev, French-Azerbaijani University,
+eliyevveliyeddin3@gmail.com\\
+\textbf{Author 3} Emin Bayramov, French-Azerbaijani University,
+eminbayka0006@gmail.com
+
+\textbf{Contributions.} B.A. designed the study, built and ran the experimental
+pipeline, and annotated all 150 items. V.A. independently annotated all 150
+items and took part in resolving disagreements into the consensus label set.
+% >>> TO COMPLETE BEFORE SUBMITTING <<<
+% Replace the bracketed clause below with what Emin Bayramov actually did.
+% ICRR applies COPE authorship criteria: every listed author must have
+% contributed substantively. If his contribution does not meet that bar, the
+% honest options are to move him to an acknowledgement (which goes in this
+% letter, not the manuscript) or to describe the contribution accurately.
+E.B. [describe contribution]. All three
+authors read and approved the submitted manuscript.
+
+\paragraph{2. Eligibility}
+\textbf{Student author} Bayram Aliyev.
+\textbf{Status} Current undergraduate student.
+\textbf{Institution} French-Azerbaijani University.
+\textbf{Origin of the work} Independent project, not part of a course or
+dissertation requirement. All three authors are current undergraduate students
+at French-Azerbaijani University.
+
+\paragraph{3. Supervision}
+\textbf{Supervisor} None; this was independent work.
+\textbf{Role} Not applicable.
+
+\paragraph{4. Funding}
+\textbf{Funding} No funding was received for this work.
+\textbf{Role of the funder} Not applicable.
+
+\paragraph{5. Ethical approval}
+\textbf{Approval} Not applicable; this research involved no human participants,
+no identifiable personal data, and no animals. The only human input was
+annotation of model-generated text by the authors themselves, from which no
+data about any person were collected.
+\textbf{Consent} Not applicable.
+
+\paragraph{6. Use of generative AI}
+\textbf{Tools used} Anthropic Claude (Opus 5).
+
+\textbf{What it was used for} Substantially, and we set the role out in full
+rather than in summary. The tool wrote the experimental pipeline: the retrieval
+index, the generation harness, the signal computation, and the evaluation and
+plotting code. It performed the statistical analyses reported in the Results
+section, including the bootstrap confidence intervals, the paired signal
+comparisons, and the length-stratified robustness check. It produced drafts of
+the manuscript text, which the authors revised. It proposed the initial
+reference list.
+
+It did not design the study, and it produced no annotation. Every one of the 300
+individual labels behind the ground-truth set was assigned by a human author,
+and the human labels are the standard against which every reported result is
+measured. The same declaration appears in the manuscript.
+
+\textbf{Verification} All references were checked by the authors against the
+publisher record rather than accepted from the tool: the ACL Anthology BibTeX
+exports for the four ACL entries, DBLP for the NeurIPS entry, and PubMed for the
+Biometrics entry. Page numbers and author lists were corrected where the tool's
+initial output was incomplete or incorrect. The authors have read every cited
+work and take responsibility for the entire content of the manuscript.
+
+\paragraph{7. Originality and prior publication}
+\textbf{Originality} This work is original, unpublished, and not under
+consideration at any other journal.
+\textbf{Prior dissemination} None.
+\textbf{Overlap with a thesis} Not applicable.
+
+\paragraph{8. Conflicts of interest}
+The authors declare no conflicts of interest.
+
+\paragraph{9. Data and materials}
+The corpus, all 150 generated answers with their token log-probabilities and
+sampled generations, the per-annotator and consensus label files, all computed
+signal scores, and the complete analysis pipeline are available from the
+corresponding author on request, and will be released publicly on acceptance.
+
+\paragraph{10. Reviewer suggestions and exclusions}
+\textbf{Suggested} None.
+\textbf{Excluded} None.
 
 \end{document}
