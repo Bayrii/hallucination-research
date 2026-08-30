@@ -1,0 +1,20 @@
+{
+  "stage": "evaluate",
+  "timestamp_utc": "2026-08-30T12:02:15.940844+00:00",
+  "args": {
+    "signals": "E:\\Coding\\Hallucination research\\data\\signals.jsonl",
+    "labels": "E:\\Coding\\Hallucination research\\data\\labels_final.jsonl",
+    "generations": "E:\\Coding\\Hallucination research\\data\\generations.jsonl",
+    "judge_files": null,
+    "partial": "unsupported",
+    "abstention": "supported",
+    "n_boot": 1000,
+    "cv_folds": 5,
+    "combined": true,
+    "out_csv": "E:\\Coding\\Hallucination research\\data\\results\\summary.csv",
+    "out_png": "E:\\Coding\\Hallucination research\\data\\results\\signals-comparison.png",
+    "seed": 42
+  },
+  "python": "3.12.0",
+  "platform": "win32"
+}
