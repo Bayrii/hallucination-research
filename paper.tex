@@ -45,8 +45,8 @@ Judges at Detecting Unsupported Retrieval-Augmented Generation Answers}}
 \textbf{Section} & Computer Sciences \\
 \textbf{Article type} & Original research \\
 \textbf{Running head} & Low-cost signals for RAG hallucination detection \\
-\textbf{Abstract word count} & 247 \\
-\textbf{Manuscript word count} & 5,810 (excluding references and appendices) \\
+\textbf{Abstract word count} & 245 \\
+\textbf{Manuscript word count} & 5,842 (excluding references and appendices) \\
 \end{tabular}
 \end{center}
 
@@ -67,17 +67,16 @@ across sampled generations, and natural language inference (NLI) entailment
 against the retrieved context) against a near-free lexical baseline and a 7B
 large language model used as a judge. Ground truth is a two-annotator consensus
 ($\kappa = 0.78$). The ordering we found inverts the one the literature assumes.
-Mean token log-probability, which costs nothing beyond the generation itself,
-leads on area under the receiver operating characteristic curve at $0.849$ and
-is statistically indistinguishable from a lexical baseline costing
-\SI{41}{\milli\second}, while the NLI cross-encoder reaches only $0.669$ at
-\SI{2.6}{\second} per query and the LLM judge attains a lower $F_1$ than the free
-signal at \SI{5.0}{\second}. A stratified analysis shows the log-probability
-result is not reducible to answer length. We also find the judge systematically
-violates an explicit instruction in its own rubric, and that our strongest
-manipulation elicits appropriate abstention more often than fabrication. For
-resource-constrained deployments, the practical recommendation is to exhaust
-free signals before paying for expensive ones.
+Mean token log-probability, which is free, leads on area under the receiver
+operating characteristic curve at $0.849$ and is statistically indistinguishable
+from a lexical baseline costing \SI{41}{\milli\second}, while the NLI
+cross-encoder reaches only $0.669$ at \SI{2.6}{\second} per query and the judge
+attains a lower $F_1$ than the free signal at \SI{5.0}{\second}. A stratified
+analysis shows the log-probability result is not reducible to answer length. We
+also find the judge systematically violates an explicit instruction in its own
+rubric, and that our strongest manipulation elicits appropriate abstention more
+often than fabrication. The practical recommendation is to exhaust free signals
+before paying for expensive ones.
 \end{abstract}
 
 \vspace{0.5em}

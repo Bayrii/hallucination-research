@@ -18,6 +18,13 @@ R = BS + BS                 # regex source for one literal backslash
 
 def strip_tex(s: str) -> list[str]:
     s = re.sub(r"%.*", "", s)
+    # Expand \SI{n}{unit} to the words a reader (and a web form) will see.
+    # Deleting it outright undercounts: the abstract measured 247 here while
+    # its plain-text form was 253, which would have breached the 250 limit
+    # without the checker noticing.
+    s = re.sub(R + r"SI\{([^}]*)\}\{" + R + r"milli" + R + r"second\}", r"\1 ms", s)
+    s = re.sub(R + r"SI\{([^}]*)\}\{" + R + r"second\}", r"\1 seconds", s)
+    s = re.sub(R + r"SI\{([^}]*)\}\{[^}]*\}", r"\1 units", s)
     s = re.sub(R + r"[a-zA-Z]+\*?(\[[^\]]*\])?(\{[^{}]*\})?", " ", s)
     s = re.sub(r"[" + BS + r"{}$&_^~]", " ", s)
     return [x for x in s.split() if re.search(r"[A-Za-z0-9]", x)]
