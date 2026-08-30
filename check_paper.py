@@ -65,7 +65,7 @@ def main() -> None:
         fails.append("keyword count %d outside 4-6" % n_kw)
 
     print("\nANONYMITY")
-    identifying = ["bayram", "aliyev", "valiyyaddin", "nitro5", "eliyev", "bayrii",
+    identifying = ["bayram", "aliyev", "valiyyaddin", "veliyyeddin", "nitro5", "eliyev", "bayrii",
                    "annotator1", "annotator2", "github.com/"]
     hits = [s for s in identifying if s in t.lower()]
     print("  identifying strings : %s" % (", ".join(hits) if hits else "none"))
