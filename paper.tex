@@ -45,8 +45,8 @@ Judges at Detecting Unsupported Retrieval-Augmented Generation Answers}}
 \textbf{Section} & Computer Sciences \\
 \textbf{Article type} & Original research \\
 \textbf{Running head} & Low-cost signals for RAG hallucination detection \\
-\textbf{Abstract word count} & 232 \\
-\textbf{Manuscript word count} & 5,720 (excluding references and appendices) \\
+\textbf{Abstract word count} & 247 \\
+\textbf{Manuscript word count} & 5,810 (excluding references and appendices) \\
 \end{tabular}
 \end{center}
 
@@ -63,12 +63,13 @@ budget. We ask how far one can get using only signals already available at
 inference time on modest hardware. Over 150 question--context pairs built from
 50 arXiv abstracts, generated with a 4-bit Qwen2.5-7B on a single 6\,GB consumer
 GPU, we compare three such signals (token log-probability, self-consistency
-across sampled generations, and NLI entailment against the retrieved
-context) against a near-free lexical baseline and a 7B LLM-as-judge. Ground
-truth is a two-annotator consensus ($\kappa = 0.78$). The ordering we found
-inverts the one the literature assumes. Mean token log-probability, which costs
-nothing beyond the generation itself, leads on AUROC at $0.849$ and is
-statistically indistinguishable from a lexical baseline costing
+across sampled generations, and natural language inference (NLI) entailment
+against the retrieved context) against a near-free lexical baseline and a 7B
+large language model used as a judge. Ground truth is a two-annotator consensus
+($\kappa = 0.78$). The ordering we found inverts the one the literature assumes.
+Mean token log-probability, which costs nothing beyond the generation itself,
+leads on area under the receiver operating characteristic curve at $0.849$ and
+is statistically indistinguishable from a lexical baseline costing
 \SI{41}{\milli\second}, while the NLI cross-encoder reaches only $0.669$ at
 \SI{2.6}{\second} per query and the LLM judge attains a lower $F_1$ than the free
 signal at \SI{5.0}{\second}. A stratified analysis shows the log-probability
@@ -384,9 +385,15 @@ signal with 95\% confidence intervals from 1{,}000-resample bootstrapping.
 Sweeping thresholds over the full dataset and reporting the maximum $F_1$
 selects a parameter on the evaluation data and is optimistically biased; we
 therefore report $F_1$ from stratified $k$-fold cross-validation, choosing the
-threshold on training folds and measuring on held-out folds. Given the dataset
-size the intervals are wide, and we treat overlapping intervals as a failure to
-distinguish two signals rather than as a ranking.
+threshold on training folds and measuring on held-out folds.
+
+The significance threshold is $\alpha = 0.05$ throughout, and we apply it to the
+paired signal comparisons rather than to the marginal intervals, since every
+signal is computed on the same items. Given the dataset size the marginal
+intervals are wide, and we treat overlapping intervals as a failure to
+distinguish two signals rather than as a ranking. Analyses were run in Python
+3.12 with scikit-learn 1.9, SciPy 1.18 and NumPy 2.5; generation used Ollama
+0.32 and the models listed in Table~\ref{tab:setup}.
 
 Two reference arms bound the comparison: a cross-validated logistic regression
 over the primary signals, and an LLM-as-judge baseline in which the local 7B
@@ -401,6 +408,8 @@ convert a finding into a hidden researcher degree of freedom.
 
 \begin{table}[htbp]
 \centering
+\caption{Experimental configuration.}
+\label{tab:setup}
 \small
 \begin{tabular}{@{}lll@{}}
 \toprule
@@ -417,8 +426,8 @@ Self-consistency samples & $N = 5$ at temperature $0.7$ & --- \\
 Total generations & 900 & --- \\
 \bottomrule
 \end{tabular}
-\caption{Experimental configuration.}
-\label{tab:setup}
+\smallskip
+{\footnotesize \textit{Note.} VRAM = video memory required to hold the model. Q4\_K\_M denotes 4-bit quantisation. NLI = natural language inference.}
 \end{table}
 
 Table~\ref{tab:setup} summarises the configuration. The \SI{6}{\giga\byte}
@@ -482,6 +491,8 @@ expected.
 
 \begin{table}[htbp]
 \centering
+\caption{Detection of unsupported answers, $n = 150$, 41 positive.}
+\label{tab:overall}
 \small
 \begin{tabular}{@{}lccccr@{}}
 \toprule
@@ -503,10 +514,8 @@ Judge (7B, v1)      & ---   & ---          & ---   & 0.589 & 4982 \\
 Judge (7B, v2)      & ---   & ---          & ---   & 0.571 & 4632 \\
 \bottomrule
 \end{tabular}
-\caption{Detection of unsupported answers, $n = 150$, 41 positive.
-AUROC is not defined for the judge arms, which emit hard labels rather than a
-score.}
-\label{tab:overall}
+\smallskip
+{\footnotesize \textit{Note.} AUROC = area under the receiver operating characteristic curve; AUPRC = area under the precision--recall curve; $F_1$ (cv) = $F_1$ from stratified $k$-fold cross-validation with the threshold fitted on training folds; CI = bootstrap confidence interval. Cost is mean wall-clock time per query on the hardware of Table~\ref{tab:setup}. AUROC is undefined for the judge arms, which emit hard labels rather than a score.}
 \end{table}
 
 \begin{figure}[htbp]
@@ -596,6 +605,8 @@ hedges and elaborates when it cannot ground itself.
 
 \begin{table}[htbp]
 \centering
+\caption{AUROC by retrieval condition.}
+\label{tab:condition}
 \small
 \begin{tabular}{@{}lccc@{}}
 \toprule
@@ -612,8 +623,8 @@ Self-consistency    & 0.592 & 0.785 & 0.674 \\
 NLI non-contradict  & 0.570 & 0.488 & 0.431 \\
 \bottomrule
 \end{tabular}
-\caption{AUROC by retrieval condition.}
-\label{tab:condition}
+\smallskip
+{\footnotesize \textit{Note.} AUROC = area under the receiver operating characteristic curve. Well, Partial and Poor denote the well-supported, partially supported and poorly supported retrieval conditions of Section~\ref{sec:conditions}. Bold marks the best signal within a column.}
 \end{table}
 
 Table~\ref{tab:condition} breaks performance down by retrieval condition.
@@ -850,7 +861,7 @@ sampled generations, the per-annotator and consensus label files, all signal
 scores, and the full analysis pipeline are available from the corresponding
 author on request and will be released publicly on acceptance. Because arXiv
 relevance ranking drifts over time, the corpus file rather than the search query
-is the artifact of record, and it is included.
+is the artifact of record, and it forms part of that release.
 
 \paragraph{Use of generative AI.}
 A large language model (Anthropic Claude, Opus 5) was used substantially in this
@@ -876,7 +887,9 @@ every one of the resulting 300 labels was assigned by a person. They are the sta
 against which every result reported here is measured, and no generative model
 contributed to them. The authors verified each reference against the publisher
 record, correcting page numbers and author lists where the tool's output was
-incomplete or wrong, and revised every draft of this manuscript.
+incomplete or wrong, and revised every draft of this manuscript. The seven
+references were checked against the ACL Anthology (four entries), the NeurIPS
+proceedings, OpenReview, and Crossref.
 
 The authors take responsibility for the entire content of the manuscript,
 including any error that survived this process.
